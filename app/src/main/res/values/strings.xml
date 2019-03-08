@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">WinDairy</string>
+    <string name="cow_buf">Cow / Buffalo</string>
+    <string name="member_type">Member Type</string>
+    <string name="winsoft_logo">Winsoft Logo</string>
+    <string-array name="member_type">
+        <item>Member</item>
+        <item>Contractor</item>
+        <item>Labour Contractor</item>
+    </string-array>
+
+    <string-array name="array_item">
+        <item>Select Item</item>
+
+    </string-array>
+</resources>

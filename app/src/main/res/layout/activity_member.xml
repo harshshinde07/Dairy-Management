@@ -1,0 +1,177 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".database.MemberActivity">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="4dp"
+        android:elevation="8dp"
+        android:paddingTop="50dp"
+        app:cardCornerRadius="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Name"
+                    android:padding="4dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:singleLine="true"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/edt_memb_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="Member Name" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Member Type"
+                    android:padding="4dp"
+                    android:singleLine="true"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/member_type"
+                    android:id="@+id/spinnerItem"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+
+                <RadioGroup
+                    android:id="@+id/cowBuff"
+                    android:orientation="horizontal"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:padding="4dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/radioButtonCow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cow"
+                        android:layout_weight="1"
+                        android:textSize="18sp"/>
+
+                    <RadioButton
+                        android:id="@+id/radioButtonBuff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Buffalo"
+                        android:layout_weight="1"
+                        android:textSize="18sp"/>
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <EditText
+                    android:id="@+id/zoonCode"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:hint="Zoon Code" />
+
+                <EditText
+                    android:id="@+id/rateGrNo"
+                    android:hint="Rate Group No"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <Button
+                    android:id="@+id/save"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:text="Save"
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/clear"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:text="Clear"
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
