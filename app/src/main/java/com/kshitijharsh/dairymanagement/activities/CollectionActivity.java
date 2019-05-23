@@ -12,6 +12,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +40,9 @@ public class CollectionActivity extends AppCompatActivity {
     float f, q, d, a;
     DBHelper dbHelper;
     DatabaseClass dbClass;
+    RadioGroup radioGroup;
+    LinearLayout swapCB, swapBoth;
+    String cowBuff;
     String[] memb_type = {"Member", "Contractor", "Labour Contractor"};
 
     @Override
@@ -59,6 +65,23 @@ public class CollectionActivity extends AppCompatActivity {
         fat = findViewById(R.id.fat);
         quantity = findViewById(R.id.qty);
         date = findViewById(R.id.date);
+
+        radioGroup = findViewById(R.id.cowBuff);
+        radioGroup.clearCheck();
+        swapBoth = findViewById(R.id.swapBoth);
+        swapCB = findViewById(R.id.swapCB);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb = group.findViewById(checkedId);
+                if (null != rb) {
+                    //Toast.makeText(SaleActivity.this, rb.getText(), Toast.LENGTH_SHORT).show();
+                    cowBuff = rb.getText().toString();
+                }
+
+            }
+        });
         initNames();
 
         clear.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +97,7 @@ public class CollectionActivity extends AppCompatActivity {
                 fat.setText("");
                 quantity.setText("");
                 date.setText("");
+                radioGroup.clearCheck();
             }
         });
 
@@ -101,26 +125,44 @@ public class CollectionActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || membType.getText().toString().equals("") || cowBuf.getText().toString().equals("") || txtCode.getText().toString().equals("") || degree.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("")) {
+                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || membType.getText().toString().equals("") || txtCode.getText().toString().equals("") || degree.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("")) {
                     Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
                     int memCode = Integer.parseInt(txtCode.getText().toString());
                     float deg = Float.parseFloat(degree.getText().toString());
                     float lit = Float.parseFloat(quantity.getText().toString());
                     float f = Float.parseFloat(fat.getText().toString());
+
+                    if (swapBoth.getVisibility() == View.VISIBLE) {
+                        if (cowBuff.equals("Cow"))
+                            cowBuf.setText("Cow");
+                        if (cowBuff.equals("Buffalo"))
+                            cowBuf.setText("Buffalo");
+                    }
                     getRateAmt(deg, f, cowBuf.getText().toString());
-                    float r = Float.parseFloat(rate.getText().toString());
-                    float a = Float.parseFloat(amt.getText().toString());
-                    dbClass.addColl(date.getText().toString(), memCode, cowBuf.getText().toString(), deg, lit, f, r, a);
-                    Toast.makeText(CollectionActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
-                    edtName.setText("");
-                    membType.setText("");
-                    cowBuf.setText("");
-                    txtCode.setText("");
-                    degree.setText("");
-                    fat.setText("");
-                    quantity.setText("");
-                    date.setText("");
+
+                    if (!rate.getText().toString().equals("") || !amt.getText().toString().equals("")) {
+                        float r = Float.parseFloat(rate.getText().toString());
+                        float a = Float.parseFloat(amt.getText().toString());
+                        if (!cowBuf.getText().toString().equals("")) {
+                            dbClass.addColl(date.getText().toString(), memCode, cowBuf.getText().toString(), deg, lit, f, r, a);
+                            Toast.makeText(CollectionActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
+                            edtName.setText("");
+                            membType.setText("");
+                            cowBuf.setText("");
+                            txtCode.setText("");
+                            degree.setText("");
+                            fat.setText("");
+                            quantity.setText("");
+                            date.setText("");
+                            swapBoth.setVisibility(View.GONE);
+                            swapCB.setVisibility(View.VISIBLE);
+                        } else {
+                            Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
             }
@@ -136,9 +178,26 @@ public class CollectionActivity extends AppCompatActivity {
                 int type = Integer.parseInt(member.getMembType());
                 Log.e("11111111111", String.valueOf(type));
                 int cb = Integer.parseInt(member.getCowbfType());
-                String cbText = (cb == 1) ? "Cow" : "Buffalo";
+
+                String cbText = "";
+                if (cb == 1) {
+                    cbText = "Cow";
+                    cowBuf.setText(cbText);
+                } else if (cb == 2) {
+                    cbText = "Buffalo";
+                    cowBuf.setText(cbText);
+                } else if (cb == 3) {
+                    cbText = "Both";
+                    swapBoth.setVisibility(View.VISIBLE);
+                    swapCB.setVisibility(View.GONE);
+                } else {
+                    cowBuf.setText(cbText);
+                }
+
+                //TODO - A BUG
+                if (type == 3)
+                    type = 2;
                 membType.setText(memb_type[type]);
-                cowBuf.setText(cbText);
                 txtCode.setText(member.getCode());
 
             }

@@ -79,7 +79,7 @@ public class DBQuery {
         return db.rawQuery(query,null);
     }
 
-    public void addNewMem(String name, int zone, int cowBuff, int memType, int rateGrp) {
+    public void addNewMem(String name, int zone, int cowBuff, int memType, String rateGrp) {
         String query = "SELECT memb_code FROM member ORDER BY memb_code DESC LIMIT 1";
         Cursor cursor = db.rawQuery(query,null);
         int val = 0;

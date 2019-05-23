@@ -1,223 +1,270 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
-    tools:context=".activities.SaleActivity">
+    android:background="@color/colorPrimaryDark">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="4dp"
-        android:elevation="8dp"
-        android:paddingTop="50dp"
-        app:cardCornerRadius="4dp">
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:background="@color/colorPrimaryDark"
+        tools:context=".activities.SaleActivity">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="4dp"
+            android:elevation="8dp"
+            android:paddingTop="50dp"
+            app:cardCornerRadius="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <EditText
-                    android:id="@+id/date"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:hint="Date" />
-
-                <EditText
-                    android:id="@+id/branch"
-                    android:hint="Branch Name"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="8dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
-
-                <TextView
-                    android:id="@+id/edt_memb_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Id"
-                    android:padding="4dp"
-                    android:singleLine="true"
-                    android:textSize="18sp" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/edt_memb_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Member Name" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
-
-                <RadioGroup
-                    android:id="@+id/morEve"
                     android:orientation="horizontal"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:padding="4dp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:padding="4dp">
 
-                    <RadioButton
-                        android:id="@+id/radioButtonMor"
+                    <EditText
+                        android:id="@+id/date"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@null"
+                        android:hint="Date" />
+
+                    <EditText
+                        android:id="@+id/branch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Morning"
+                        android:layout_marginTop="8dp"
                         android:layout_weight="1"
-                        android:textSize="18sp"/>
+                        android:hint="Branch Name" />
+                </LinearLayout>
 
-                    <RadioButton
-                        android:id="@+id/radioButtonEve"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:layout_marginStart="8dp"
+                        android:id="@+id/edt_memb_id"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Id"
+                        android:padding="4dp"
+                        android:singleLine="true"
+                        android:textSize="18sp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/edt_memb_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Evening"
+                        android:layout_weight="2"
+                        android:hint="Member Name" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+
+                    <RadioGroup
+                        android:id="@+id/morEve"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
                         android:layout_weight="1"
-                        android:textSize="18sp"/>
-                </RadioGroup>
-            </LinearLayout>
+                        android:orientation="horizontal"
+                        android:padding="4dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
+                        <RadioButton
+                            android:id="@+id/radioButtonMor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Morning"
+                            android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/txt_cow_buf"
-                    android:layout_width="wrap_content"
+                        <RadioButton
+                            android:id="@+id/radioButtonEve"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Evening"
+                            android:textSize="18sp" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/swapCB"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/cow_buf"
-                    android:textSize="18sp" />
+                    android:orientation="horizontal"
+                    android:padding="4dp">
 
-                <TextView
-                    android:id="@+id/cow_buf"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/txt_cow_buf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/cow_buf"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/cow_buf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp"
+                        android:textAlignment="center"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/swapBoth"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="8dp"
-                    android:textAlignment="center"
-                    android:textSize="18sp" />
-            </LinearLayout>
+                    android:orientation="horizontal"
+                    android:padding="4dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
+                    <RadioGroup
+                        android:id="@+id/cowBuff"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:padding="4dp">
 
-                <EditText
-                    android:id="@+id/qty"
-                    android:hint="Quantity"
-                    android:layout_margin="4dp"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                        <RadioButton
+                            android:id="@+id/radioButtonCow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Cow"
+                            android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/fat"
-                    android:hint="Fat"
-                    android:layout_margin="4dp"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                        <RadioButton
+                            android:id="@+id/radioButtonBuff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Buffalo"
+                            android:textSize="18sp" />
 
+                    </RadioGroup>
 
-            </LinearLayout>
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
-
-                <EditText
-                    android:id="@+id/rate"
-                    android:hint="Rate"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/amt"
-                    android:hint="Amount"
-                    android:padding="4dp"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
-
-                <Button
-                    android:id="@+id/save"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp"
-                    android:text="Save"
-                    android:textAlignment="center"
-                    android:textSize="16sp" />
+                    android:orientation="horizontal"
+                    android:padding="4dp">
 
-                <Button
-                    android:id="@+id/clear"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/qty"
+                        android:singleLine="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:hint="Qty" />
+
+                    <EditText
+                        android:id="@+id/fat"
+                        android:singleLine="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:hint="Fat" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp"
-                    android:text="Clear"
-                    android:textAlignment="center"
-                    android:textSize="16sp" />
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+
+                    <EditText
+                        android:singleLine="true"
+                        android:id="@+id/rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Rate      "
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/amt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="  Amount"
+                        android:padding="4dp"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+
+                    <Button
+                        android:id="@+id/save"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:text="Save"
+                        android:textAlignment="center"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/clear"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:text="Clear"
+                        android:textAlignment="center"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
+        </android.support.v7.widget.CardView>
 
-    </android.support.v7.widget.CardView>
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

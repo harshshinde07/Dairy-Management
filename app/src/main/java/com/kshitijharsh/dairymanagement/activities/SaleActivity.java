@@ -11,6 +11,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -21,7 +22,6 @@ import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
 import com.kshitijharsh.dairymanagement.model.Member;
-import com.kshitijharsh.dairymanagement.model.Sale;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,7 +39,9 @@ public class SaleActivity extends AppCompatActivity {
     Button save, clear;
     DBHelper dbHelper;
     DatabaseClass dbClass;
-    RadioGroup radioGroup;
+    RadioGroup radioGroup, radioGroupCB;
+    LinearLayout swapCB, swapBoth;
+    String cowBuff;
     String mornEve;
 
     @Override
@@ -64,8 +66,6 @@ public class SaleActivity extends AppCompatActivity {
         radioGroup = findViewById(R.id.morEve);
         initNames();
         radioGroup.clearCheck();
-        //float count = dbClass.getMilkCount();
-        //Toast.makeText(this, String.valueOf(count), Toast.LENGTH_SHORT).show();
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -74,6 +74,26 @@ public class SaleActivity extends AppCompatActivity {
                 if (null != rb) {
                     //Toast.makeText(SaleActivity.this, rb.getText(), Toast.LENGTH_SHORT).show();
                     mornEve = rb.getText().toString();
+                }
+
+            }
+        });
+
+        //float count = dbClass.getMilkCount();
+        //Toast.makeText(this, String.valueOf(count), Toast.LENGTH_SHORT).show();
+
+        radioGroupCB = findViewById(R.id.cowBuff);
+        radioGroupCB.clearCheck();
+        swapBoth = findViewById(R.id.swapBoth);
+        swapCB = findViewById(R.id.swapCB);
+
+        radioGroupCB.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb = group.findViewById(checkedId);
+                if (null != rb) {
+                    //Toast.makeText(SaleActivity.this, rb.getText(), Toast.LENGTH_SHORT).show();
+                    cowBuff = rb.getText().toString();
                 }
 
             }
@@ -92,6 +112,7 @@ public class SaleActivity extends AppCompatActivity {
                 quantity.setText("");
                 date.setText("");
                 radioGroup.clearCheck();
+                radioGroupCB.clearCheck();
             }
         });
 
@@ -119,7 +140,7 @@ public class SaleActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || branch.getText().toString().equals("") || cowBuf.getText().toString().equals("") || txtCode.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroup.getCheckedRadioButtonId() == -1 ) {
+                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || branch.getText().toString().equals("") || txtCode.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroup.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(SaleActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
                     int memCode = Integer.parseInt(txtCode.getText().toString());
@@ -128,17 +149,30 @@ public class SaleActivity extends AppCompatActivity {
                     float r = Float.parseFloat(rate.getText().toString());
                     float a = lit * r;
                     amt.setText(String.valueOf(a));
-                    dbClass.addSale(date.getText().toString(), branch.getText().toString(), memCode, mornEve, cowBuf.getText().toString() , lit, f, r, a);
-                    Toast.makeText(SaleActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
-                    edtName.setText("");
-                    branch.setText("");
-                    cowBuf.setText("");
-                    txtCode.setText("");
-                    rate.setText("");
-                    fat.setText("");
-                    quantity.setText("");
-                    date.setText("");
-                    radioGroup.clearCheck();
+                    if (swapBoth.getVisibility() == View.VISIBLE) {
+                        if (cowBuff.equals("Cow"))
+                            cowBuf.setText("Cow");
+                        if (cowBuff.equals("Buffalo"))
+                            cowBuf.setText("Buffalo");
+                    }
+                    if (!cowBuf.getText().toString().equals("")) {
+                        dbClass.addSale(date.getText().toString(), branch.getText().toString(), memCode, mornEve, cowBuf.getText().toString(), lit, f, r, a);
+                        Toast.makeText(SaleActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
+                        edtName.setText("");
+                        branch.setText("");
+                        cowBuf.setText("");
+                        txtCode.setText("");
+                        rate.setText("");
+                        fat.setText("");
+                        quantity.setText("");
+                        date.setText("");
+                        radioGroup.clearCheck();
+                        radioGroupCB.clearCheck();
+                        swapBoth.setVisibility(View.GONE);
+                        swapCB.setVisibility(View.VISIBLE);
+                    } else {
+                        Toast.makeText(SaleActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
             }
@@ -152,8 +186,21 @@ public class SaleActivity extends AppCompatActivity {
                 TextView txtName = (TextView) view;
                 Member member = members.get(txtName.getText().toString());
                 int cb = Integer.parseInt(member.getCowbfType());
-                String cbText = (cb == 1) ? "Cow" : "Buffalo";
-                cowBuf.setText(cbText);
+
+                String cbText = "";
+                if (cb == 1) {
+                    cbText = "Cow";
+                    cowBuf.setText(cbText);
+                } else if (cb == 2) {
+                    cbText = "Buffalo";
+                    cowBuf.setText(cbText);
+                } else if (cb == 3) {
+                    cbText = "Both";
+                    swapBoth.setVisibility(View.VISIBLE);
+                    swapCB.setVisibility(View.GONE);
+                } else {
+                    cowBuf.setText(cbText);
+                }
                 txtCode.setText(member.getCode());
 
             }

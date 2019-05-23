@@ -66,19 +66,22 @@ public class MemberActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int zoonCode = 1, rateGrpNo = 1, cb = -1, mType = -1;
+                int zoonCode = 1, cb = -1, mType = -1;
+                String rateGrpNo = "";
                 if (name.getText().toString().equals("") || radioGroup.getCheckedRadioButtonId() == -1 ) {
                     Toast.makeText(MemberActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
                     if(!zone.getText().toString().equals(""))
                         zoonCode = Integer.parseInt(zone.getText().toString());
                     if(!rateGrp.getText().toString().equals(""))
-                        rateGrpNo = Integer.parseInt(rateGrp.getText().toString());
+                        rateGrpNo = rateGrp.getText().toString();
 
                     if(cowBuf.equals("Cow"))
                         cb = 1;
                     if(cowBuf.equals("Buffalo"))
                         cb = 2;
+                    if(cowBuf.equals("Both"))
+                        cb = 3;
                     if(type.getSelectedItem().toString().equals("Member"))
                         mType = 1;
                     if(type.getSelectedItem().toString().equals("Contractor"))
