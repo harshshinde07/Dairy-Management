@@ -124,6 +124,7 @@
                         android:layout_margin="4dp"
                         android:layout_weight="1"
                         android:hint="Rate"
+                        android:inputType="phone"
                         android:textSize="18sp" />
 
                     <EditText
@@ -133,6 +134,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
+                        android:inputType="phone"
                         android:hint="Quantity" />
 
                 </LinearLayout>

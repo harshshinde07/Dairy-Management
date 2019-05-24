@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -65,6 +67,111 @@ public class CollectionActivity extends AppCompatActivity {
         fat = findViewById(R.id.fat);
         quantity = findViewById(R.id.qty);
         date = findViewById(R.id.date);
+
+        degree.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                float fa = 0, de = 0, qt = 0;
+                if(!cowBuf.getText().toString().equals("")) {
+                    if (swapBoth.getVisibility() == View.VISIBLE) {
+                        if (cowBuff.equals("Cow"))
+                            cowBuf.setText("Cow");
+                        if (cowBuff.equals("Buffalo"))
+                            cowBuf.setText("Buffalo");
+                    }
+                    if(!fat.getText().toString().equals(""))
+                        fa = Float.parseFloat(fat.getText().toString());
+                    if(!s.toString().equals(""))
+                        de = Float.parseFloat(s.toString());
+                    if(!quantity.getText().toString().equals(""))
+                        qt = Float.parseFloat(quantity.getText().toString());
+                    getRateAmt(fa, de, qt, cowBuf.getText().toString());
+                } else {
+                    Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        fat.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                float fa = 0, de = 0, qt = 0;
+                if(!cowBuf.getText().toString().equals("")) {
+                    if (swapBoth.getVisibility() == View.VISIBLE) {
+                        if (cowBuff.equals("Cow"))
+                            cowBuf.setText("Cow");
+                        if (cowBuff.equals("Buffalo"))
+                            cowBuf.setText("Buffalo");
+                    }
+                    if(!s.toString().equals(""))
+                        fa = Float.parseFloat(s.toString());
+                    if(!degree.getText().toString().equals(""))
+                        de = Float.parseFloat(degree.getText().toString());
+                    if(!quantity.getText().toString().equals(""))
+                        qt = Float.parseFloat(quantity.getText().toString());
+                    getRateAmt(fa, de, qt, cowBuf.getText().toString());
+                } else {
+                    Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        quantity.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                float fa = 0, de = 0, qt = 0;
+                if(!cowBuf.getText().toString().equals("")) {
+                    if (swapBoth.getVisibility() == View.VISIBLE) {
+                        if (cowBuff.equals("Cow"))
+                            cowBuf.setText("Cow");
+                        if (cowBuff.equals("Buffalo"))
+                            cowBuf.setText("Buffalo");
+                    }
+                    if(!fat.getText().toString().equals(""))
+                        fa = Float.parseFloat(fat.getText().toString());
+                    if(!degree.getText().toString().equals(""))
+                        de = Float.parseFloat(degree.getText().toString());
+                    if(!s.toString().equals(""))
+                        qt = Float.parseFloat(s.toString());
+                    getRateAmt(fa, de, qt, cowBuf.getText().toString());
+                } else {
+                    Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         radioGroup = findViewById(R.id.cowBuff);
         radioGroup.clearCheck();
@@ -132,6 +239,7 @@ public class CollectionActivity extends AppCompatActivity {
                     float deg = Float.parseFloat(degree.getText().toString());
                     float lit = Float.parseFloat(quantity.getText().toString());
                     float f = Float.parseFloat(fat.getText().toString());
+                    float q = Float.parseFloat(quantity.getText().toString());
 
                     if (swapBoth.getVisibility() == View.VISIBLE) {
                         if (cowBuff.equals("Cow"))
@@ -139,7 +247,7 @@ public class CollectionActivity extends AppCompatActivity {
                         if (cowBuff.equals("Buffalo"))
                             cowBuf.setText("Buffalo");
                     }
-                    getRateAmt(deg, f, cowBuf.getText().toString());
+                    //getRateAmt(deg, f, q, cowBuf.getText().toString());
 
                     if (!rate.getText().toString().equals("") || !amt.getText().toString().equals("")) {
                         float r = Float.parseFloat(rate.getText().toString());
@@ -229,7 +337,7 @@ public class CollectionActivity extends AppCompatActivity {
         edtName.setThreshold(1);
     }
 
-    public void getRateAmt(float degree, float fat, String cobf) {
+    public void getRateAmt(float degree, float fat, float qty, String cobf) {
         Cursor c = dbQuery.getRate(degree, fat, cobf);
         float val;
         c.moveToFirst();
@@ -237,8 +345,8 @@ public class CollectionActivity extends AppCompatActivity {
             val = c.getFloat(c.getColumnIndex("rate"));
             //Toast.makeText(this, String.valueOf(val), Toast.LENGTH_SHORT).show();
             rate.setText(String.valueOf(val));
-            q = Float.parseFloat(quantity.getText().toString());
-            a = q * val;
+            //q = Float.parseFloat(quantity.getText().toString());
+            a = qty * val;
             amt.setText(String.valueOf(a));
             //float m = dbQuery.getMilkCount();
             //Toast.makeText(this, String.valueOf(m), Toast.LENGTH_SHORT).show();

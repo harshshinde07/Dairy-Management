@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -66,6 +68,74 @@ public class SaleActivity extends AppCompatActivity {
         radioGroup = findViewById(R.id.morEve);
         initNames();
         radioGroup.clearCheck();
+
+        rate.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                float ra = 0, qt = 0;
+                if(!cowBuf.getText().toString().equals("")) {
+                    if (swapBoth.getVisibility() == View.VISIBLE) {
+                        if (cowBuff.equals("Cow"))
+                            cowBuf.setText("Cow");
+                        if (cowBuff.equals("Buffalo"))
+                            cowBuf.setText("Buffalo");
+                    }
+                    if(!s.toString().equals(""))
+                        ra = Float.parseFloat(s.toString());
+                    if(!quantity.getText().toString().equals(""))
+                        qt = Float.parseFloat(quantity.getText().toString());
+                    float a = qt * ra;
+                    amt.setText(String.valueOf(a));
+                } else {
+                    Toast.makeText(SaleActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        quantity.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                float ra = 0, qt = 0;
+                if(!cowBuf.getText().toString().equals("")) {
+                    if (swapBoth.getVisibility() == View.VISIBLE) {
+                        if (cowBuff.equals("Cow"))
+                            cowBuf.setText("Cow");
+                        if (cowBuff.equals("Buffalo"))
+                            cowBuf.setText("Buffalo");
+                    }
+                    if(!s.toString().equals(""))
+                        qt = Float.parseFloat(s.toString());
+                    if(!rate.getText().toString().equals(""))
+                        qt = Float.parseFloat(quantity.getText().toString());
+                    float a = qt * ra;
+                    amt.setText(String.valueOf(a));
+                } else {
+                    Toast.makeText(SaleActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -147,8 +217,8 @@ public class SaleActivity extends AppCompatActivity {
                     float lit = Float.parseFloat(quantity.getText().toString());
                     float f = Float.parseFloat(fat.getText().toString());
                     float r = Float.parseFloat(rate.getText().toString());
-                    float a = lit * r;
-                    amt.setText(String.valueOf(a));
+//                    float a = lit * r;
+//                    amt.setText(String.valueOf(a));
                     if (swapBoth.getVisibility() == View.VISIBLE) {
                         if (cowBuff.equals("Cow"))
                             cowBuf.setText("Cow");
@@ -156,7 +226,7 @@ public class SaleActivity extends AppCompatActivity {
                             cowBuf.setText("Buffalo");
                     }
                     if (!cowBuf.getText().toString().equals("")) {
-                        dbClass.addSale(date.getText().toString(), branch.getText().toString(), memCode, mornEve, cowBuf.getText().toString(), lit, f, r, a);
+                        dbClass.addSale(date.getText().toString(), branch.getText().toString(), memCode, mornEve, cowBuf.getText().toString(), lit, f, r, Float.parseFloat(amt.getText().toString()));
                         Toast.makeText(SaleActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
                         edtName.setText("");
                         branch.setText("");

@@ -187,6 +187,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
+                        android:inputType="phone"
                         android:hint="Qty" />
 
                     <EditText
@@ -196,6 +197,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
+                        android:inputType="phone"
                         android:hint="Fat" />
 
 
@@ -214,6 +216,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="Rate      "
+                        android:inputType="phone"
                         android:textSize="18sp" />
 
                     <TextView

@@ -180,7 +180,7 @@
                         android:layout_margin="4dp"
                         android:layout_weight="1"
                         android:hint="Degree"
-                        android:inputType="numberDecimal"
+                        android:inputType="phone"
                         android:singleLine="true" />
 
                     <EditText
@@ -190,7 +190,7 @@
                         android:layout_margin="4dp"
                         android:layout_weight="1"
                         android:hint="Fat"
-                        android:inputType="numberDecimal"
+                        android:inputType="phone"
                         android:singleLine="true" />
 
                     <EditText
@@ -200,7 +200,7 @@
                         android:layout_margin="4dp"
                         android:layout_weight="1"
                         android:hint="Quantity"
-                        android:inputType="numberDecimal"
+                        android:inputType="phone"
                         android:singleLine="true" />
 
                 </LinearLayout>
