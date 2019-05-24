@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kshitijharsh.dairymanagement.activities.SaleActivity;
 import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
@@ -23,8 +26,9 @@ import com.kshitijharsh.dairymanagement.model.Member;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
-public class CattleFeedActivity extends AppCompatActivity {
+public class CattleFeedActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText date, tran, bal, qty, rate, particulars;
     AutoCompleteTextView edtName;
     TextView amt, txtCode;
@@ -33,7 +37,7 @@ public class CattleFeedActivity extends AppCompatActivity {
     DatabaseClass dbClass;
     DBHelper dbHelper;
     DBQuery dbQuery;
-
+    String label;
     ArrayList<String> names;
     HashMap<String, Member> members;
 
@@ -59,6 +63,57 @@ public class CattleFeedActivity extends AppCompatActivity {
         initNames();
         clear = findViewById(R.id.clear);
         save = findViewById(R.id.save);
+
+        item.setOnItemSelectedListener(CattleFeedActivity.this);
+        loadItemData();
+
+        qty.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                float ra = 0, qt = 0;
+                    if(!s.toString().equals(""))
+                        qt = Float.parseFloat(s.toString());
+                    if(!rate.getText().toString().equals(""))
+                        ra = Float.parseFloat(rate.getText().toString());
+                    float a = qt * ra;
+                    amt.setText(String.valueOf(a));
+            }
+        });
+
+        rate.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                float ra = 0, qt = 0;
+                if(!s.toString().equals(""))
+                    ra = Float.parseFloat(s.toString());
+                if(!qty.getText().toString().equals(""))
+                    qt = Float.parseFloat(qty.getText().toString());
+                float a = qt * ra;
+                amt.setText(String.valueOf(a));
+            }
+        });
 
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +142,7 @@ public class CattleFeedActivity extends AppCompatActivity {
                     float r = Float.parseFloat(rate.getText().toString());
                     float a = quantity * r;
                     amt.setText(String.valueOf(a));
-                    dbClass.addCattle(date.getText().toString(), tranNo, memId, item.getSelectedItem().toString(), quantity, r, a, particulars.getText().toString());
+                    dbClass.addCattle(date.getText().toString(), tranNo, memId, label, quantity, r, a, particulars.getText().toString());
                     Toast.makeText(CattleFeedActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
                     date.setText("");
                     txtCode.setText("");
@@ -159,5 +214,47 @@ public class CattleFeedActivity extends AppCompatActivity {
 
         edtName.setAdapter(adapter);
         edtName.setThreshold(1);
+    }
+
+    private void loadItemData() {
+        // database handler
+        DBQuery db = new DBQuery(getApplicationContext());
+
+        // Spinner Drop down elements
+        List<String> lables = db.getAllItems();
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, lables);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        item.setAdapter(dataAdapter);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        label = adapterView.getItemAtPosition(i).toString();
+        getSelectedItemRate(label);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    public void getSelectedItemRate(String item) {
+        Cursor c = dbQuery.getItemRate(item);
+        float val;
+        c.moveToFirst();
+        if (c.getCount() > 0 && c != null) {
+            val = c.getFloat(c.getColumnIndex("rate"));
+            rate.setText(String.valueOf(val));
+        } else {
+            Toast.makeText(this, "Value not found!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

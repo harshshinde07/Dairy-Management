@@ -128,7 +128,7 @@ public class SaleActivity extends AppCompatActivity {
                     if(!s.toString().equals(""))
                         qt = Float.parseFloat(s.toString());
                     if(!rate.getText().toString().equals(""))
-                        qt = Float.parseFloat(quantity.getText().toString());
+                        ra = Float.parseFloat(rate.getText().toString());
                     float a = qt * ra;
                     amt.setText(String.valueOf(a));
                 } else {

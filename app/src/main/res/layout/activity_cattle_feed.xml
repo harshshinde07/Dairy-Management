@@ -146,12 +146,19 @@
                     android:padding="4dp">
 
                     <TextView
-                        android:textAlignment="center"
-                        android:id="@+id/amt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="Amount"
+                        android:padding="4dp"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/amt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="       "
                         android:padding="4dp"
                         android:textSize="18sp" />
 

@@ -146,4 +146,8 @@ public class MainActivity extends AppCompatActivity {
     public void launchMember(View view) {
         startActivity(new Intent(MainActivity.this, MemberActivity.class));
     }
+
+    public void launchSettings(View view) {
+        //TODO startActivity(new Intent(MainActivity.this, DeductionActivity.class));
+    }
 }

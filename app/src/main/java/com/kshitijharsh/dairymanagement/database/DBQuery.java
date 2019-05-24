@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_COWBF_TYPE;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_MEMB_CODE;
@@ -18,6 +19,7 @@ import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.T
 
 public class DBQuery {
 
+    private static final String TABLE_ITEMS = "item";
     private DBHelper dbHelper;
     private SQLiteDatabase db;
 
@@ -104,5 +106,35 @@ public class DBQuery {
         values.put("membNam_Eng", name);
         values.put("AcNo", acNo);
         dbHelper.getWritableDatabase().insert("member", "memb_code", values);
+    }
+
+    public List<String> getAllItems(){
+        List<String> labels = new ArrayList<String>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_ITEMS;
+
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                labels.add(cursor.getString(1));
+            } while (cursor.moveToNext());
+        }
+
+        // closing connection
+        cursor.close();
+        db.close();
+
+        // returning lables
+        return labels;
+    }
+
+    public Cursor getItemRate(String item) {
+        String query = "SELECT rate from item where itname='"+item+"'";
+        return db.rawQuery(query,null);
     }
 }
