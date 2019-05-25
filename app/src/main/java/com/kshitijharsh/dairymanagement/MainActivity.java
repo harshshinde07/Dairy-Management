@@ -148,6 +148,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchSettings(View view) {
-        //TODO startActivity(new Intent(MainActivity.this, DeductionActivity.class));
+        startActivity(new Intent(MainActivity.this, SettingsActivity.class));
     }
 }

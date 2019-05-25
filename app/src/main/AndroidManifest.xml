@@ -48,7 +48,8 @@
             android:name=".CattleFeedActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".database.MemberActivity"></activity>
+        <activity android:name=".database.MemberActivity" />
+        <activity android:name=".SettingsActivity"/>
     </application>
 
 </manifest>

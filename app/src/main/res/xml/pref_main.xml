@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="General">
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="snf_facility"
+            android:summary="Check if you want the SNF facility"
+            android:title="SNF Facility" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:enabled="false"
+            android:key="snf_calculate"
+            android:summary="Check if you want to calculate SNF"
+            android:title="SNF Calculate" />
+
+    </PreferenceCategory>
+</PreferenceScreen>
