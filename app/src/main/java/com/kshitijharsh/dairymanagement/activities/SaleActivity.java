@@ -335,6 +335,23 @@ public class SaleActivity extends AppCompatActivity {
         if (c.getCount() > 0 && c != null) {
             name = c.getString(c.getColumnIndex("memb_name"));
             edtName.setText(name);
+            Member member = members.get(name);
+            int cb = Integer.parseInt(member.getCowbfType());
+
+            String cbText = "";
+            if (cb == 1) {
+                cbText = "Cow";
+                cowBuf.setText(cbText);
+            } else if (cb == 2) {
+                cbText = "Buffalo";
+                cowBuf.setText(cbText);
+            } else if (cb == 3) {
+                cbText = "Both";
+                swapBoth.setVisibility(View.VISIBLE);
+                swapCB.setVisibility(View.GONE);
+            } else {
+                cowBuf.setText(cbText);
+            }
         } else {
             Toast.makeText(this, "Member not found!", Toast.LENGTH_SHORT).show();
         }
