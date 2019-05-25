@@ -61,15 +61,14 @@
                     android:orientation="horizontal"
                     android:padding="4dp">
 
-                    <TextView
+                    <EditText
                         android:id="@+id/edt_memb_id"
                         android:layout_width="90dp"
+                        android:inputType="phone"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:hint="Id"
-                        android:padding="4dp"
-                        android:singleLine="true"
-                        android:textSize="18sp" />
+                        android:singleLine="true"/>
 
                     <AutoCompleteTextView
                         android:id="@+id/edt_memb_name"

@@ -60,13 +60,13 @@
                     android:orientation="horizontal"
                     android:padding="4dp">
 
-                    <TextView
+                    <EditText
                         android:layout_marginStart="8dp"
                         android:id="@+id/edt_memb_id"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:hint="Id"
-                        android:padding="4dp"
+                        android:inputType="phone"
                         android:singleLine="true"
                         android:textSize="18sp" />
 

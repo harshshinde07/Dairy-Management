@@ -137,4 +137,9 @@ public class DBQuery {
         String query = "SELECT rate from item where itname='"+item+"'";
         return db.rawQuery(query,null);
     }
+
+    public Cursor getMemName(int id) {
+        String query = "SELECT memb_name from member where memb_code='"+id+"'";
+        return db.rawQuery(query,null);
+    }
 }

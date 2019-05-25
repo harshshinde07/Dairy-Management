@@ -35,7 +35,8 @@ public class CollectionActivity extends AppCompatActivity {
     AutoCompleteTextView edtName;
     TextView membType, cowBuf;
     ArrayList<String> names;
-    TextView txtCode, rate, amt;
+    TextView rate, amt;
+    EditText txtCode;
     HashMap<String, Member> members;
     EditText degree, fat, quantity, date;
     Button save, clear;
@@ -83,18 +84,18 @@ public class CollectionActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 float fa = 0, de = 0, qt = 0;
-                if(!cowBuf.getText().toString().equals("")) {
+                if (!cowBuf.getText().toString().equals("")) {
                     if (swapBoth.getVisibility() == View.VISIBLE) {
                         if (cowBuff.equals("Cow"))
                             cowBuf.setText("Cow");
                         if (cowBuff.equals("Buffalo"))
                             cowBuf.setText("Buffalo");
                     }
-                    if(!fat.getText().toString().equals(""))
+                    if (!fat.getText().toString().equals(""))
                         fa = Float.parseFloat(fat.getText().toString());
-                    if(!s.toString().equals(""))
+                    if (!s.toString().equals(""))
                         de = Float.parseFloat(s.toString());
-                    if(!quantity.getText().toString().equals(""))
+                    if (!quantity.getText().toString().equals(""))
                         qt = Float.parseFloat(quantity.getText().toString());
                     getRateAmt(fa, de, qt, cowBuf.getText().toString());
                 } else {
@@ -118,18 +119,18 @@ public class CollectionActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 float fa = 0, de = 0, qt = 0;
-                if(!cowBuf.getText().toString().equals("")) {
+                if (!cowBuf.getText().toString().equals("")) {
                     if (swapBoth.getVisibility() == View.VISIBLE) {
                         if (cowBuff.equals("Cow"))
                             cowBuf.setText("Cow");
                         if (cowBuff.equals("Buffalo"))
                             cowBuf.setText("Buffalo");
                     }
-                    if(!s.toString().equals(""))
+                    if (!s.toString().equals(""))
                         fa = Float.parseFloat(s.toString());
-                    if(!degree.getText().toString().equals(""))
+                    if (!degree.getText().toString().equals(""))
                         de = Float.parseFloat(degree.getText().toString());
-                    if(!quantity.getText().toString().equals(""))
+                    if (!quantity.getText().toString().equals(""))
                         qt = Float.parseFloat(quantity.getText().toString());
                     getRateAmt(fa, de, qt, cowBuf.getText().toString());
                 } else {
@@ -153,18 +154,18 @@ public class CollectionActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 float fa = 0, de = 0, qt = 0;
-                if(!cowBuf.getText().toString().equals("")) {
+                if (!cowBuf.getText().toString().equals("")) {
                     if (swapBoth.getVisibility() == View.VISIBLE) {
                         if (cowBuff.equals("Cow"))
                             cowBuf.setText("Cow");
                         if (cowBuff.equals("Buffalo"))
                             cowBuf.setText("Buffalo");
                     }
-                    if(!fat.getText().toString().equals(""))
+                    if (!fat.getText().toString().equals(""))
                         fa = Float.parseFloat(fat.getText().toString());
-                    if(!degree.getText().toString().equals(""))
+                    if (!degree.getText().toString().equals(""))
                         de = Float.parseFloat(degree.getText().toString());
-                    if(!s.toString().equals(""))
+                    if (!s.toString().equals(""))
                         qt = Float.parseFloat(s.toString());
                     getRateAmt(fa, de, qt, cowBuf.getText().toString());
                 } else {
@@ -276,6 +277,31 @@ public class CollectionActivity extends AppCompatActivity {
             }
         });
 
+        txtCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int val;
+                if (!charSequence.toString().equals("")) {
+                    val = Integer.parseInt(charSequence.toString());
+                    getMemNameFromID(val);
+                } else {
+                    edtName.setText("");
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
         edtName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -352,6 +378,19 @@ public class CollectionActivity extends AppCompatActivity {
             //Toast.makeText(this, String.valueOf(m), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Value not found!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void getMemNameFromID(int id) {
+        Cursor c = dbQuery.getMemName(id);
+        String name;
+        c.moveToFirst();
+        edtName.setText("");
+        if (c.getCount() > 0 && c != null) {
+            name = c.getString(c.getColumnIndex("memb_name"));
+            edtName.setText(name);
+        } else {
+            Toast.makeText(this, "Member not found!", Toast.LENGTH_SHORT).show();
         }
     }
 }

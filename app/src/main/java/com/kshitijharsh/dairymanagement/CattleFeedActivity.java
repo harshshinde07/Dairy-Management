@@ -31,7 +31,8 @@ import java.util.List;
 public class CattleFeedActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText date, tran, bal, qty, rate, particulars;
     AutoCompleteTextView edtName;
-    TextView amt, txtCode;
+    TextView amt;
+    EditText txtCode;
     Spinner item;
     Button clear, save;
     DatabaseClass dbClass;
@@ -157,6 +158,30 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
             }
         });
 
+        txtCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int val;
+                if (!charSequence.toString().equals("")) {
+                    val = Integer.parseInt(charSequence.toString());
+                    getMemNameFromID(val);
+                } else {
+                    edtName.setText("");
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         edtName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -255,6 +280,19 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
             rate.setText(String.valueOf(val));
         } else {
             Toast.makeText(this, "Value not found!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void getMemNameFromID(int id) {
+        Cursor c = dbQuery.getMemName(id);
+        String name;
+        c.moveToFirst();
+        edtName.setText("");
+        if (c.getCount() > 0 && c != null) {
+            name = c.getString(c.getColumnIndex("memb_name"));
+            edtName.setText(name);
+        } else {
+            Toast.makeText(this, "Member not found!", Toast.LENGTH_SHORT).show();
         }
     }
 }
