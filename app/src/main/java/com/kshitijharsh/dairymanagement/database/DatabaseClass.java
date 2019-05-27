@@ -26,7 +26,7 @@ public class DatabaseClass extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //db.execSQL("CREATE TABLE member(memb_code INTEGER PRIMARY KEY, memb_name TEXT, zoon_code INTEGER, Cobf_type INTEGER, memb_type INTEGER, accno INTEGER, rategrno INTEGER, bank_code INTEGER, BankAcNo INTEGER, membNam_Eng TEXT, AcNo INTEGER);");
-        db.execSQL("CREATE TABLE collectionTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, cobf TEXT, degree FLOAT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
+        db.execSQL("CREATE TABLE collectionTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, cobf TEXT, morEve TEXT, degree FLOAT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
         db.execSQL("CREATE TABLE saleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, brName TEXT, membCode INTEGER, mornEve TEXT, cobf TEXT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
         db.execSQL("CREATE TABLE cattleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, trNo INTEGER, memId INTEGER, itemName TEXT, quantity FLOAT, rate FLOAT, amount FLOAT, particulars TEXT);");
     }
@@ -56,11 +56,12 @@ public class DatabaseClass extends SQLiteOpenHelper {
         getWritableDatabase().insert("member", "memb_code", values);
     }
 
-    public void addColl(String date, int membCode, String cobf, float degree, float liters, float fat, float rate, float amount) {
-        ContentValues values = new ContentValues(8);
+    public void addColl(String date, int membCode, String cobf, String morEve, float degree, float liters, float fat, float rate, float amount) {
+        ContentValues values = new ContentValues(9);
         values.put("trnDate", date);
         values.put("membCode", membCode);
         values.put("cobf", cobf);
+        values.put("morEve", morEve);
         values.put("degree", degree);
         values.put("liters", liters);
         values.put("fat", fat);

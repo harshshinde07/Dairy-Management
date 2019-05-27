@@ -46,9 +46,10 @@ public class CollectionActivity extends AppCompatActivity {
     float f, q, d, a;
     DBHelper dbHelper;
     DatabaseClass dbClass;
-    RadioGroup radioGroup;
+    RadioGroup radioGroup, radioGroupMorEve;
     LinearLayout swapCB, swapBoth, addSNF;
     String cowBuff;
+    String mornEve;
     String[] memb_type = {"Member", "Contractor", "Labour Contractor"};
     String settingsPrefs = "empty";
 
@@ -210,6 +211,21 @@ public class CollectionActivity extends AppCompatActivity {
             }
         });
 
+        radioGroupMorEve = findViewById(R.id.morEve);
+        radioGroupMorEve.clearCheck();
+
+        radioGroupMorEve.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb = group.findViewById(checkedId);
+                if (null != rb) {
+                    //Toast.makeText(SaleActivity.this, rb.getText(), Toast.LENGTH_SHORT).show();
+                    mornEve = rb.getText().toString();
+                }
+
+            }
+        });
+
         radioGroup = findViewById(R.id.cowBuff);
         radioGroup.clearCheck();
         swapBoth = findViewById(R.id.swapBoth);
@@ -242,6 +258,7 @@ public class CollectionActivity extends AppCompatActivity {
                 quantity.setText("");
                 date.setText("");
                 radioGroup.clearCheck();
+                radioGroupMorEve.clearCheck();
             }
         });
 
@@ -269,7 +286,7 @@ public class CollectionActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || membType.getText().toString().equals("") || txtCode.getText().toString().equals("") || degree.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("")) {
+                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || membType.getText().toString().equals("") || txtCode.getText().toString().equals("") || degree.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroupMorEve.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
                     int memCode = Integer.parseInt(txtCode.getText().toString());
@@ -290,7 +307,7 @@ public class CollectionActivity extends AppCompatActivity {
                         float r = Float.parseFloat(rate.getText().toString());
                         float a = Float.parseFloat(amt.getText().toString());
                         if (!cowBuf.getText().toString().equals("")) {
-                            dbClass.addColl(date.getText().toString(), memCode, cowBuf.getText().toString(), deg, lit, f, r, a);
+                            dbClass.addColl(date.getText().toString(), memCode, cowBuf.getText().toString(), mornEve, deg, lit, f, r, a);
                             Toast.makeText(CollectionActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
                             edtName.setText("");
                             membType.setText("");
