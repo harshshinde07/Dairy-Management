@@ -67,7 +67,7 @@ public class DBQuery {
                 null,
                 null,
                 null,
-                COLUMN_MEMB_CODE
+                COLUMN_MEMB_NAME
         );
     }
 
@@ -78,6 +78,16 @@ public class DBQuery {
         else
             cb = "C";
         String query = "SELECT rate from ratemst where degree='"+degree+"' AND fat='"+fat+"' AND cobf='"+cb+"'";
+        return db.rawQuery(query,null);
+    }
+
+    public Cursor getRateFromSNF(float snf, float fat, String cobf) {
+        String cb;
+        if(cobf.equals("Buffalo"))
+            cb = "B";
+        else
+            cb = "C";
+        String query = "SELECT rate from ratemst where snf='"+snf+"' AND fat='"+fat+"' AND cobf='"+cb+"'";
         return db.rawQuery(query,null);
     }
 

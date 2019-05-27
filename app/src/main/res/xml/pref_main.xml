@@ -10,7 +10,7 @@
 
         <CheckBoxPreference
             android:defaultValue="false"
-            android:enabled="false"
+            android:dependency="snf_facility"
             android:key="snf_calculate"
             android:summary="Check if you want to calculate SNF"
             android:title="SNF Calculate" />

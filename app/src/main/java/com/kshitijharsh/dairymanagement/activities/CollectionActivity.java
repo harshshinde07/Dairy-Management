@@ -5,9 +5,11 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kshitijharsh.dairymanagement.R;
+import com.kshitijharsh.dairymanagement.SettingsActivity;
 import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
@@ -38,15 +41,16 @@ public class CollectionActivity extends AppCompatActivity {
     TextView rate, amt;
     EditText txtCode;
     HashMap<String, Member> members;
-    EditText degree, fat, quantity, date;
+    EditText degree, fat, quantity, date, snf;
     Button save, clear;
     float f, q, d, a;
     DBHelper dbHelper;
     DatabaseClass dbClass;
     RadioGroup radioGroup;
-    LinearLayout swapCB, swapBoth;
+    LinearLayout swapCB, swapBoth, addSNF;
     String cowBuff;
     String[] memb_type = {"Member", "Contractor", "Labour Contractor"};
+    String settingsPrefs = "empty";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,28 @@ public class CollectionActivity extends AppCompatActivity {
         fat = findViewById(R.id.fat);
         quantity = findViewById(R.id.qty);
         date = findViewById(R.id.date);
+        degree.setVisibility(View.GONE);
+        addSNF = findViewById(R.id.linearAdd);
+
+        settingsPrefs = SettingsActivity.MainPreferenceFragment.CALCULATE_PREF;
+
+        if (settingsPrefs.equals("false")) {
+            degree.setVisibility(View.VISIBLE);
+            degree.setHint("SNF");
+        }
+        if (settingsPrefs.equals("true")) {
+            snf = new EditText(this);
+            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+            snf.setLayoutParams(p);
+            snf.setEnabled(false);
+            snf.setSingleLine();
+            degree.setVisibility(View.VISIBLE);
+            snf.setHint("SNF");
+            snf.setInputType(InputType.TYPE_CLASS_PHONE);
+            //snf.setText("Text");
+            //snf.setId(R.id.snf);
+            addSNF.addView(snf);
+        }
 
         degree.addTextChangedListener(new TextWatcher() {
 
@@ -97,7 +123,11 @@ public class CollectionActivity extends AppCompatActivity {
                         de = Float.parseFloat(s.toString());
                     if (!quantity.getText().toString().equals(""))
                         qt = Float.parseFloat(quantity.getText().toString());
-                    getRateAmt(fa, de, qt, cowBuf.getText().toString());
+                    if (settingsPrefs.equals("true")) {
+                        calculateSNF(de, fa);
+                    }
+                    getRateAmt(de, fa, qt, cowBuf.getText().toString());
+
                 } else {
                     Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
                 }
@@ -132,7 +162,10 @@ public class CollectionActivity extends AppCompatActivity {
                         de = Float.parseFloat(degree.getText().toString());
                     if (!quantity.getText().toString().equals(""))
                         qt = Float.parseFloat(quantity.getText().toString());
-                    getRateAmt(fa, de, qt, cowBuf.getText().toString());
+                    if (settingsPrefs.equals("true")) {
+                        calculateSNF(de, fa);
+                    }
+                    getRateAmt(de, fa, qt, cowBuf.getText().toString());
                 } else {
                     Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
                 }
@@ -167,7 +200,10 @@ public class CollectionActivity extends AppCompatActivity {
                         de = Float.parseFloat(degree.getText().toString());
                     if (!s.toString().equals(""))
                         qt = Float.parseFloat(s.toString());
-                    getRateAmt(fa, de, qt, cowBuf.getText().toString());
+                    if (settingsPrefs.equals("true")) {
+                        calculateSNF(de, fa);
+                    }
+                    getRateAmt(de, fa, qt, cowBuf.getText().toString());
                 } else {
                     Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
                 }
@@ -363,8 +399,20 @@ public class CollectionActivity extends AppCompatActivity {
         edtName.setThreshold(1);
     }
 
-    public void getRateAmt(float degree, float fat, float qty, String cobf) {
-        Cursor c = dbQuery.getRate(degree, fat, cobf);
+    public void getRateAmt(float deg, float fat, float qty, String cobf) {
+        Cursor c;
+        if (degree.getHint().toString().equals("SNF")) {
+            c = dbQuery.getRateFromSNF(deg, fat, cobf);
+        } else {
+            if (settingsPrefs.equals("true")) {
+                float s = 0;
+                if (!snf.getText().toString().equals(""))
+                    s = Float.parseFloat(snf.getText().toString());
+                c = dbQuery.getRateFromSNF(s, fat, cobf);
+            } else {
+                c = dbQuery.getRate(deg, fat, cobf);
+            }
+        }
         float val;
         c.moveToFirst();
         if (c.getCount() > 0 && c != null) {
@@ -415,5 +463,12 @@ public class CollectionActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Member not found!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void calculateSNF(float deg, float fat) {
+        /** This function calculates SNF and sets it to the added SNF **/
+        double res = 0;
+        res = (deg/4) + (fat*0.21) + 0.36;
+        snf.setText(String.valueOf(res));
     }
 }
