@@ -63,12 +63,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 //                    Toast.makeText(getActivity(), "Pref " + preference.getKey() + " changed to " + o.toString(), Toast.LENGTH_SHORT).show();
                     if (facilityPref.isChecked()) {
                         if (o.toString().equals("true")) {
-                            //TODO calculate SNF from degree and fat and show in textView
                             CALCULATE_PREF = "true";
                             Toast.makeText(getActivity(), "Please restart your app to see the changes.", Toast.LENGTH_LONG).show();
                         }
                         if (o.toString().equals("false")) {
-                            //TODO Hide degree and take SNF input from editText
                             CALCULATE_PREF = "false";
                             Toast.makeText(getActivity(), "Please restart your app to see the changes.", Toast.LENGTH_LONG).show();
                         }

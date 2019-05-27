@@ -3,6 +3,7 @@ package com.kshitijharsh.dairymanagement;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,11 +29,17 @@ import java.io.IOException;
 
 import static com.kshitijharsh.dairymanagement.Constants.CONST.BACKUP_DIRECTORY;
 import static com.kshitijharsh.dairymanagement.Constants.CONST.EXT_DIRECTORY;
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_ITEM;
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_MEMBER;
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_RATEGRPMASTER;
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_RATEMASTER;
 
 public class MainActivity extends AppCompatActivity {
     public static final int ACCESS_EXTERNAL_STORAGE = 1;
     private boolean exit = false;
     DatabaseClass dc;
+    DBHelper dbHelper;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +84,23 @@ public class MainActivity extends AppCompatActivity {
                 }
             },3*1000);
         } else {
+            dbHelper = new DBHelper(this);
+            db = dbHelper.getReadableDatabase();
+            Cursor member = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '"+ TABLE_MEMBER +"'", null);
+            Cursor rateMaster = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '"+ TABLE_RATEMASTER +"'", null);
+            Cursor item = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '"+ TABLE_ITEM +"'", null);
+            Cursor rateGrpMaster = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '"+ TABLE_RATEGRPMASTER +"'", null);
+
+            if (member.getCount()<=0 || rateMaster.getCount()<=0 || item.getCount() <=0 || rateGrpMaster.getCount() <=0) {
+                Toast.makeText(this, "Required tables not found in database, app will exit now...", Toast.LENGTH_LONG).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                },3*1000);
+            }
+
             DBQuery query = new DBQuery(this);
             query.createDatabase();
             query.open();

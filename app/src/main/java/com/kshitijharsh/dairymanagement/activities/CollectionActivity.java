@@ -2,6 +2,7 @@ package com.kshitijharsh.dairymanagement.activities;
 
 import android.app.DatePickerDialog;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -52,6 +53,8 @@ public class CollectionActivity extends AppCompatActivity {
     String mornEve;
     String[] memb_type = {"Member", "Contractor", "Labour Contractor"};
     String settingsPrefs = "empty";
+    int rateGroupNo;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -308,7 +311,7 @@ public class CollectionActivity extends AppCompatActivity {
                         float a = Float.parseFloat(amt.getText().toString());
                         if (!cowBuf.getText().toString().equals("")) {
                             dbClass.addColl(date.getText().toString(), memCode, cowBuf.getText().toString(), mornEve, deg, lit, f, r, a);
-                            Toast.makeText(CollectionActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CollectionActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                             edtName.setText("");
                             membType.setText("");
                             cowBuf.setText("");
@@ -363,9 +366,10 @@ public class CollectionActivity extends AppCompatActivity {
                 TextView txtName = (TextView) view;
                 Member member = members.get(txtName.getText().toString());
                 int type = Integer.parseInt(member.getMembType());
+                type = type -1;
                 Log.e("11111111111", String.valueOf(type));
                 int cb = Integer.parseInt(member.getCowbfType());
-
+                rateGroupNo = Integer.parseInt(member.getRateGrpNo());
                 String cbText = "";
                 if (cb == 1) {
                     cbText = "Cow";
@@ -380,10 +384,6 @@ public class CollectionActivity extends AppCompatActivity {
                 } else {
                     cowBuf.setText(cbText);
                 }
-
-                //TODO - A BUG
-                if (type == 3)
-                    type = 2;
                 membType.setText(memb_type[type]);
                 txtCode.setText(member.getCode());
 
@@ -401,7 +401,8 @@ public class CollectionActivity extends AppCompatActivity {
             Member mem = new Member(cursor.getString(0),
                     cursor.getString(1),
                     cursor.getString(2),
-                    cursor.getString(3));
+                    cursor.getString(3),
+                    cursor.getString(4));
             names.add(name);
             members.put(name, mem);
             cursor.moveToNext();
@@ -419,15 +420,15 @@ public class CollectionActivity extends AppCompatActivity {
     public void getRateAmt(float deg, float fat, float qty, String cobf) {
         Cursor c;
         if (degree.getHint().toString().equals("SNF")) {
-            c = dbQuery.getRateFromSNF(deg, fat, cobf);
+            c = dbQuery.getRateFromSNF(deg, fat, cobf, rateGroupNo);
         } else {
             if (settingsPrefs.equals("true")) {
                 float s = 0;
                 if (!snf.getText().toString().equals(""))
                     s = Float.parseFloat(snf.getText().toString());
-                c = dbQuery.getRateFromSNF(s, fat, cobf);
+                c = dbQuery.getRateFromSNF(s, fat, cobf, rateGroupNo);
             } else {
-                c = dbQuery.getRate(deg, fat, cobf);
+                c = dbQuery.getRate(deg, fat, cobf, rateGroupNo);
             }
         }
         float val;
@@ -457,7 +458,7 @@ public class CollectionActivity extends AppCompatActivity {
             Member member = members.get(name);
             int type = Integer.parseInt(member.getMembType());
             int cb = Integer.parseInt(member.getCowbfType());
-
+            rateGroupNo = Integer.parseInt(member.getRateGrpNo());
             String cbText = "";
             if (cb == 1) {
                 cbText = "Cow";
@@ -472,10 +473,6 @@ public class CollectionActivity extends AppCompatActivity {
             } else {
                 cowBuf.setText(cbText);
             }
-
-            //TODO - A BUG
-            if (type == 3)
-                type = 2;
             membType.setText(memb_type[type]);
         } else {
             Toast.makeText(this, "Member not found!", Toast.LENGTH_SHORT).show();
@@ -485,7 +482,7 @@ public class CollectionActivity extends AppCompatActivity {
     public void calculateSNF(float deg, float fat) {
         /** This function calculates SNF and sets it to the added SNF **/
         double res = 0;
-        res = (deg/4) + (fat*0.21) + 0.36;
+        res = (deg / 4) + (fat * 0.21) + 0.36;
         snf.setText(String.valueOf(res));
     }
 }

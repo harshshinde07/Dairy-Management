@@ -144,7 +144,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                     float a = quantity * r;
                     amt.setText(String.valueOf(a));
                     dbClass.addCattle(date.getText().toString(), tranNo, memId, label, quantity, r, a, particulars.getText().toString());
-                    Toast.makeText(CattleFeedActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CattleFeedActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                     date.setText("");
                     txtCode.setText("");
                     edtName.setText("");
@@ -226,7 +226,8 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
             Member mem = new Member(cursor.getString(0),
                     cursor.getString(1),
                     cursor.getString(2),
-                    cursor.getString(3));
+                    cursor.getString(3),
+                    cursor.getString(4));
             names.add(name);
             members.put(name, mem);
             cursor.moveToNext();

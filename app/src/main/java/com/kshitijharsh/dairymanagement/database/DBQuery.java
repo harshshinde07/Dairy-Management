@@ -15,6 +15,8 @@ import java.util.List;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_COWBF_TYPE;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_MEMB_CODE;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_MEMB_NAME;
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_MEMB_TYPE;
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_RATEGRP_NO;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_MEMBER;
 
 public class DBQuery {
@@ -59,7 +61,7 @@ public class DBQuery {
         return cursor.getCount();
     }
     public Cursor getAllMembers() {
-        String cols[] = {COLUMN_MEMB_CODE,COLUMN_MEMB_NAME,COLUMN_COWBF_TYPE,COLUMN_COWBF_TYPE};
+        String cols[] = {COLUMN_MEMB_CODE,COLUMN_MEMB_NAME,COLUMN_COWBF_TYPE,COLUMN_MEMB_TYPE, COLUMN_RATEGRP_NO};
         return db.query(
                 TABLE_MEMBER,
                 cols,
@@ -71,27 +73,27 @@ public class DBQuery {
         );
     }
 
-    public Cursor getRate(float degree, float fat, String cobf) {
+    public Cursor getRate(float degree, float fat, String cobf, int rateGrpNo) {
         String cb;
         if(cobf.equals("Buffalo"))
             cb = "B";
         else
             cb = "C";
-        String query = "SELECT rate from ratemst where degree='"+degree+"' AND fat='"+fat+"' AND cobf='"+cb+"'";
+        String query = "SELECT rate from ratemst where degree='"+degree+"' AND fat='"+fat+"' AND cobf='"+cb+"' AND rtgrno='"+rateGrpNo+"'";
         return db.rawQuery(query,null);
     }
 
-    public Cursor getRateFromSNF(float snf, float fat, String cobf) {
+    public Cursor getRateFromSNF(float snf, float fat, String cobf, int rateGrpNo) {
         String cb;
         if(cobf.equals("Buffalo"))
             cb = "B";
         else
             cb = "C";
-        String query = "SELECT rate from ratemst where snf='"+snf+"' AND fat='"+fat+"' AND cobf='"+cb+"'";
+        String query = "SELECT rate from ratemst where snf='"+snf+"' AND fat='"+fat+"' AND cobf='"+cb+"' AND rtgrno='"+rateGrpNo+"'";
         return db.rawQuery(query,null);
     }
 
-    public void addNewMem(String name, int zone, int cowBuff, int memType, String rateGrp) {
+    public void addNewMem(String name, int zone, int cowBuff, int memType, int rateGrp) {
         String query = "SELECT memb_code FROM member ORDER BY memb_code DESC LIMIT 1";
         Cursor cursor = db.rawQuery(query,null);
         int val = 0;
@@ -150,6 +152,11 @@ public class DBQuery {
 
     public Cursor getMemName(int id) {
         String query = "SELECT memb_name from member where memb_code='"+id+"'";
+        return db.rawQuery(query,null);
+    }
+
+    public Cursor getRateGrpNo(String rateGrpName) {
+        String query = "SELECT RateGrno from Rt_grmst where RateGrname='"+rateGrpName+"'";
         return db.rawQuery(query,null);
     }
 }

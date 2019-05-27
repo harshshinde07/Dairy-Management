@@ -5,12 +5,14 @@ public class Member {
     String name;
     String cowbfType;
     String membType;
+    String rateGrpNo;
 
-    public Member(String code, String name, String cowbfType, String membType) {
+    public Member(String code, String name, String cowbfType, String membType, String rateGrpNo) {
         this.code = code;
         this.name = name;
         this.cowbfType = cowbfType;
         this.membType = membType;
+        this.rateGrpNo = rateGrpNo;
     }
 
     public String getCode() {
@@ -27,5 +29,9 @@ public class Member {
 
     public String getMembType() {
         return membType;
+    }
+
+    public String getRateGrpNo() {
+        return rateGrpNo;
     }
 }
