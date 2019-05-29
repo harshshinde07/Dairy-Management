@@ -79,6 +79,8 @@ public class CollectionActivity extends AppCompatActivity {
         degree.setVisibility(View.GONE);
         addSNF = findViewById(R.id.linearAdd);
 
+        getSupportActionBar().setTitle("Milk Collection");
+
         settingsPrefs = SettingsActivity.MainPreferenceFragment.CALCULATE_PREF;
 
         if (settingsPrefs.equals("false")) {

@@ -31,6 +31,8 @@ public class MemberActivity extends AppCompatActivity {
         dbQuery.open();
         dbHelper = new DBHelper(this);
 
+        getSupportActionBar().setTitle("Add Members");
+
         name = findViewById(R.id.edt_memb_name);
         zone = findViewById(R.id.zoonCode);
         rateGrp = findViewById(R.id.rateGrNo);

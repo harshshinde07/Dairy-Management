@@ -55,6 +55,9 @@ public class SaleActivity extends AppCompatActivity {
         dbQuery.open();
         dbHelper = new DBHelper(this);
         dbClass = new DatabaseClass(this);
+
+        getSupportActionBar().setTitle("Milk Sale");
+
         edtName = findViewById(R.id.edt_memb_name);
         cowBuf = findViewById(R.id.cow_buf);
         txtCode = findViewById(R.id.edt_memb_id);

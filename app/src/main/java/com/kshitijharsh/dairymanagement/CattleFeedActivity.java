@@ -51,6 +51,8 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         dbQuery.open();
         dbHelper = new DBHelper(this);
 
+        getSupportActionBar().setTitle("CattleFeed");
+
         dbClass = new DatabaseClass(this);
         date = findViewById(R.id.date);
         edtName = findViewById(R.id.edt_memb_name);
