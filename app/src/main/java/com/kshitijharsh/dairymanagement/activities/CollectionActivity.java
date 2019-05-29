@@ -310,7 +310,7 @@ public class CollectionActivity extends AppCompatActivity {
                         float r = Float.parseFloat(rate.getText().toString());
                         float a = Float.parseFloat(amt.getText().toString());
                         if (!cowBuf.getText().toString().equals("")) {
-                            dbClass.addColl(date.getText().toString(), memCode, cowBuf.getText().toString(), mornEve, deg, lit, f, r, a);
+                            dbClass.addColl(date.getText().toString(), memCode, edtName.getText().toString(), cowBuf.getText().toString(), mornEve, deg, lit, f, r, a);
                             Toast.makeText(CollectionActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                             edtName.setText("");
                             membType.setText("");

@@ -55,7 +55,6 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         date = findViewById(R.id.date);
         edtName = findViewById(R.id.edt_memb_name);
         txtCode = findViewById(R.id.edt_memb_id);
-        tran = findViewById(R.id.tran);
         qty = findViewById(R.id.qty);
         rate = findViewById(R.id.rate);
         particulars = findViewById(R.id.particulars);
@@ -122,7 +121,6 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                 date.setText("");
                 txtCode.setText("");
                 edtName.setText("");
-                tran.setText("");
                 rate.setText("");
                 amt.setText("");
                 qty.setText("");
@@ -137,13 +135,12 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                 if (date.getText().toString().equals("") || txtCode.getText().toString().equals("") || tran.getText().toString().equals("") ||  rate.getText().toString().equals("") || amt.getText().toString().equals("") || qty.getText().toString().equals("") || particulars.getText().toString().equals("") || item.getSelectedItem().equals("Select Item")) {
                     Toast.makeText(CattleFeedActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
-                    int tranNo = Integer.parseInt(tran.getText().toString());
                     int memId = Integer.parseInt(txtCode.getText().toString());
                     float quantity = Float.parseFloat(qty.getText().toString());
                     float r = Float.parseFloat(rate.getText().toString());
                     float a = quantity * r;
                     amt.setText(String.valueOf(a));
-                    dbClass.addCattle(date.getText().toString(), tranNo, memId, label, quantity, r, a, particulars.getText().toString());
+                    dbClass.addCattle(date.getText().toString(), memId, edtName.getText().toString(), label, quantity, r, a, particulars.getText().toString());
                     Toast.makeText(CattleFeedActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                     date.setText("");
                     txtCode.setText("");

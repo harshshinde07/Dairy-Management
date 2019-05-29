@@ -28,7 +28,7 @@ public class DatabaseClass extends SQLiteOpenHelper {
         //db.execSQL("CREATE TABLE member(memb_code INTEGER PRIMARY KEY, memb_name TEXT, zoon_code INTEGER, Cobf_type INTEGER, memb_type INTEGER, accno INTEGER, rategrno INTEGER, bank_code INTEGER, BankAcNo INTEGER, membNam_Eng TEXT, AcNo INTEGER);");
         db.execSQL("CREATE TABLE collectionTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, cobf TEXT, morEve TEXT, degree FLOAT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
         db.execSQL("CREATE TABLE saleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, brName TEXT, membCode INTEGER, mornEve TEXT, cobf TEXT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
-        db.execSQL("CREATE TABLE cattleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, trNo INTEGER, memId INTEGER, itemName TEXT, quantity FLOAT, rate FLOAT, amount FLOAT, particulars TEXT);");
+        db.execSQL("CREATE TABLE cattleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, memId INTEGER, itemName TEXT, quantity FLOAT, rate FLOAT, amount FLOAT, particulars TEXT);");
     }
 
     @Override
@@ -56,10 +56,11 @@ public class DatabaseClass extends SQLiteOpenHelper {
         getWritableDatabase().insert("member", "memb_code", values);
     }
 
-    public void addColl(String date, int membCode, String cobf, String morEve, float degree, float liters, float fat, float rate, float amount) {
-        ContentValues values = new ContentValues(9);
+    public void addColl(String date, int membCode, String name, String cobf, String morEve, float degree, float liters, float fat, float rate, float amount) {
+        ContentValues values = new ContentValues(10);
         values.put("trnDate", date);
         values.put("membCode", membCode);
+        values.put("memName", name);
         values.put("cobf", cobf);
         values.put("morEve", morEve);
         values.put("degree", degree);
@@ -70,11 +71,12 @@ public class DatabaseClass extends SQLiteOpenHelper {
         getWritableDatabase().insert("collectionTransactions", "trnDate", values);
     }
 
-    public void addSale(String date, String brName, int membCode, String morEve, String cobf, float liters, float fat, float rate, float amount) {
-        ContentValues values = new ContentValues(9);
+    public void addSale(String date, String brName, int membCode, String name, String morEve, String cobf, float liters, float fat, float rate, float amount) {
+        ContentValues values = new ContentValues(10);
         values.put("trnDate", date);
         values.put("brName", brName);
         values.put("membCode", membCode);
+        values.put("memName", name);
         values.put("mornEve", morEve);
         values.put("cobf", cobf);
         values.put("liters", liters);
@@ -84,11 +86,11 @@ public class DatabaseClass extends SQLiteOpenHelper {
         getWritableDatabase().insert("saleTransactions", "trnDate", values);
     }
 
-    public void addCattle(String date, int tran, int lgr, String item, float qty, float rate, float amt, String part) {
+    public void addCattle(String date, int lgr, String name, String item, float qty, float rate, float amt, String part) {
         ContentValues values = new ContentValues(9);
         values.put("trnDate", date);
-        values.put("trNo", tran);
         values.put("memId", lgr);
+        values.put("memName", name);
         values.put("itemName", item);
         values.put("quantity", qty);
         values.put("rate", rate);

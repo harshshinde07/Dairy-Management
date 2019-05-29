@@ -227,7 +227,7 @@ public class SaleActivity extends AppCompatActivity {
                             cowBuf.setText("Buffalo");
                     }
                     if (!cowBuf.getText().toString().equals("")) {
-                        dbClass.addSale(date.getText().toString(), branch.getText().toString(), memCode, mornEve, cowBuf.getText().toString(), lit, f, r, Float.parseFloat(amt.getText().toString()));
+                        dbClass.addSale(date.getText().toString(), branch.getText().toString(), memCode, edtName.getText().toString(), mornEve, cowBuf.getText().toString(), lit, f, r, Float.parseFloat(amt.getText().toString()));
                         Toast.makeText(SaleActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                         edtName.setText("");
                         branch.setText("");

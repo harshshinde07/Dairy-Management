@@ -5,16 +5,32 @@ package com.kshitijharsh.dairymanagement.model;
  */
 
 public class Sale {
-    String date;
-    String branch;
-    String mornEve;
-    String cowbfType;
-    String cashCredit;
-    String customerName;
-    double litre;
-    double fat;
-    double rate;
-    double amount;
+    String id, date, branchName, memId, memName, morEve, milkType, qty, fat, rate, amount;
+
+    Sale() {
+    }
+
+    public Sale(String id, String date, String branchName, String memId, String memName, String morEve, String milkType, String qty, String fat, String rate, String amount) {
+        this.id = id;
+        this.date = date;
+        this.branchName = branchName;
+        this.memId = memId;
+        this.memName = memName;
+        this.morEve = morEve;
+        this.milkType = milkType;
+        this.qty = qty;
+        this.fat = fat;
+        this.rate = rate;
+        this.amount = amount;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getDate() {
         return date;
@@ -24,93 +40,75 @@ public class Sale {
         this.date = date;
     }
 
-    public String getBranch() {
-        return branch;
+    public String getBranchName() {
+        return branchName;
     }
 
-    public void setBranch(String branch) {
-        this.branch = branch;
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
     }
 
-    public String getMornEve() {
-        return mornEve;
+    public String getMemId() {
+        return memId;
     }
 
-    public void setMornEve(String mornEve) {
-        this.mornEve = mornEve;
+    public void setMemId(String memId) {
+        this.memId = memId;
     }
 
-    public String getCowbfType() {
-        return cowbfType;
+    public String getMemName() {
+        return memName;
     }
 
-    public void setCowbfType(String cowbfType) {
-        this.cowbfType = cowbfType;
+    public void setMemName(String memName) {
+        this.memName = memName;
     }
 
-    public String getCashCredit() {
-        return cashCredit;
+    public String getMorEve() {
+        return morEve;
     }
 
-    public void setCashCredit(String cashCredit) {
-        this.cashCredit = cashCredit;
+    public void setMorEve(String morEve) {
+        this.morEve = morEve;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getMilkType() {
+        return milkType;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setMilkType(String milkType) {
+        this.milkType = milkType;
     }
 
-    public double getLitre() {
-        return litre;
+    public String getQty() {
+        return qty;
     }
 
-    public void setLitre(double litre) {
-        this.litre = litre;
+    public void setQty(String qty) {
+        this.qty = qty;
     }
 
-    public double getFat() {
+    public String getFat() {
         return fat;
     }
 
-    public void setFat(double fat) {
+    public void setFat(String fat) {
         this.fat = fat;
     }
 
-    public double getRate() {
+    public String getRate() {
         return rate;
     }
 
-    public void setRate(double rate) {
+    public void setRate(String rate) {
         this.rate = rate;
     }
 
-    public double getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public Sale() {
-
-    }
-
-    public Sale(String date, String branch, String mornEve, String cowbfType, String cashCredit, String customerName, double litre, double fat, double rate, double amount) {
-
-        this.date = date;
-        this.branch = branch;
-        this.mornEve = mornEve;
-        this.cowbfType = cowbfType;
-        this.cashCredit = cashCredit;
-        this.customerName = customerName;
-        this.litre = litre;
-        this.fat = fat;
-        this.rate = rate;
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 }
