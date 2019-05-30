@@ -24,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kshitijharsh.dairymanagement.R;
-import com.kshitijharsh.dairymanagement.SettingsActivity;
 import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;

@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.CollectionActivity"
@@ -29,7 +29,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name=".SplashActivity"
+            android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Fullscreen">
             <intent-filter>
@@ -44,15 +44,16 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".DeductionActivity"
+            android:name=".activities.DeductionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CattleFeedActivity"
+            android:name=".activities.CattleFeedActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".database.MemberActivity"
+        <activity
+            android:name=".activities.MemberActivity"
             android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".activities.SettingsActivity" />
     </application>
 
 </manifest>

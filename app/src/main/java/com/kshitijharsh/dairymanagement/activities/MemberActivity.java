@@ -1,4 +1,4 @@
-package com.kshitijharsh.dairymanagement.database;
+package com.kshitijharsh.dairymanagement.activities;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.kshitijharsh.dairymanagement.R;
+import com.kshitijharsh.dairymanagement.database.DBHelper;
+import com.kshitijharsh.dairymanagement.database.DBQuery;
 
 public class MemberActivity extends AppCompatActivity {
 

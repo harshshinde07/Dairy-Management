@@ -1,10 +1,10 @@
-package com.kshitijharsh.dairymanagement;
+package com.kshitijharsh.dairymanagement.utils;
 
 import android.os.Environment;
 
 import java.io.File;
 
-import static com.kshitijharsh.dairymanagement.Constants.CONST.EXT_DIRECTORY;
+import static com.kshitijharsh.dairymanagement.utils.Constants.CONST.EXT_DIRECTORY;
 
 public class FileUtils {
 

@@ -1,7 +1,9 @@
-package com.kshitijharsh.dairymanagement;
+package com.kshitijharsh.dairymanagement.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.kshitijharsh.dairymanagement.R;
 
 public class DeductionActivity extends AppCompatActivity {
 

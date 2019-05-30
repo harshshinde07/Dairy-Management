@@ -1,4 +1,4 @@
-package com.kshitijharsh.dairymanagement;
+package com.kshitijharsh.dairymanagement.activities;
 
 import android.Manifest;
 import android.content.Intent;
@@ -9,26 +9,23 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.os.EnvironmentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.kshitijharsh.dairymanagement.activities.CollectionActivity;
-import com.kshitijharsh.dairymanagement.activities.SaleActivity;
+import com.kshitijharsh.dairymanagement.R;
+import com.kshitijharsh.dairymanagement.utils.SqliteExporter;
 import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
-import com.kshitijharsh.dairymanagement.database.MemberActivity;
 
 import java.io.File;
 import java.io.IOException;
 
-import static com.kshitijharsh.dairymanagement.Constants.CONST.BACKUP_DIRECTORY;
-import static com.kshitijharsh.dairymanagement.Constants.CONST.EXT_DIRECTORY;
+import static com.kshitijharsh.dairymanagement.utils.Constants.CONST.BACKUP_DIRECTORY;
+import static com.kshitijharsh.dairymanagement.utils.Constants.CONST.EXT_DIRECTORY;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_ITEM;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_MEMBER;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_RATEGRPMASTER;

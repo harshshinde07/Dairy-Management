@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00bcd4"
-    tools:context="com.kshitijharsh.dairymanagement.SplashActivity">
+    tools:context="com.kshitijharsh.dairymanagement.activities.SplashActivity">
 
     <ImageView
         android:layout_width="326dp"

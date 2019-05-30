@@ -1,4 +1,4 @@
-package com.kshitijharsh.dairymanagement;
+package com.kshitijharsh.dairymanagement.utils;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

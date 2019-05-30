@@ -1,4 +1,4 @@
-package com.kshitijharsh.dairymanagement;
+package com.kshitijharsh.dairymanagement.activities;
 
 import android.app.DatePickerDialog;
 import android.database.Cursor;
@@ -17,7 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kshitijharsh.dairymanagement.activities.SaleActivity;
+import com.kshitijharsh.dairymanagement.R;
 import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;

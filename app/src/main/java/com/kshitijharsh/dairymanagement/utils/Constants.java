@@ -1,4 +1,4 @@
-package com.kshitijharsh.dairymanagement;
+package com.kshitijharsh.dairymanagement.utils;
 
 public class Constants {
     public static class CONST {

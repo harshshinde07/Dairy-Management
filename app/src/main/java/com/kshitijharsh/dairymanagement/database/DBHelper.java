@@ -1,13 +1,11 @@
 package com.kshitijharsh.dairymanagement.database;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,8 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import static com.kshitijharsh.dairymanagement.Constants.CONST.EXT_DIRECTORY;
-import static com.kshitijharsh.dairymanagement.Constants.CONST.MY_PATH;
+import static com.kshitijharsh.dairymanagement.utils.Constants.CONST.EXT_DIRECTORY;
 
 public class DBHelper extends SQLiteOpenHelper {
 

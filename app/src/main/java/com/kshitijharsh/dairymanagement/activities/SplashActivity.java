@@ -1,9 +1,11 @@
-package com.kshitijharsh.dairymanagement;
+package com.kshitijharsh.dairymanagement.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+
+import com.kshitijharsh.dairymanagement.R;
 
 public class SplashActivity extends AppCompatActivity {
 

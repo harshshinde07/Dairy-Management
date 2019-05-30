@@ -1,4 +1,4 @@
-package com.kshitijharsh.dairymanagement;
+package com.kshitijharsh.dairymanagement.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.kshitijharsh.dairymanagement.utils.AppCompatPreferenceActivity;
+import com.kshitijharsh.dairymanagement.R;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 

@@ -1,4 +1,4 @@
-package com.kshitijharsh.dairymanagement;
+package com.kshitijharsh.dairymanagement.utils;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
