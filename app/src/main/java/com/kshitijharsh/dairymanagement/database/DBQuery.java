@@ -159,4 +159,9 @@ public class DBQuery {
         String query = "SELECT RateGrno from Rt_grmst where RateGrname='"+rateGrpName+"'";
         return db.rawQuery(query,null);
     }
+
+    public Cursor getRateGrpName(String rateGrpNo) {
+        String query = "SELECT RateGrname from Rt_grmst where RateGrno='" + rateGrpNo + "'";
+        return db.rawQuery(query, null);
+    }
 }
