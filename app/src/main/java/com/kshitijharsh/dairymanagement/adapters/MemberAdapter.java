@@ -2,7 +2,6 @@ package com.kshitijharsh.dairymanagement.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +38,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
     public void onBindViewHolder(MemberAdapter.ViewHolder holder, final int position) {
         final Member member = memberList.get(position);
         final Bundle bundle = new Bundle();
-        String id = member.getCode();
+        final String id = member.getCode();
         String name = member.getName();
         String memType = member.getMembType();
         String milkType = member.getCowbfType();
@@ -62,6 +61,8 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 //TODO delete code
+                Toast.makeText(context, "Delete: " + id, Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -70,6 +71,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
             public void onClick(View view) {
                 //TODO edit code
                 clickListener.onClick(bundle);
+                Toast.makeText(context, "Edit: " + id, Toast.LENGTH_SHORT).show();
             }
         });
     }

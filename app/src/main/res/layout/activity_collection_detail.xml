@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".activities.CollectionDetailActivity">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/collection_list"
+        android:background="#f1f5f8"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
+
 </android.support.constraint.ConstraintLayout>

@@ -26,7 +26,6 @@ public class MemberDetailActivity extends AppCompatActivity implements ItemClick
     private RecyclerView recyclerView;
     private MemberAdapter mAdapter;
     DBQuery dbQuery;
-
     List<Member> memberList;
 
     @Override
