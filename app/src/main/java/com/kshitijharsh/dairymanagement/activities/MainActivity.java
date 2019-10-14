@@ -107,13 +107,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void updateDatabase(View view) {
-        DBQuery query = new DBQuery(this);
-        query.createDatabase();
-        query.open();
-        Log.d(getClass().getSimpleName(), "First Query Result: " + query.getMembercount());
-        query.close();
-    }
+//    public void updateDatabase(View view) {
+//        DBQuery query = new DBQuery(this);
+//        query.createDatabase();
+//        query.open();
+//        Log.d(getClass().getSimpleName(), "First Query Result: " + query.getMembercount());
+//        query.close();
+//    }
 
     public void exitApp(){
         if(exit){

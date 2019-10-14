@@ -249,7 +249,7 @@ public class SaleActivity extends AppCompatActivity {
                         swapBoth.setVisibility(View.GONE);
                         swapCB.setVisibility(View.VISIBLE);
                     } else {
-                        Toast.makeText(SaleActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(SaleActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -310,7 +310,7 @@ public class SaleActivity extends AppCompatActivity {
     }
 
     private void initNames() {
-        Cursor cursor = dbQuery.getAllMembers();
+        Cursor cursor = dbQuery.getAllMembers("Member Name");
         names = new ArrayList<>();
         members = new HashMap<>();
         cursor.moveToFirst();
@@ -376,7 +376,7 @@ public class SaleActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_details:
-                startActivity(new Intent(this, MemberDetailActivity.class));
+                startActivity(new Intent(this, SaleDetailActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

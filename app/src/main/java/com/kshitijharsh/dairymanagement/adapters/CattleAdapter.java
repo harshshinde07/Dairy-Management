@@ -41,7 +41,7 @@ public class CattleAdapter extends RecyclerView.Adapter<CattleAdapter.ViewHolder
         final CattleFeed cattleFeed = cattleList.get(position);
         final Bundle bundle = new Bundle();
         final String id, name, date, item, rate, qty, amt, part;
-        id = cattleFeed.getId();
+        id = cattleFeed.getMemId();
         name = cattleFeed.getName();
         date = cattleFeed.getDate();
         item = cattleFeed.getItemName();
@@ -69,23 +69,23 @@ public class CattleAdapter extends RecyclerView.Adapter<CattleAdapter.ViewHolder
         holder.part.setText(cattleFeed.getParticulars());
 
 
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO delete code
-                Toast.makeText(context, "Delete: " + id, Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        holder.edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO edit code
-                clickListener.onClick(bundle);
-                Toast.makeText(context, "Edit: " + id, Toast.LENGTH_SHORT).show();
-            }
-        });
+//        holder.delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //TODO delete code
+//                Toast.makeText(context, "Delete: " + id, Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//
+//        holder.edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //TODO edit code
+//                clickListener.onClick(bundle);
+//                Toast.makeText(context, "Edit: " + id, Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
 
@@ -112,8 +112,8 @@ public class CattleAdapter extends RecyclerView.Adapter<CattleAdapter.ViewHolder
             amt = view.findViewById(R.id.amt);
             part = view.findViewById(R.id.part);
 
-            edit = view.findViewById(R.id.edit);
-            delete = view.findViewById(R.id.delete);
+//            edit = view.findViewById(R.id.edit);
+//            delete = view.findViewById(R.id.delete);
         }
     }
 

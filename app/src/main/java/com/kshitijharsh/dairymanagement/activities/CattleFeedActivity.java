@@ -138,7 +138,8 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (date.getText().toString().equals("") || txtCode.getText().toString().equals("") || tran.getText().toString().equals("") ||  rate.getText().toString().equals("") || amt.getText().toString().equals("") || qty.getText().toString().equals("") || particulars.getText().toString().equals("") || item.getSelectedItem().equals("Select Item")) {
+                String p;
+                if (date.getText().toString().equals("") || txtCode.getText().toString().equals("") || rate.getText().toString().equals("") || amt.getText().toString().equals("") || qty.getText().toString().equals("") || item.getSelectedItem().equals("Select Item")) {
                     Toast.makeText(CattleFeedActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
                     int memId = Integer.parseInt(txtCode.getText().toString());
@@ -146,12 +147,15 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                     float r = Float.parseFloat(rate.getText().toString());
                     float a = quantity * r;
                     amt.setText(String.valueOf(a));
-                    dbClass.addCattle(date.getText().toString(), memId, edtName.getText().toString(), label, quantity, r, a, particulars.getText().toString());
+                    if (particulars.getText().toString().equals(""))
+                        p = "None";
+                    else
+                        p = particulars.getText().toString();
+                    dbClass.addCattle(date.getText().toString(), memId, edtName.getText().toString(), label, quantity, r, a, p);
                     Toast.makeText(CattleFeedActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                     date.setText("");
                     txtCode.setText("");
                     edtName.setText("");
-                    tran.setText("");
                     rate.setText("");
                     qty.setText("");
                     item.setSelected(false);
@@ -220,7 +224,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
     }
 
     private void initNames() {
-        Cursor cursor = dbQuery.getAllMembers();
+        Cursor cursor = dbQuery.getAllMembers("Member Name");
         names = new ArrayList<>();
         members = new HashMap<>();
         cursor.moveToFirst();
@@ -250,11 +254,11 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         DBQuery db = new DBQuery(getApplicationContext());
 
         // Spinner Drop down elements
-        List<String> lables = db.getAllItems();
+        List<String> labels = db.getAllItems();
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, lables);
+                android.R.layout.simple_spinner_item, labels);
 
         // Drop down layout style - list view with radio button
         dataAdapter
@@ -311,7 +315,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_details:
-                startActivity(new Intent(this, MemberDetailActivity.class));
+                startActivity(new Intent(this, CattleDetailActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

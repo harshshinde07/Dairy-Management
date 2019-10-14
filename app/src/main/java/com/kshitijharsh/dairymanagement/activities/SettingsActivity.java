@@ -42,14 +42,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 //                    Toast.makeText(getActivity(), "Pref " + preference.getKey() + " changed to " + newValue.toString(), Toast.LENGTH_SHORT).show();
                     if (newValue.toString().equals("false")) {
                         CALCULATE_PREF = "none";
-                        Toast.makeText(getActivity(), "Please restart your app to see the changes.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Restarted your app to see the changes.", Toast.LENGTH_LONG).show();
                     }
                     if (newValue.toString().equals("true")) {
                         if (calculatePref.isChecked())
                             CALCULATE_PREF = "true";
                         else
                             CALCULATE_PREF = "false";
-                        Toast.makeText(getActivity(), "Please restart your app to see the changes.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Restarted your app to apply the changes.", Toast.LENGTH_LONG).show();
                     }
                     Intent i = getActivity().getPackageManager()
                             .getLaunchIntentForPackage(getActivity().getPackageName());
@@ -67,11 +67,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     if (facilityPref.isChecked()) {
                         if (o.toString().equals("true")) {
                             CALCULATE_PREF = "true";
-                            Toast.makeText(getActivity(), "Please restart your app to see the changes.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Restarted your app to apply the changes.", Toast.LENGTH_LONG).show();
                         }
                         if (o.toString().equals("false")) {
                             CALCULATE_PREF = "false";
-                            Toast.makeText(getActivity(), "Please restart your app to see the changes.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Restarted your app to apply the changes.", Toast.LENGTH_LONG).show();
                         }
                         Intent i = getActivity().getPackageManager()
                                 .getLaunchIntentForPackage(getActivity().getPackageName());

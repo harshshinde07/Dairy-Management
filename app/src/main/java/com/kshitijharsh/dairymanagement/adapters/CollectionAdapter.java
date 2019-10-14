@@ -74,27 +74,27 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         holder.rate.setText(collection.getRate());
         holder.qty.setText(collection.getQty());
         holder.amt.setText(collection.getAmt());
-        holder.snf.setText(collection.getSnf());
+//        holder.snf.setText(collection.getSnf());
         holder.fat.setText(collection.getFat());
 
 
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO delete code
-                Toast.makeText(context, "Delete: " + id, Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        holder.edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO edit code
-                clickListener.onClick(bundle);
-                Toast.makeText(context, "Edit: " + id, Toast.LENGTH_SHORT).show();
-            }
-        });
+//        holder.delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //TODO delete code
+//                Toast.makeText(context, "Delete: " + id, Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//
+//        holder.edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //TODO edit code
+//                clickListener.onClick(bundle);
+//                Toast.makeText(context, "Edit: " + id, Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
 
@@ -122,11 +122,11 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
             rate = view.findViewById(R.id.rate);
             qty = view.findViewById(R.id.qty);
             amt = view.findViewById(R.id.amt);
-            snf = view.findViewById(R.id.snf);
+//            snf = view.findViewById(R.id.snf);
 
 
-            edit = view.findViewById(R.id.edit);
-            delete = view.findViewById(R.id.delete);
+//            edit = view.findViewById(R.id.edit);
+//            delete = view.findViewById(R.id.delete);
         }
     }
 

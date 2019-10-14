@@ -5,30 +5,29 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Environment;
 
 import java.io.File;
-
-import static com.kshitijharsh.dairymanagement.utils.Constants.CONST.EXT_DIRECTORY;
 
 public class DatabaseClass extends SQLiteOpenHelper {
 
     public final static String DATABASE_NAME ="records.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private SQLiteDatabase db;
+    private File dbPath;
 
     public DatabaseClass(final Context context) {
-        super(context, Environment.getExternalStorageDirectory() + EXT_DIRECTORY
-                + File.separator
-                + DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        dbPath = context.getDatabasePath(DATABASE_NAME);
+        db = SQLiteDatabase.openDatabase(dbPath.toString(), null, SQLiteDatabase.CREATE_IF_NECESSARY);
+        db = getReadableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         //db.execSQL("CREATE TABLE member(memb_code INTEGER PRIMARY KEY, memb_name TEXT, zoon_code INTEGER, Cobf_type INTEGER, memb_type INTEGER, accno INTEGER, rategrno INTEGER, bank_code INTEGER, BankAcNo INTEGER, membNam_Eng TEXT, AcNo INTEGER);");
-        db.execSQL("CREATE TABLE collectionTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, cobf TEXT, morEve TEXT, degree FLOAT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
-        db.execSQL("CREATE TABLE saleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, brName TEXT, membCode INTEGER, mornEve TEXT, cobf TEXT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
-        db.execSQL("CREATE TABLE cattleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, memId INTEGER, itemName TEXT, quantity FLOAT, rate FLOAT, amount FLOAT, particulars TEXT);");
+        db.execSQL("CREATE TABLE collectionTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, memName TEXT, cobf TEXT, morEve TEXT, degree FLOAT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
+        db.execSQL("CREATE TABLE saleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, brName TEXT, membCode INTEGER, memName TEXT, mornEve TEXT, cobf TEXT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
+        db.execSQL("CREATE TABLE cattleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, memId INTEGER, memName TEXT, itemName TEXT, quantity FLOAT, rate FLOAT, amount FLOAT, particulars TEXT);");
     }
 
     @Override
@@ -107,5 +106,23 @@ public class DatabaseClass extends SQLiteOpenHelper {
         if(c != null && c.getCount() >0)
             milkCount = c.getFloat(c.getColumnIndex("liters"));
         return milkCount;
+    }
+
+    public Cursor getAllCattle() {
+        String query = "SELECT * FROM cattleTransactions";
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery(query, null);
+    }
+
+    public Cursor getAllSale() {
+        String query = "SELECT * FROM saleTransactions";
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery(query, null);
+    }
+
+    public Cursor getAllCollection() {
+        String query = "SELECT * FROM collectionTransactions";
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery(query, null);
     }
 }

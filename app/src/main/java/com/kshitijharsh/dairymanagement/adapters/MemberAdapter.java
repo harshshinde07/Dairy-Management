@@ -57,23 +57,23 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
         holder.rateGrpName.setText(member.getRateGrpNo());
 
 
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO delete code
-                Toast.makeText(context, "Delete: " + id, Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        holder.edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO edit code
-                clickListener.onClick(bundle);
-                Toast.makeText(context, "Edit: " + id, Toast.LENGTH_SHORT).show();
-            }
-        });
+//        holder.delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //TODO delete code
+//                Toast.makeText(context, "Delete: " + id, Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//
+//        holder.edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //TODO edit code
+//                clickListener.onClick(bundle);
+//                Toast.makeText(context, "Edit: " + id, Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
 
@@ -97,8 +97,8 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
             memberType = view.findViewById(R.id.member_type);
             rateGrpName = view.findViewById(R.id.rate_grp_name);
 
-            edit = view.findViewById(R.id.edit);
-            delete = view.findViewById(R.id.delete);
+//            edit = view.findViewById(R.id.edit);
+//            delete = view.findViewById(R.id.delete);
         }
     }
 

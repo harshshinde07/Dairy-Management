@@ -11,6 +11,36 @@
 
     <string-array name="array_item">
         <item>Select Item</item>
+    </string-array>
 
+    <string name="value_any_type">All Types</string>
+    <string name="value_any_time">Any Time</string>
+    <string name="all_records">All Records</string>
+
+    <string name="sort_by_name">Member Name</string>
+    <string name="sort_by_code">Member Code</string>
+    <!--    <string name="sort_by_amount">Amount</string>-->
+
+    <!-- Types of Milk -->
+    <string-array name="types">
+        <item>@string/value_any_type</item>
+
+        <item>Cow</item>
+        <item>Buffalo</item>
+
+    </string-array>
+
+    <!-- Time filters -->
+    <string-array name="time">
+        <item>@string/value_any_time</item>
+
+        <item>Morning</item>
+        <item>Evening</item>
+    </string-array>
+
+    <!-- Ways you can sort -->
+    <string-array name="sort_by">
+        <item>@string/sort_by_name</item>
+        <item>@string/sort_by_code</item>
     </string-array>
 </resources>

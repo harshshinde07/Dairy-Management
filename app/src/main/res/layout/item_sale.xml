@@ -12,25 +12,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="4dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_edit_black_24dp" />
+        <!--        <ImageView-->
+        <!--            android:id="@+id/edit"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_alignParentEnd="true"-->
+        <!--            android:layout_marginTop="20dp"-->
+        <!--            android:layout_marginEnd="4dp"-->
+        <!--            android:padding="8dp"-->
+        <!--            android:src="@drawable/ic_edit_black_24dp" />-->
 
-        <ImageView
-            android:id="@+id/delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="4dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_delete_black_24dp" />
+        <!--        <ImageView-->
+        <!--            android:id="@+id/delete"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/edit"-->
+        <!--            android:layout_alignParentEnd="true"-->
+        <!--            android:layout_margin="4dp"-->
+        <!--            android:padding="8dp"-->
+        <!--            android:src="@drawable/ic_delete_black_24dp" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,7 +48,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:padding="2dp"
-                    android:text="Date" />
+                    android:text="Date:"
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -59,11 +60,13 @@
                     android:padding="2dp" />
 
                 <TextView
+                    android:id="@+id/bname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:padding="2dp"
-                    android:text="Branch Name" />
+                    android:text="Branch Name:"
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -108,7 +111,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Time" />
+                    android:text="Time:"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/mor_eve"
@@ -128,7 +132,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Milk Type" />
+                    android:text="Milk Type:"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/milk_type"
@@ -149,7 +154,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Quantity" />
+                    android:text="Quantity:"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/qty"
@@ -161,7 +167,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Fat" />
+                    android:text="Fat:"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/fat"
@@ -181,7 +188,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Rate" />
+                    android:text="Rate:"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/rate"
@@ -193,7 +201,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Amount" />
+                    android:text="Amount:"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/amt"

@@ -74,23 +74,23 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
         holder.branch.setText(sale.getBranchName());
         holder.fat.setText(sale.getFat());
 
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO delete code
-                Toast.makeText(context, "Delete: " + id, Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        holder.edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO edit code
-                clickListener.onClick(bundle);
-                Toast.makeText(context, "Edit: " + id, Toast.LENGTH_SHORT).show();
-            }
-        });
+//        holder.delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //TODO delete code
+//                Toast.makeText(context, "Delete: " + id, Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//
+//        holder.edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //TODO edit code
+//                clickListener.onClick(bundle);
+//                Toast.makeText(context, "Edit: " + id, Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
 
@@ -116,11 +116,11 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
             rate = view.findViewById(R.id.rate);
             qty = view.findViewById(R.id.qty);
             amt = view.findViewById(R.id.amt);
-            branch = view.findViewById(R.id.branch);
+            branch = view.findViewById(R.id.bname);
             fat = view.findViewById(R.id.fat);
 
-            edit = view.findViewById(R.id.edit);
-            delete = view.findViewById(R.id.delete);
+//            edit = view.findViewById(R.id.edit);
+//            delete = view.findViewById(R.id.delete);
         }
     }
 

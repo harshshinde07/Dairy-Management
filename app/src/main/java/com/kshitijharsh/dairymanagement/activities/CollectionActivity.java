@@ -33,6 +33,7 @@ import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
 import com.kshitijharsh.dairymanagement.model.Member;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -85,6 +86,8 @@ public class CollectionActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Milk Collection");
 
         settingsPrefs = SettingsActivity.MainPreferenceFragment.CALCULATE_PREF;
+
+        Toast.makeText(this, "Prefs: " + settingsPrefs, Toast.LENGTH_SHORT).show();
 
         if (settingsPrefs.equals("false")) {
             degree.setVisibility(View.VISIBLE);
@@ -265,6 +268,8 @@ public class CollectionActivity extends AppCompatActivity {
                 fat.setText("");
                 quantity.setText("");
                 date.setText("");
+                if (settingsPrefs.equals("true"))
+                    snf.setText("");
                 radioGroup.clearCheck();
                 radioGroupMorEve.clearCheck();
             }
@@ -294,14 +299,16 @@ public class CollectionActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || membType.getText().toString().equals("") || txtCode.getText().toString().equals("") || degree.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroupMorEve.getCheckedRadioButtonId() == -1) {
+                float deg = 0, lit, f, q;
+                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || membType.getText().toString().equals("") || txtCode.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroupMorEve.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
                     int memCode = Integer.parseInt(txtCode.getText().toString());
-                    float deg = Float.parseFloat(degree.getText().toString());
-                    float lit = Float.parseFloat(quantity.getText().toString());
-                    float f = Float.parseFloat(fat.getText().toString());
-                    float q = Float.parseFloat(quantity.getText().toString());
+                    if (!degree.getText().toString().equals(""))
+                        deg = Float.parseFloat(degree.getText().toString());
+                    lit = Float.parseFloat(quantity.getText().toString());
+                    f = Float.parseFloat(fat.getText().toString());
+                    q = Float.parseFloat(quantity.getText().toString());
 
                     if (swapBoth.getVisibility() == View.VISIBLE) {
                         if (cowBuff.equals("Cow"))
@@ -325,13 +332,17 @@ public class CollectionActivity extends AppCompatActivity {
                             fat.setText("");
                             quantity.setText("");
                             date.setText("");
+                            rate.setText("");
+                            amt.setText("");
+                            radioGroup.clearCheck();
+                            radioGroupMorEve.clearCheck();
                             swapBoth.setVisibility(View.GONE);
                             swapCB.setVisibility(View.VISIBLE);
                         } else {
-                            Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -372,7 +383,7 @@ public class CollectionActivity extends AppCompatActivity {
                 Member member = members.get(txtName.getText().toString());
                 int type = Integer.parseInt(member.getMembType());
                 type = type -1;
-                Log.e("11111111111", String.valueOf(type));
+//                Log.e("11111111111", String.valueOf(type));
                 int cb = Integer.parseInt(member.getCowbfType());
                 rateGroupNo = Integer.parseInt(member.getRateGrpNo());
                 String cbText = "";
@@ -397,7 +408,7 @@ public class CollectionActivity extends AppCompatActivity {
     }
 
     private void initNames() {
-        Cursor cursor = dbQuery.getAllMembers();
+        Cursor cursor = dbQuery.getAllMembers("Member Name");
         names = new ArrayList<>();
         members = new HashMap<>();
         cursor.moveToFirst();
@@ -432,8 +443,10 @@ public class CollectionActivity extends AppCompatActivity {
                 if (!snf.getText().toString().equals(""))
                     s = Float.parseFloat(snf.getText().toString());
                 c = dbQuery.getRateFromSNF(s, fat, cobf, rateGroupNo);
-            } else {
+            } else if (settingsPrefs.equals("false")) {
                 c = dbQuery.getRate(deg, fat, cobf, rateGroupNo);
+            } else {
+                c = dbQuery.getRateFromFat(fat, cobf, rateGroupNo);
             }
         }
         float val;
@@ -448,7 +461,7 @@ public class CollectionActivity extends AppCompatActivity {
             //float m = dbQuery.getMilkCount();
             //Toast.makeText(this, String.valueOf(m), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Value not found!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Value not found!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -478,16 +491,20 @@ public class CollectionActivity extends AppCompatActivity {
             } else {
                 cowBuf.setText(cbText);
             }
-            membType.setText(memb_type[type]);
+            membType.setText(memb_type[type - 1]);
         } else {
             Toast.makeText(this, "Member not found!", Toast.LENGTH_SHORT).show();
         }
     }
 
+    /**
+     * This function calculates SNF and sets it to the added SNF
+     **/
     public void calculateSNF(float deg, float fat) {
-        /** This function calculates SNF and sets it to the added SNF **/
         double res = 0;
         res = (deg / 4) + (fat * 0.21) + 0.36;
+        DecimalFormat twoDForm = new DecimalFormat("#.#");
+        res = Double.valueOf(twoDForm.format(res));
         snf.setText(String.valueOf(res));
     }
 
@@ -502,7 +519,7 @@ public class CollectionActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_details:
-                startActivity(new Intent(this, MemberDetailActivity.class));
+                startActivity(new Intent(this, CollectionDetailActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
