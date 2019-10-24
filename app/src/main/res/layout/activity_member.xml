@@ -40,7 +40,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
-                    android:hint="Name"
+                    android:hint="@string/name"
                     android:padding="4dp"
                     android:singleLine="true"
                     android:textSize="18sp" />
@@ -52,7 +52,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="2"
-                    android:hint="Member Name" />
+                    android:hint="@string/member_name" />
             </LinearLayout>
 
             <LinearLayout
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Member Type"
+                    android:hint="@string/member_type"
                     android:padding="4dp"
                     android:singleLine="true"
                     android:textSize="18sp" />
@@ -99,7 +99,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Cow"
+                        android:text="@string/cow"
                         android:textSize="18sp" />
 
                     <RadioButton
@@ -107,7 +107,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Buffalo"
+                        android:text="@string/buffalo"
                         android:textSize="18sp" />
 
                     <RadioButton
@@ -115,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Both"
+                        android:text="@string/both"
                         android:textSize="18sp" />
                 </RadioGroup>
 
@@ -132,14 +132,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Zoon Code" />
+                    android:hint="@string/zone_code" />
 
                 <EditText
                     android:id="@+id/rateGrNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Rate Group Name" />
+                    android:hint="@string/rate_group_name" />
             </LinearLayout>
 
             <LinearLayout
@@ -158,7 +158,7 @@
                     android:layout_weight="1"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
-                    android:text="Save"
+                    android:text="@string/save"
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
@@ -172,7 +172,7 @@
                     android:layout_weight="1"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
-                    android:text="Clear"
+                    android:text="@string/clear"
                     android:textAlignment="center"
                     android:textSize="16sp" />
             </LinearLayout>

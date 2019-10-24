@@ -39,8 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-
-                    android:hint="Date" />
+                    android:hint="@string/date" />
 
                 <EditText
                     android:id="@+id/branch"
@@ -48,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
-                    android:hint="Branch Name" />
+                    android:hint="@string/branch_name" />
             </LinearLayout>
 
             <LinearLayout
@@ -62,7 +61,7 @@
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:hint="Id"
+                    android:hint="@string/id"
                     android:inputType="phone"
                     android:singleLine="true"
                     android:textSize="18sp" />
@@ -72,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:hint="Member Name" />
+                    android:hint="@string/member_name" />
             </LinearLayout>
 
             <LinearLayout
@@ -95,7 +94,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Morning"
+                        android:text="@string/morning"
                         android:textSize="18sp" />
 
                     <RadioButton
@@ -103,7 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Evening"
+                        android:text="@string/evening"
                         android:textSize="18sp" />
                 </RadioGroup>
             </LinearLayout>
@@ -156,7 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Cow"
+                        android:text="@string/cow"
                         android:textSize="18sp" />
 
                     <RadioButton
@@ -164,7 +163,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Buffalo"
+                        android:text="@string/buffalo"
                         android:textSize="18sp" />
 
                 </RadioGroup>
@@ -183,7 +182,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:layout_weight="1"
-                    android:hint="Qty"
+                    android:hint="@string/qty"
                     android:inputType="phone"
                     android:singleLine="true" />
 
@@ -193,7 +192,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:layout_weight="1"
-                    android:hint="Fat"
+                    android:hint="@string/fat"
                     android:inputType="phone"
                     android:singleLine="true" />
 
@@ -211,7 +210,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Rate      "
+                    android:hint="@string/rate"
                     android:inputType="phone"
                     android:singleLine="true"
                     android:textSize="18sp" />
@@ -221,7 +220,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="  Amount"
+                    android:hint="@string/amount"
                     android:padding="4dp"
                     android:textSize="18sp" />
 
@@ -243,7 +242,7 @@
                     android:layout_weight="1"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
-                    android:text="Save"
+                    android:text="@string/save"
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
@@ -257,7 +256,7 @@
                     android:layout_weight="1"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
-                    android:text="Clear"
+                    android:text="@string/clear"
                     android:textAlignment="center"
                     android:textSize="16sp" />
             </LinearLayout>
