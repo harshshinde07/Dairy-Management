@@ -39,21 +39,21 @@ public class DatabaseClass extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addMember(int memCode, String memName, int zoonCode, int cobfType, int memType, int accNo, int rategrNo, int bankCode, int bankacNo, String memnameEng, int acNo) {
-        ContentValues values = new ContentValues(11);
-        values.put("memb_code", memCode);
-        values.put("memb_name", memName);
-        values.put("zoon_code", zoonCode);
-        values.put("Cobf_type", cobfType);
-        values.put("memb_type", memType);
-        values.put("accno", accNo);
-        values.put("rategrno", rategrNo);
-        values.put("bank_code", bankCode);
-        values.put("BankAcNo", bankacNo);
-        values.put("membNam_Eng", memnameEng);
-        values.put("AcNo", acNo);
-        getWritableDatabase().insert("member", "memb_code", values);
-    }
+//    public void addMember(int memCode, String memName, int zoonCode, int cobfType, int memType, int accNo, int rategrNo, int bankCode, int bankacNo, String memnameEng, int acNo) {
+//        ContentValues values = new ContentValues(11);
+//        values.put("memb_code", memCode);
+//        values.put("memb_name", memName);
+//        values.put("zoon_code", zoonCode);
+//        values.put("Cobf_type", cobfType);
+//        values.put("memb_type", memType);
+//        values.put("accno", accNo);
+//        values.put("rategrno", rategrNo);
+//        values.put("bank_code", bankCode);
+//        values.put("BankAcNo", bankacNo);
+//        values.put("membNam_Eng", memnameEng);
+//        values.put("AcNo", acNo);
+//        getWritableDatabase().insert("member", "memb_code", values);
+//    }
 
     public void addColl(String date, int membCode, String name, String cobf, String morEve, float degree, float liters, float fat, float rate, float amount) {
         ContentValues values = new ContentValues(10);
@@ -95,12 +95,12 @@ public class DatabaseClass extends SQLiteOpenHelper {
         values.put("rate", rate);
         values.put("amount", amt);
         values.put("particulars", part);
-        getWritableDatabase().insert("CattleTransactions", "trnDate", values);
+        getWritableDatabase().insert("cattleTransactions", "trnDate", values);
     }
 
     public float getMilkCount() {
         float milkCount = 0;
-        String query = "SELECT SUM(liters) from collectionTransactions;";
+        String query = "SELECT SUM(liters) from TABLE_COLLECTION;";
         Cursor c = getReadableDatabase().rawQuery(query,null);
         //c.moveToFirst();
         if(c != null && c.getCount() >0)

@@ -5,7 +5,7 @@ package com.kshitijharsh.dairymanagement.model;
  */
 
 public class Sale {
-    String id, date, branchName, memId, memName, morEve, milkType, qty, fat, rate, amount;
+    private String id, date, branchName, memId, memName, morEve, milkType, qty, fat, rate, amount;
 
     Sale() {
     }

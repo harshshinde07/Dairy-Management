@@ -1,11 +1,7 @@
 package com.kshitijharsh.dairymanagement.model;
 
 public class Member {
-    String code;
-    String name;
-    String cowbfType;
-    String membType;
-    String rateGrpNo;
+    private String code, name, cowbfType, membType, rateGrpNo;
 
     public Member(String code, String name, String cowbfType, String membType, String rateGrpNo) {
         this.code = code;

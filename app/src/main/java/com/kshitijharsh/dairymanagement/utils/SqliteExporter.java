@@ -47,12 +47,6 @@ public class SqliteExporter {
         return "db_backup_" + sdf.format(new Date()) + ".csv";
     }
 
-    /**
-     * Get all the table names we have in db
-     *
-     * @param db
-     * @return
-     */
     public static List<String> getTablesOnDataBase(SQLiteDatabase db){
         Cursor c = null;
         List<String> tables = new ArrayList<>();

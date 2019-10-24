@@ -5,7 +5,7 @@ package com.kshitijharsh.dairymanagement.model;
  */
 
 public class Collection {
-    String id, date, memId, memName, memType, milktype, morEve, fat, snf, degree, qty, rate, amt;
+    private String id, date, memId, memName, memType, milktype, morEve, fat, snf, degree, qty, rate, amt;
 
     Collection() {
     }

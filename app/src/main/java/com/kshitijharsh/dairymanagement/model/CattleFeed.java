@@ -1,7 +1,7 @@
 package com.kshitijharsh.dairymanagement.model;
 
 public class CattleFeed {
-    String id, date, memId, name, itemName, rate, qty, amt, particulars;
+    private String id, date, memId, name, itemName, rate, qty, amt, particulars;
 
     CattleFeed() {
     }
