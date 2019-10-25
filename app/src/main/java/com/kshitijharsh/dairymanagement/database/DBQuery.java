@@ -17,6 +17,13 @@ import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.C
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_RATEGRP_NO;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_MEMBER;
 
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_RATEGRNO;
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_RATEGRNAME;
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_RATE_TYPE;
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_COW_RATE;
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_BUFFALO_RATE;
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_RATEGRPMASTER;
+
 public class DBQuery {
 
     private static final String TABLE_ITEMS = "item";
@@ -60,7 +67,7 @@ public class DBQuery {
     }
 
     public Cursor getAllMembers(String order) {
-        String cols[] = {COLUMN_MEMB_CODE, COLUMN_MEMB_NAME, COLUMN_COWBF_TYPE, COLUMN_MEMB_TYPE, COLUMN_RATEGRP_NO};
+        String[] cols = {COLUMN_MEMB_CODE, COLUMN_MEMB_NAME, COLUMN_COWBF_TYPE, COLUMN_MEMB_TYPE, COLUMN_RATEGRP_NO};
 
         if (order.equals("code"))
             return db.query(
@@ -82,6 +89,18 @@ public class DBQuery {
                     null,
                     COLUMN_MEMB_NAME
             );
+    }
+
+    public Cursor getAllRateGroups() {
+        String[] cols = {COLUMN_RATEGRNO, COLUMN_RATEGRNAME, COLUMN_RATE_TYPE, COLUMN_COW_RATE, COLUMN_BUFFALO_RATE};
+        return db.query(
+                TABLE_RATEGRPMASTER,
+                cols,
+                null,
+                null,
+                null,
+                null,
+                COLUMN_RATEGRNAME);
     }
 
     public Cursor getRate(float degree, float fat, String cobf, int rateGrpNo) {

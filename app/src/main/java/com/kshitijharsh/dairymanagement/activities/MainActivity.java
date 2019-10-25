@@ -23,6 +23,7 @@ import com.kshitijharsh.dairymanagement.database.DatabaseClass;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 import static com.kshitijharsh.dairymanagement.utils.Constants.CONST.BACKUP_DIRECTORY;
 import static com.kshitijharsh.dairymanagement.utils.Constants.CONST.EXT_DIRECTORY;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        getSupportActionBar().setLogo(R.drawable.winsofticon);
         setContentView(R.layout.activity_main);
         checkForStoragePermission();
         dc = new DatabaseClass(this);
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }else {
             exit = true;
-            Toast.makeText(this,"Press back again to exit",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this,"Press back again to exit",Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

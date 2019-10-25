@@ -15,5 +15,12 @@ public class BaseContract {
         public static final String COLUMN_COWBF_TYPE = "Cobf_type";
         public static final String COLUMN_MEMB_TYPE = "memb_type";
         public static final String COLUMN_RATEGRP_NO = "rategrno";
+
+        //Rate Group table columns
+        public static final String COLUMN_RATEGRNO = "RateGrno";
+        public static final String COLUMN_RATEGRNAME = "RateGrname";
+        public static final String COLUMN_RATE_TYPE = "RateTyp";
+        public static final String COLUMN_COW_RATE = "CowRate";
+        public static final String COLUMN_BUFFALO_RATE = "BufRate";
     }
 }
