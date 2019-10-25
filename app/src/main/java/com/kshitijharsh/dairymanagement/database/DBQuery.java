@@ -69,7 +69,7 @@ public class DBQuery {
     public Cursor getAllMembers(String order) {
         String[] cols = {COLUMN_MEMB_CODE, COLUMN_MEMB_NAME, COLUMN_COWBF_TYPE, COLUMN_MEMB_TYPE, COLUMN_RATEGRP_NO};
 
-        if (order.equals("code"))
+//        if (order.equals("code"))
             return db.query(
                     TABLE_MEMBER,
                     cols,
@@ -79,16 +79,16 @@ public class DBQuery {
                     null,
                     COLUMN_MEMB_CODE
             );
-        else
-            return db.query(
-                    TABLE_MEMBER,
-                    cols,
-                    null,
-                    null,
-                    null,
-                    null,
-                    COLUMN_MEMB_NAME
-            );
+//        else
+//            return db.query(
+//                    TABLE_MEMBER,
+//                    cols,
+//                    null,
+//                    null,
+//                    null,
+//                    null,
+//                    COLUMN_MEMB_NAME
+//            );
     }
 
     public Cursor getAllRateGroups() {

@@ -67,7 +67,7 @@ public class SaleActivity extends AppCompatActivity {
         txtCode = findViewById(R.id.edt_memb_id);
         rate = findViewById(R.id.rate);
         amt = findViewById(R.id.amt);
-        branch = findViewById(R.id.branch);
+//        branch = findViewById(R.id.branch);
         fat = findViewById(R.id.fat);
         quantity = findViewById(R.id.qty);
         date = findViewById(R.id.date);
@@ -181,7 +181,7 @@ public class SaleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 edtName.setText("");
-                branch.setText("");
+//                branch.setText("");
                 cowBuf.setText("");
                 txtCode.setText("");
                 rate.setText("");
@@ -218,7 +218,7 @@ public class SaleActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || branch.getText().toString().equals("") || txtCode.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroup.getCheckedRadioButtonId() == -1) {
+                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || txtCode.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroup.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(SaleActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
                     int memCode = Integer.parseInt(txtCode.getText().toString());
@@ -234,10 +234,10 @@ public class SaleActivity extends AppCompatActivity {
                             cowBuf.setText("Buffalo");
                     }
                     if (!cowBuf.getText().toString().equals("")) {
-                        dbClass.addSale(date.getText().toString(), branch.getText().toString(), memCode, edtName.getText().toString(), mornEve, cowBuf.getText().toString(), lit, f, r, Float.parseFloat(amt.getText().toString()));
+                        dbClass.addSale(date.getText().toString(), memCode, edtName.getText().toString(), mornEve, cowBuf.getText().toString(), lit, f, r, Float.parseFloat(amt.getText().toString()));
                         Toast.makeText(SaleActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                         edtName.setText("");
-                        branch.setText("");
+//                        branch.setText("");
                         cowBuf.setText("");
                         txtCode.setText("");
                         rate.setText("");

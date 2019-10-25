@@ -5,15 +5,14 @@ package com.kshitijharsh.dairymanagement.model;
  */
 
 public class Sale {
-    private String id, date, branchName, memId, memName, morEve, milkType, qty, fat, rate, amount;
+    private String id, date, memId, memName, morEve, milkType, qty, fat, rate, amount;
 
     Sale() {
     }
 
-    public Sale(String id, String date, String branchName, String memId, String memName, String morEve, String milkType, String qty, String fat, String rate, String amount) {
+    public Sale(String id, String date, String memId, String memName, String morEve, String milkType, String qty, String fat, String rate, String amount) {
         this.id = id;
         this.date = date;
-        this.branchName = branchName;
         this.memId = memId;
         this.memName = memName;
         this.morEve = morEve;
@@ -38,14 +37,6 @@ public class Sale {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public String getBranchName() {
-        return branchName;
-    }
-
-    public void setBranchName(String branchName) {
-        this.branchName = branchName;
     }
 
     public String getMemId() {

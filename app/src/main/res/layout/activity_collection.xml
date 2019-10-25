@@ -217,6 +217,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:hint="@string/quantity"
+                android:imeOptions="actionDone"
                 android:inputType="phone"
                 android:singleLine="true" />
 

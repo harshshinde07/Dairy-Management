@@ -117,6 +117,7 @@
                 android:layout_weight="1"
                 android:hint="@string/quantity"
                 android:inputType="phone"
+                android:imeOptions="actionDone"
                 android:singleLine="true" />
 
         </LinearLayout>

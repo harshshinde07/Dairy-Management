@@ -61,7 +61,8 @@ public class CollectionDetailActivity extends AppCompatActivity implements ItemC
     public void getCollDetails() {
         Cursor cursor = db.getAllCollection();
         int count = cursor.getCount();
-        Toast.makeText(this, "Count: " + count, Toast.LENGTH_SHORT).show();
+        if (count == 0)
+            Toast.makeText(this, "No records found.", Toast.LENGTH_SHORT).show();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Collection collection = new Collection(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10));

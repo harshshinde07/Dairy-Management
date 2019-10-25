@@ -59,22 +59,22 @@
                     android:layout_marginStart="8dp"
                     android:padding="2dp" />
 
-                <TextView
-                    android:id="@+id/bname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:padding="2dp"
-                    android:text="Branch Name:"
-                    android:textStyle="bold" />
+                <!--                <TextView-->
+                <!--                    android:id="@+id/bname"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginStart="8dp"-->
+                <!--                    android:padding="2dp"-->
+                <!--                    android:text="Branch Name:"-->
+                <!--                    android:textStyle="bold" />-->
 
 
-                <TextView
-                    android:id="@+id/brName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:padding="2dp" />
+                <!--                <TextView-->
+                <!--                    android:id="@+id/brName"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginStart="8dp"-->
+                <!--                    android:padding="2dp" />-->
 
             </LinearLayout>
 

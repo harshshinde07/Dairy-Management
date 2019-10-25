@@ -40,7 +40,7 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
     public void onBindViewHolder(SaleAdapter.ViewHolder holder, final int position) {
         final Sale sale = saleList.get(position);
         final Bundle bundle = new Bundle();
-        final String id, name, date, milkType, morEve, rate, qty, amt, branch, fat;
+        final String id, name, date, milkType, morEve, rate, qty, amt, fat;
         id = sale.getMemId();
         name = sale.getMemName();
         date = sale.getDate();
@@ -49,7 +49,6 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
         rate = sale.getRate();
         qty = sale.getQty();
         amt = sale.getAmount();
-        branch = sale.getBranchName();
         fat = sale.getFat();
 
         bundle.putString("id", id);
@@ -60,7 +59,6 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
         bundle.putString("rate", rate);
         bundle.putString("qty", qty);
         bundle.putString("amt", amt);
-        bundle.putString("branch", branch);
         bundle.putString("fat", fat);
 
         holder.memberId.setText(sale.getMemId());
@@ -71,7 +69,6 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
         holder.rate.setText(sale.getRate());
         holder.qty.setText(sale.getQty());
         holder.amt.setText(sale.getAmount());
-        holder.branch.setText(sale.getBranchName());
         holder.fat.setText(sale.getFat());
 
 //        holder.delete.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +97,7 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView memberId, memberName, milkType, morEve, date, rate, qty, amt, branch, fat;
+        TextView memberId, memberName, milkType, morEve, date, rate, qty, amt, fat;
         ImageView edit;
         ImageView delete;
         View mView;
@@ -116,7 +113,6 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
             rate = view.findViewById(R.id.rate);
             qty = view.findViewById(R.id.qty);
             amt = view.findViewById(R.id.amt);
-            branch = view.findViewById(R.id.bname);
             fat = view.findViewById(R.id.fat);
 
 //            edit = view.findViewById(R.id.edit);

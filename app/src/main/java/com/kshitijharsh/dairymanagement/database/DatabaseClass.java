@@ -11,7 +11,7 @@ import java.io.File;
 public class DatabaseClass extends SQLiteOpenHelper {
 
     public final static String DATABASE_NAME ="records.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private SQLiteDatabase db;
     private File dbPath;
 
@@ -26,7 +26,7 @@ public class DatabaseClass extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //db.execSQL("CREATE TABLE member(memb_code INTEGER PRIMARY KEY, memb_name TEXT, zoon_code INTEGER, Cobf_type INTEGER, memb_type INTEGER, accno INTEGER, rategrno INTEGER, bank_code INTEGER, BankAcNo INTEGER, membNam_Eng TEXT, AcNo INTEGER);");
         db.execSQL("CREATE TABLE collectionTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, memName TEXT, cobf TEXT, morEve TEXT, degree FLOAT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
-        db.execSQL("CREATE TABLE saleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, brName TEXT, membCode INTEGER, memName TEXT, mornEve TEXT, cobf TEXT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
+        db.execSQL("CREATE TABLE saleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, memName TEXT, mornEve TEXT, cobf TEXT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
         db.execSQL("CREATE TABLE cattleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, memId INTEGER, memName TEXT, itemName TEXT, quantity FLOAT, rate FLOAT, amount FLOAT, particulars TEXT);");
     }
 
@@ -70,10 +70,9 @@ public class DatabaseClass extends SQLiteOpenHelper {
         getWritableDatabase().insert("collectionTransactions", "trnDate", values);
     }
 
-    public void addSale(String date, String brName, int membCode, String name, String morEve, String cobf, float liters, float fat, float rate, float amount) {
+    public void addSale(String date, int membCode, String name, String morEve, String cobf, float liters, float fat, float rate, float amount) {
         ContentValues values = new ContentValues(10);
         values.put("trnDate", date);
-        values.put("brName", brName);
         values.put("membCode", membCode);
         values.put("memName", name);
         values.put("mornEve", morEve);

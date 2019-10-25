@@ -87,7 +87,7 @@ public class CollectionActivity extends AppCompatActivity {
 
         settingsPrefs = SettingsActivity.MainPreferenceFragment.CALCULATE_PREF;
 
-        Toast.makeText(this, "Prefs: " + settingsPrefs, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Preferences: " + settingsPrefs, Toast.LENGTH_SHORT).show();
 
         if (settingsPrefs.equals("false")) {
             degree.setVisibility(View.VISIBLE);
@@ -141,7 +141,7 @@ public class CollectionActivity extends AppCompatActivity {
                     getRateAmt(de, fa, qt, cowBuf.getText().toString());
 
                 } else {
-                    Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -179,7 +179,7 @@ public class CollectionActivity extends AppCompatActivity {
                     }
                     getRateAmt(de, fa, qt, cowBuf.getText().toString());
                 } else {
-                    Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -217,7 +217,7 @@ public class CollectionActivity extends AppCompatActivity {
                     }
                     getRateAmt(de, fa, qt, cowBuf.getText().toString());
                 } else {
-                    Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
