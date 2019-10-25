@@ -21,8 +21,7 @@ import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Objects;
 
 public class MemberActivity extends AppCompatActivity {
 
@@ -42,7 +41,7 @@ public class MemberActivity extends AppCompatActivity {
         dbQuery.open();
         dbHelper = new DBHelper(this);
 
-        getSupportActionBar().setTitle("Add Members");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Add Members");
 
         name = findViewById(R.id.edt_memb_name);
 //        zone = findViewById(R.id.zoonCode);
@@ -124,20 +123,18 @@ public class MemberActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_details:
-                startActivity(new Intent(this, MemberDetailActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.menu_details) {
+            startActivity(new Intent(this, MemberDetailActivity.class));
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public int getRateGrpNoFromName(String name) {
         Cursor c = dbQuery.getRateGrpNo(name);
         int no;
         c.moveToFirst();
-        if (c.getCount() > 0 && c != null) {
+        if (c.getCount() > 0) {
             no = c.getInt(c.getColumnIndex("RateGrno"));
             return no;
         } else {

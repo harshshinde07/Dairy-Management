@@ -103,7 +103,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         return collectionList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView memberId, memberName, milkType, memberType, date, rate, qty, amt, snf, fat, morEve;
         ImageView edit;
         ImageView delete;

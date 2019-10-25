@@ -1,33 +1,29 @@
 package com.kshitijharsh.dairymanagement.activities;
 
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.kshitijharsh.dairymanagement.ItemClickListener;
 import com.kshitijharsh.dairymanagement.R;
 import com.kshitijharsh.dairymanagement.adapters.CollectionAdapter;
-import com.kshitijharsh.dairymanagement.adapters.MemberAdapter;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
 import com.kshitijharsh.dairymanagement.model.Collection;
-import com.kshitijharsh.dairymanagement.model.Member;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CollectionDetailActivity extends AppCompatActivity implements ItemClickListener {
 
     private RecyclerView recyclerView;
-    private CollectionAdapter mAdapter;
     DBQuery dbQuery;
     List<Collection> collectionList;
     DatabaseClass db;
@@ -37,7 +33,7 @@ public class CollectionDetailActivity extends AppCompatActivity implements ItemC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection_detail);
 
-        getSupportActionBar().setTitle("Collection Details");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Collection Details");
 
         dbQuery = new DBQuery(this);
         dbQuery.open();
@@ -69,7 +65,7 @@ public class CollectionDetailActivity extends AppCompatActivity implements ItemC
             collectionList.add(collection);
             cursor.moveToNext();
         }
-        mAdapter = new CollectionAdapter(collectionList, this, this);
+        CollectionAdapter mAdapter = new CollectionAdapter(collectionList, this, this);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -83,13 +79,10 @@ public class CollectionDetailActivity extends AppCompatActivity implements ItemC
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_filter:
-                //TODO
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.menu_filter) {//TODO
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

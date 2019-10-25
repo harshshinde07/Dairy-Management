@@ -3,9 +3,6 @@ package com.kshitijharsh.dairymanagement.model;
 public class CattleFeed {
     private String id, date, memId, name, itemName, rate, qty, amt, particulars;
 
-    CattleFeed() {
-    }
-
     public CattleFeed(String id, String date, String memId, String name, String itemName, String rate, String qty, String amt, String particulars) {
         this.id = id;
         this.date = date;

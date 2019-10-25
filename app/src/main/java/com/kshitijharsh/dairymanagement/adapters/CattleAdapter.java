@@ -8,12 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kshitijharsh.dairymanagement.ItemClickListener;
 import com.kshitijharsh.dairymanagement.R;
 import com.kshitijharsh.dairymanagement.model.CattleFeed;
-import com.kshitijharsh.dairymanagement.model.Member;
 
 import java.util.List;
 
@@ -94,7 +92,7 @@ public class CattleAdapter extends RecyclerView.Adapter<CattleAdapter.ViewHolder
         return cattleList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView memberId, memberName, date, itemName, rate, qty, amt, part;
         ImageView edit;
         ImageView delete;

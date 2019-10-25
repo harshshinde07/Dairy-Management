@@ -1,5 +1,6 @@
 package com.kshitijharsh.dairymanagement.activities;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -32,6 +33,7 @@ import com.kshitijharsh.dairymanagement.model.Member;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class SaleActivity extends AppCompatActivity {
 
@@ -39,10 +41,10 @@ public class SaleActivity extends AppCompatActivity {
     AutoCompleteTextView edtName;
     TextView cowBuf;
     ArrayList<String> names;
-    TextView amt;
+    TextView amt, date;
     EditText txtCode;
     HashMap<String, Member> members;
-    EditText branch, fat, quantity, date, rate;
+    EditText fat, quantity, rate;
     Button save, clear;
     DBHelper dbHelper;
     DatabaseClass dbClass;
@@ -60,7 +62,7 @@ public class SaleActivity extends AppCompatActivity {
         dbHelper = new DBHelper(this);
         dbClass = new DatabaseClass(this);
 
-        getSupportActionBar().setTitle("Milk Sale");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Milk Sale");
 
         edtName = findViewById(R.id.edt_memb_name);
         cowBuf = findViewById(R.id.cow_buf);
@@ -88,6 +90,7 @@ public class SaleActivity extends AppCompatActivity {
                                           int count, int after) {
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
@@ -122,6 +125,7 @@ public class SaleActivity extends AppCompatActivity {
                                           int count, int after) {
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
@@ -188,7 +192,7 @@ public class SaleActivity extends AppCompatActivity {
                 amt.setText("");
                 fat.setText("");
                 quantity.setText("");
-                date.setText("");
+                date.setText(R.string.select_date);
                 radioGroup.clearCheck();
                 radioGroupCB.clearCheck();
             }
@@ -200,6 +204,7 @@ public class SaleActivity extends AppCompatActivity {
         final int mMonth = mcurrentDate.get(Calendar.MONTH);
         final int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
         datePickerDialog = new DatePickerDialog(SaleActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 int m = month + 1;
@@ -216,6 +221,7 @@ public class SaleActivity extends AppCompatActivity {
         });
 
         save.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || txtCode.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroup.getCheckedRadioButtonId() == -1) {
@@ -243,14 +249,15 @@ public class SaleActivity extends AppCompatActivity {
                         rate.setText("");
                         fat.setText("");
                         quantity.setText("");
-                        date.setText("");
+                        date.setText(R.string.select_date);
                         radioGroup.clearCheck();
                         radioGroupCB.clearCheck();
                         swapBoth.setVisibility(View.GONE);
                         swapCB.setVisibility(View.VISIBLE);
-                    } else {
-//                        Toast.makeText(SaleActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                     }
+//                    else {
+//                        Toast.makeText(SaleActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
+//                    }
                 }
 
             }
@@ -298,6 +305,7 @@ public class SaleActivity extends AppCompatActivity {
                     cowBuf.setText(cbText);
                 } else if (cb == 3) {
                     cbText = "Both";
+                    cowBuf.setText(cbText);
                     swapBoth.setVisibility(View.VISIBLE);
                     swapCB.setVisibility(View.GONE);
                 } else {
@@ -340,7 +348,7 @@ public class SaleActivity extends AppCompatActivity {
         String name;
         c.moveToFirst();
         edtName.setText("");
-        if (c.getCount() > 0 && c != null) {
+        if (c.getCount() > 0) {
             name = c.getString(c.getColumnIndex("memb_name"));
             edtName.setText(name);
             Member member = members.get(name);
@@ -355,6 +363,7 @@ public class SaleActivity extends AppCompatActivity {
                 cowBuf.setText(cbText);
             } else if (cb == 3) {
                 cbText = "Both";
+                cowBuf.setText(cbText);
                 swapBoth.setVisibility(View.VISIBLE);
                 swapCB.setVisibility(View.GONE);
             } else {
@@ -374,12 +383,10 @@ public class SaleActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_details:
-                startActivity(new Intent(this, SaleDetailActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.menu_details) {
+            startActivity(new Intent(this, SaleDetailActivity.class));
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 }

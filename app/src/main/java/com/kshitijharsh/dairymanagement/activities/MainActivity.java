@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getSupportActionBar().setLogo(R.drawable.winsofticon);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         setContentView(R.layout.activity_main);
         checkForStoragePermission();
         dc = new DatabaseClass(this);
@@ -99,7 +100,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 },3*1000);
             }
-
+            member.close();
+            rateMaster.close();
+            item.close();
+            rateGrpMaster.close();
             DBQuery query = new DBQuery(this);
             query.createDatabase();
             query.open();
@@ -162,9 +166,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, CattleFeedActivity.class));
     }
 
-    public void launchDeduction(View view) {
-        startActivity(new Intent(MainActivity.this, DeductionActivity.class));
-    }
+//    public void launchDeduction(View view) {
+//        startActivity(new Intent(MainActivity.this, DeductionActivity.class));
+//    }
 
     public void launchMember(View view) {
         startActivity(new Intent(MainActivity.this, MemberActivity.class));

@@ -27,13 +27,14 @@
                 android:text="@string/date"
                 android:textSize="18sp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/date"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:singleLine="true"
                 android:hint="@string/select_date"
+                android:textSize="18sp"
                 android:padding="8dp" />
 
             <!--            <EditText-->
@@ -223,7 +224,7 @@
 
             <TextView
                 android:id="@+id/amt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="4dp"

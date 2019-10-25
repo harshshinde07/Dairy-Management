@@ -1,18 +1,14 @@
 package com.kshitijharsh.dairymanagement.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.kshitijharsh.dairymanagement.ItemClickListener;
@@ -26,11 +22,11 @@ import com.kshitijharsh.dairymanagement.viewmodel.MemberDetailActivityViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MemberDetailActivity extends AppCompatActivity implements ItemClickListener, FilterDialogFragment.FilterListener {
 
     private RecyclerView recyclerView;
-    private MemberAdapter mAdapter;
     DBQuery dbQuery;
     List<Member> memberList;
 
@@ -42,7 +38,7 @@ public class MemberDetailActivity extends AppCompatActivity implements ItemClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_detail);
 
-        getSupportActionBar().setTitle("Member Details");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Member Details");
 
         mViewModel = ViewModelProviders.of(this).get(MemberDetailActivityViewModel.class);
         mFilterDialog = new FilterDialogFragment();
@@ -67,7 +63,7 @@ public class MemberDetailActivity extends AppCompatActivity implements ItemClick
     public void getMemDetails(String filter) {
         Log.e("TAAAAAAAAAAAAAAG", filter);
         Cursor cursor = dbQuery.getAllMembers(filter);
-        String memType = "", milkType = "", rateGrpName = "";
+        String memType = "", milkType = "", rateGrpName;
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             if (cursor.getString(2).equals("1"))
@@ -91,7 +87,7 @@ public class MemberDetailActivity extends AppCompatActivity implements ItemClick
             memberList.add(mem);
             cursor.moveToNext();
         }
-        mAdapter = new MemberAdapter(memberList, this, this);
+        MemberAdapter mAdapter = new MemberAdapter(memberList, this, this);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -104,7 +100,7 @@ public class MemberDetailActivity extends AppCompatActivity implements ItemClick
         Cursor c = dbQuery.getRateGrpName(no);
         String name = "";
         c.moveToFirst();
-        if (c.getCount() > 0 && c != null) {
+        if (c.getCount() > 0) {
             name = c.getString(c.getColumnIndex("RateGrname"));
             return name;
         } else {
@@ -130,14 +126,11 @@ public class MemberDetailActivity extends AppCompatActivity implements ItemClick
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_filter:
-                // Show the dialog containing filter options
-                mFilterDialog.show(getSupportFragmentManager(), FilterDialogFragment.TAG);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.menu_filter) {// Show the dialog containing filter options
+            mFilterDialog.show(getSupportFragmentManager(), FilterDialogFragment.TAG);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     //TODO
@@ -147,14 +140,14 @@ public class MemberDetailActivity extends AppCompatActivity implements ItemClick
 //        Query query = mFirestore.collection("restaurants");
 //
         // Category (equality filter)
-        if (filters.hasType()) {
+//        if (filters.hasType()) {
 //            getMemDetails(filters.getType());
-        }
+//        }
 
         // City (equality filter)
-        if (filters.hasTime()) {
+//        if (filters.hasTime()) {
 //            getMemDetails(filters.getTime());
-        }
+//        }
 
         // Sort by (orderBy with direction)
 //        if (filters.hasSortBy()) {

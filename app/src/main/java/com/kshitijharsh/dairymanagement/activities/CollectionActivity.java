@@ -1,15 +1,14 @@
 package com.kshitijharsh.dairymanagement.activities;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,18 +36,20 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class CollectionActivity extends AppCompatActivity {
     DBQuery dbQuery;
     AutoCompleteTextView edtName;
     TextView membType, cowBuf;
     ArrayList<String> names;
-    TextView rate, amt;
+    TextView rate, amt, date;
     EditText txtCode;
     HashMap<String, Member> members;
-    EditText degree, fat, quantity, date, snf;
+    EditText degree, fat, quantity, snf;
     Button save, clear;
-    float f, q, d, a;
+    float a;
+    //    float f, q, d;
     DBHelper dbHelper;
     DatabaseClass dbClass;
     RadioGroup radioGroup, radioGroupMorEve;
@@ -58,7 +59,7 @@ public class CollectionActivity extends AppCompatActivity {
     String[] memb_type = {"Member", "Contractor", "Labour Contractor"};
     String settingsPrefs = "empty";
     int rateGroupNo;
-    SQLiteDatabase db;
+//    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,7 @@ public class CollectionActivity extends AppCompatActivity {
         degree.setVisibility(View.GONE);
         addSNF = findViewById(R.id.linearAdd);
 
-        getSupportActionBar().setTitle("Milk Collection");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Milk Collection");
 
         settingsPrefs = SettingsActivity.MainPreferenceFragment.CALCULATE_PREF;
 
@@ -118,6 +119,7 @@ public class CollectionActivity extends AppCompatActivity {
                                           int count, int after) {
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
@@ -140,9 +142,10 @@ public class CollectionActivity extends AppCompatActivity {
                     }
                     getRateAmt(de, fa, qt, cowBuf.getText().toString());
 
-                } else {
-//                    Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
                 }
+//                else {
+//                    Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 
@@ -157,6 +160,7 @@ public class CollectionActivity extends AppCompatActivity {
                                           int count, int after) {
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
@@ -178,9 +182,10 @@ public class CollectionActivity extends AppCompatActivity {
                         calculateSNF(de, fa);
                     }
                     getRateAmt(de, fa, qt, cowBuf.getText().toString());
-                } else {
-//                    Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
                 }
+//                else {
+//                    Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 
@@ -195,6 +200,7 @@ public class CollectionActivity extends AppCompatActivity {
                                           int count, int after) {
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
@@ -216,9 +222,10 @@ public class CollectionActivity extends AppCompatActivity {
                         calculateSNF(de, fa);
                     }
                     getRateAmt(de, fa, qt, cowBuf.getText().toString());
-                } else {
-//                    Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
                 }
+//                else {
+//                    Toast.makeText(CollectionActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 
@@ -267,7 +274,7 @@ public class CollectionActivity extends AppCompatActivity {
                 degree.setText("");
                 fat.setText("");
                 quantity.setText("");
-                date.setText("");
+                date.setText(R.string.select_date);
                 if (settingsPrefs.equals("true"))
                     snf.setText("");
                 radioGroup.clearCheck();
@@ -281,6 +288,7 @@ public class CollectionActivity extends AppCompatActivity {
         final int mMonth = mcurrentDate.get(Calendar.MONTH);
         final int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
         datePickerDialog = new DatePickerDialog(CollectionActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 int m = month + 1;
@@ -297,10 +305,11 @@ public class CollectionActivity extends AppCompatActivity {
         });
 
         save.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                float deg = 0, lit, f, q;
-                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || membType.getText().toString().equals("") || txtCode.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroupMorEve.getCheckedRadioButtonId() == -1) {
+                float deg = 0, lit, f;
+                if (date.getText().toString().equals("Select Date") || edtName.getText().toString().equals("") || membType.getText().toString().equals("") || txtCode.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroupMorEve.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
                     int memCode = Integer.parseInt(txtCode.getText().toString());
@@ -308,7 +317,6 @@ public class CollectionActivity extends AppCompatActivity {
                         deg = Float.parseFloat(degree.getText().toString());
                     lit = Float.parseFloat(quantity.getText().toString());
                     f = Float.parseFloat(fat.getText().toString());
-                    q = Float.parseFloat(quantity.getText().toString());
 
                     if (swapBoth.getVisibility() == View.VISIBLE) {
                         if (cowBuff.equals("Cow"))
@@ -331,19 +339,21 @@ public class CollectionActivity extends AppCompatActivity {
                             degree.setText("");
                             fat.setText("");
                             quantity.setText("");
-                            date.setText("");
+                            date.setText(R.string.select_date);
                             rate.setText("");
                             amt.setText("");
                             radioGroup.clearCheck();
                             radioGroupMorEve.clearCheck();
                             swapBoth.setVisibility(View.GONE);
                             swapCB.setVisibility(View.VISIBLE);
-                        } else {
-//                            Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-//                        Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
+//                        else {
+//                            Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
+//                        }
                     }
+//                    else {
+//                        Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
+//                    }
                 }
 
             }
@@ -451,7 +461,7 @@ public class CollectionActivity extends AppCompatActivity {
         }
         float val;
         c.moveToFirst();
-        if (c.getCount() > 0 && c != null) {
+        if (c.getCount() > 0) {
             val = c.getFloat(c.getColumnIndex("rate"));
             //Toast.makeText(this, String.valueOf(val), Toast.LENGTH_SHORT).show();
             rate.setText(String.valueOf(val));
@@ -460,9 +470,10 @@ public class CollectionActivity extends AppCompatActivity {
             amt.setText(String.valueOf(a));
             //float m = dbQuery.getMilkCount();
             //Toast.makeText(this, String.valueOf(m), Toast.LENGTH_SHORT).show();
-        } else {
-//            Toast.makeText(this, "Value not found!", Toast.LENGTH_SHORT).show();
         }
+//        else {
+//            Toast.makeText(this, "Value not found!", Toast.LENGTH_SHORT).show();
+//        }
     }
 
     public void getMemNameFromID(int id) {
@@ -470,7 +481,7 @@ public class CollectionActivity extends AppCompatActivity {
         String name;
         c.moveToFirst();
         edtName.setText("");
-        if (c.getCount() > 0 && c != null) {
+        if (c.getCount() > 0) {
             name = c.getString(c.getColumnIndex("memb_name"));
             edtName.setText(name);
             Member member = members.get(name);
@@ -517,12 +528,10 @@ public class CollectionActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_details:
-                startActivity(new Intent(this, CollectionDetailActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.menu_details) {
+            startActivity(new Intent(this, CollectionDetailActivity.class));
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 }

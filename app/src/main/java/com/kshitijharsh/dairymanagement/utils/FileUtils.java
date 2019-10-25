@@ -8,11 +8,11 @@ import static com.kshitijharsh.dairymanagement.utils.Constants.CONST.EXT_DIRECTO
 
 public class FileUtils {
 
-    public static String getAppDir(){
+    static String getAppDir() {
         return Environment.getExternalStorageDirectory() + EXT_DIRECTORY;
     }
 
-    public static File createDirIfNotExist(String path){
+    static File createDirIfNotExist(String path) {
         File dir = new File(path);
         if( !dir.exists() ){
             dir.mkdir();
@@ -21,7 +21,7 @@ public class FileUtils {
     }
 
     /* Checks if external storage is available for read and write */
-    public static boolean isExternalStorageWritable() {
+    static boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state);
     }
