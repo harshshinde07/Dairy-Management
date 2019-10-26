@@ -99,7 +99,7 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
     public float getMilkCount() {
         float milkCount = 0;
-        String query = "SELECT SUM(liters) from TABLE_COLLECTION;";
+        String query = "SELECT SUM(liters) from collectionTransactions;";
         Cursor c = getReadableDatabase().rawQuery(query,null);
         //c.moveToFirst();
         if(c != null && c.getCount() >0)
@@ -122,6 +122,27 @@ public class DatabaseClass extends SQLiteOpenHelper {
     public Cursor getAllCollection() {
         String query = "SELECT * FROM collectionTransactions";
         SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery(query, null);
+    }
+
+    public Cursor deleteCollectionItem(String id) {
+        String query = "DELETE FROM collectionTransactions WHERE _id='" + id + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("collectionTransactions", "_id='" + id + "'", null);
+        return db.rawQuery(query, null);
+    }
+
+    public Cursor deleteSaleItem(String id) {
+        String query = "DELETE FROM saleTransactions WHERE _id='" + id + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("saleTransactions", "_id='" + id + "'", null);
+        return db.rawQuery(query, null);
+    }
+
+    public Cursor deleteCattleItem(String id) {
+        String query = "DELETE FROM cattleTransactions WHERE _id='" + id + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("cattleTransactions", "_id='" + id + "'", null);
         return db.rawQuery(query, null);
     }
 }

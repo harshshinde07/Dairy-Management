@@ -204,4 +204,11 @@ public class DBQuery {
         String query = "SELECT RateGrname from Rt_grmst where RateGrno='" + rateGrpNo + "'";
         return db.rawQuery(query, null);
     }
+
+    public Cursor deleteMember(String id) {
+        String query = "DELETE FROM member WHERE memb_code='" + id + "'";
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete("member", "memb_code='" + id + "'", null);
+        return db.rawQuery(query, null);
+    }
 }
