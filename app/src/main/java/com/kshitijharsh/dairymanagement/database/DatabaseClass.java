@@ -185,4 +185,29 @@ public class DatabaseClass extends SQLiteOpenHelper {
         c.close();
         return amt;
     }
+
+    //get member wise daily collection
+    public float getMemberWiseDailyLitre(String date, String name) {
+        float milkCount = 0;
+        String query = "SELECT SUM(liters) as Total from collectionTransactions WHERE trnDate='" + date + "' AND memName='" + name + "'";
+        Cursor c = getReadableDatabase().rawQuery(query, null);
+        //c.moveToFirst();
+        if (c.moveToFirst()) {
+            milkCount = c.getFloat(c.getColumnIndex("Total"));
+        }
+        c.close();
+        return milkCount;
+    }
+
+    public float getMemberWiseDailyAmt(String date, String name) {
+        float amt = 0;
+        String query = "SELECT SUM(amount) as Total from collectionTransactions WHERE trnDate='" + date + "' AND memName='" + name + "'";
+        Cursor c = getReadableDatabase().rawQuery(query, null);
+        //c.moveToFirst();
+        if (c.moveToFirst()) {
+            amt = c.getFloat(c.getColumnIndex("Total"));
+        }
+        c.close();
+        return amt;
+    }
 }

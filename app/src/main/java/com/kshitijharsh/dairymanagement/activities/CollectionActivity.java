@@ -53,14 +53,14 @@ public class CollectionActivity extends AppCompatActivity {
     DBHelper dbHelper;
     DatabaseClass dbClass;
     RadioGroup radioGroup, radioGroupMorEve;
-    LinearLayout swapCB, swapBoth, addSNF, collectionDetails;
+    LinearLayout swapCB, swapBoth, addSNF, collectionDetails, todayDetails;
     String cowBuff;
     String mornEve;
     String[] memb_type = {"Member", "Contractor", "Labour Contractor"};
     String settingsPrefs = "empty";
     int rateGroupNo;
 //    SQLiteDatabase db;
-TextView todayDate, totLit, totAmt;
+TextView todayDate, totLit, totAmt, todayLit, todayAmt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +84,10 @@ TextView todayDate, totLit, totAmt;
         date = findViewById(R.id.date);
         degree.setVisibility(View.GONE);
         addSNF = findViewById(R.id.linearAdd);
+
+        todayAmt = findViewById(R.id.today_amt);
+        todayLit = findViewById(R.id.today_lit);
+        todayDetails = findViewById(R.id.today_details);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("Milk Collection");
 
@@ -286,6 +290,8 @@ TextView todayDate, totLit, totAmt;
                 radioGroup.clearCheck();
                 radioGroupMorEve.clearCheck();
                 collectionDetails.setVisibility(View.GONE);
+                if (todayDetails.getVisibility() == View.VISIBLE)
+                    todayDetails.setVisibility(View.GONE);
             }
         });
 
@@ -305,6 +311,18 @@ TextView todayDate, totLit, totAmt;
                 totAmt.setText(String.valueOf(dbClass.getCollecedAmtFromDate(tmp)));
                 totLit.setText(String.valueOf(dbClass.getCollecedMilkFromDate(tmp)));
                 collectionDetails.setVisibility(View.VISIBLE);
+
+                if (!edtName.getText().toString().equals("")) {
+                    float amt = dbClass.getMemberWiseDailyAmt(tmp, edtName.getText().toString());
+                    float lit = dbClass.getMemberWiseDailyLitre(tmp, edtName.getText().toString());
+                    if (amt != 0 && lit != 0) {
+                        todayAmt.setText(String.valueOf(amt) + " Rupees");
+                        todayLit.setText(String.valueOf(lit) + " Litres");
+                        todayDetails.setVisibility(View.VISIBLE);
+                    } else {
+                        todayDetails.setVisibility(View.GONE);
+                    }
+                }
 
             }
         }, mYear, mMonth, mDay);
@@ -359,6 +377,8 @@ TextView todayDate, totLit, totAmt;
                             swapBoth.setVisibility(View.GONE);
                             swapCB.setVisibility(View.VISIBLE);
                             collectionDetails.setVisibility(View.GONE);
+                            if (todayDetails.getVisibility() == View.VISIBLE)
+                                todayDetails.setVisibility(View.GONE);
                         }
 //                        else {
 //                            Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
@@ -384,6 +404,19 @@ TextView todayDate, totLit, totAmt;
                 if (!charSequence.toString().equals("")) {
                     val = Integer.parseInt(charSequence.toString());
                     getMemNameFromID(val);
+
+                    if (!date.getText().toString().equals("Select Date")) {
+                        float amt = dbClass.getMemberWiseDailyAmt(date.getText().toString(), edtName.getText().toString());
+                        float lit = dbClass.getMemberWiseDailyLitre(date.getText().toString(), edtName.getText().toString());
+                        if (amt != 0 && lit != 0) {
+                            todayAmt.setText(String.valueOf(amt) + " Rupees");
+                            todayLit.setText(String.valueOf(lit) + " Litres");
+                            todayDetails.setVisibility(View.VISIBLE);
+                        } else {
+                            todayDetails.setVisibility(View.GONE);
+                        }
+                    }
+
                 } else {
                     edtName.setText("");
                 }
@@ -425,6 +458,18 @@ TextView todayDate, totLit, totAmt;
                 }
                 membType.setText(memb_type[type]);
                 txtCode.setText(member.getCode());
+
+                if (!date.getText().toString().equals("Select Date")) {
+                    float amt = dbClass.getMemberWiseDailyAmt(date.getText().toString(), edtName.getText().toString());
+                    float lit = dbClass.getMemberWiseDailyLitre(date.getText().toString(), edtName.getText().toString());
+                    if (amt != 0 && lit != 0) {
+                        todayAmt.setText(String.valueOf(amt) + " Rupees");
+                        todayLit.setText(String.valueOf(lit) + " Litres");
+                        todayDetails.setVisibility(View.VISIBLE);
+                    } else {
+                        todayDetails.setVisibility(View.GONE);
+                    }
+                }
 
             }
         });
