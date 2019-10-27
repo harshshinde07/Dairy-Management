@@ -1,19 +1,25 @@
 package com.kshitijharsh.dairymanagement.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kshitijharsh.dairymanagement.R;
@@ -32,6 +38,7 @@ public class MemberActivity extends AppCompatActivity {
     RadioGroup radioGroup;
     DBHelper dbHelper;
     String cowBuf;
+    ProgressDialog p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +60,29 @@ public class MemberActivity extends AppCompatActivity {
         radioGroup.clearCheck();
 
         initGroupNames();
+
+//        name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if(actionId== EditorInfo.IME_ACTION_DONE){
+//                    //Clear focus here from edittext
+//                    name.clearFocus();
+//                }
+//                return false;
+//            }
+//        });
+//
+////         Implement onFocusChanged to check for duplicate member names
+//        name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (!hasFocus) {
+////                    checkForDuplicateName(name.getText().toString());
+//                    CheckDuplicateAsyncTask asyncTask = new CheckDuplicateAsyncTask();
+//                    asyncTask.execute(name.getText().toString());
+//                }
+//            }
+//        });
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -80,6 +110,10 @@ public class MemberActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int zoonCode = 1, cb = -1, mType = -1, rateGrpNo = -1;
                 String rateGrpName;
+
+//                CheckDuplicateAsyncTask asyncTask = new CheckDuplicateAsyncTask();
+//                asyncTask.execute(name.getText().toString());
+
                 if (name.getText().toString().equals("") || radioGroup.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(MemberActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
@@ -159,4 +193,47 @@ public class MemberActivity extends AppCompatActivity {
         rateGrp.setAdapter(adapter);
 
     }
+
+    //TODO check for duplicates in member names
+//    protected int checkForDuplicateName(String val) {
+//        Cursor cursor = dbQuery.getAllMembers("");
+//        cursor.moveToFirst();
+//        while (!cursor.isAfterLast()) {
+//            if(cursor.getString(1).equals(val)) {
+////                name.setText("");
+////                name.setError("The name already exists! Try another.");
+//                Toast.makeText(this, "True!", Toast.LENGTH_SHORT).show();
+//                return 1;
+//            }
+//        }
+//        return 0;
+//    }
+//
+//    private class CheckDuplicateAsyncTask extends AsyncTask<String, Void, Integer> {
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            p = new ProgressDialog(MemberActivity.this);
+//            p.setMessage("Please wait...");
+//            p.setIndeterminate(false);
+//            p.setCancelable(false);
+//            p.show();
+//        }
+//
+//        @Override
+//        protected Integer doInBackground(String... strings) {
+//            return checkForDuplicateName(strings[0]);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Integer i) {
+//            super.onPostExecute(i);
+//            p.dismiss();
+//            if(i != 0) {
+//                name.setText("");
+//                name.setError("The name already exists! Try another.");
+//            }
+//        }
+//    }
 }

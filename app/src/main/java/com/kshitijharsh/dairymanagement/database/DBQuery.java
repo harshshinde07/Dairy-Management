@@ -70,16 +70,6 @@ public class DBQuery {
         String[] cols = {COLUMN_MEMB_CODE, COLUMN_MEMB_NAME, COLUMN_COWBF_TYPE, COLUMN_MEMB_TYPE, COLUMN_RATEGRP_NO};
 
 //        if (order.equals("code"))
-            return db.query(
-                    TABLE_MEMBER,
-                    cols,
-                    null,
-                    null,
-                    null,
-                    null,
-                    COLUMN_MEMB_CODE
-            );
-//        else
 //            return db.query(
 //                    TABLE_MEMBER,
 //                    cols,
@@ -87,8 +77,18 @@ public class DBQuery {
 //                    null,
 //                    null,
 //                    null,
-//                    COLUMN_MEMB_NAME
+//                    COLUMN_MEMB_CODE
 //            );
+//        else
+        return db.query(
+                TABLE_MEMBER,
+                cols,
+                null,
+                null,
+                null,
+                null,
+                COLUMN_MEMB_NAME
+        );
     }
 
     public Cursor getAllRateGroups() {
@@ -142,7 +142,7 @@ public class DBQuery {
             val = val + 1;
         }
         int memCode = val;
-        Log.e("-----------------", String.valueOf(val));
+//        Log.e("-----------------", String.valueOf(val));
         int acno = 1, bankcode = 1, bankAcNo = 1, acNo = 1;
 
         ContentValues values = new ContentValues(11);

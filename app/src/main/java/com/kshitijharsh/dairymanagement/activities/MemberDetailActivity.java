@@ -61,7 +61,7 @@ public class MemberDetailActivity extends AppCompatActivity implements ItemClick
     }
 
     public void getMemDetails(String filter) {
-        Log.e("TAAAAAAAAAAAAAAG", filter);
+//        Log.e("TAAAAAAAAAAAAAAG", filter);
         Cursor cursor = dbQuery.getAllMembers(filter);
         String memType = "", milkType = "", rateGrpName;
         cursor.moveToFirst();
