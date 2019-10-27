@@ -49,9 +49,10 @@ public class SaleActivity extends AppCompatActivity {
     DBHelper dbHelper;
     DatabaseClass dbClass;
     RadioGroup radioGroup, radioGroupCB;
-    LinearLayout swapCB, swapBoth;
+    LinearLayout swapCB, swapBoth, saleDetails;
     String cowBuff;
     String mornEve;
+    TextView todayDate, totLit, totAmt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +170,11 @@ public class SaleActivity extends AppCompatActivity {
         swapBoth = findViewById(R.id.swapBoth);
         swapCB = findViewById(R.id.swapCB);
 
+        saleDetails = findViewById(R.id.sale_details);
+        todayDate = findViewById(R.id.today_date);
+        totAmt = findViewById(R.id.tot_amt);
+        totLit = findViewById(R.id.tot_lit);
+
         radioGroupCB.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -195,6 +201,7 @@ public class SaleActivity extends AppCompatActivity {
                 date.setText(R.string.select_date);
                 radioGroup.clearCheck();
                 radioGroupCB.clearCheck();
+                saleDetails.setVisibility(View.GONE);
             }
         });
 
@@ -208,7 +215,12 @@ public class SaleActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 int m = month + 1;
-                date.setText(dayOfMonth + "-" + m + "-" + year);
+                String tmp = dayOfMonth + "-" + m + "-" + year;
+                date.setText(tmp);
+                todayDate.setText(tmp);
+                totAmt.setText(String.valueOf(dbClass.getAmtFromDate(tmp)));
+                totLit.setText(String.valueOf(dbClass.getMilkFromDate(tmp)));
+                saleDetails.setVisibility(View.VISIBLE);
 
             }
         }, mYear, mMonth, mDay);
@@ -254,6 +266,7 @@ public class SaleActivity extends AppCompatActivity {
                         radioGroupCB.clearCheck();
                         swapBoth.setVisibility(View.GONE);
                         swapCB.setVisibility(View.VISIBLE);
+                        saleDetails.setVisibility(View.GONE);
                     }
 //                    else {
 //                        Toast.makeText(SaleActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();

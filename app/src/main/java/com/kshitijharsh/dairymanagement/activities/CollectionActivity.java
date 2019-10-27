@@ -53,13 +53,14 @@ public class CollectionActivity extends AppCompatActivity {
     DBHelper dbHelper;
     DatabaseClass dbClass;
     RadioGroup radioGroup, radioGroupMorEve;
-    LinearLayout swapCB, swapBoth, addSNF;
+    LinearLayout swapCB, swapBoth, addSNF, collectionDetails;
     String cowBuff;
     String mornEve;
     String[] memb_type = {"Member", "Contractor", "Labour Contractor"};
     String settingsPrefs = "empty";
     int rateGroupNo;
 //    SQLiteDatabase db;
+TextView todayDate, totLit, totAmt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,6 +250,11 @@ public class CollectionActivity extends AppCompatActivity {
         swapBoth = findViewById(R.id.swapBoth);
         swapCB = findViewById(R.id.swapCB);
 
+        collectionDetails = findViewById(R.id.collection_details);
+        todayDate = findViewById(R.id.today_date);
+        totAmt = findViewById(R.id.tot_amt);
+        totLit = findViewById(R.id.tot_lit);
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -279,6 +285,7 @@ public class CollectionActivity extends AppCompatActivity {
                     snf.setText("");
                 radioGroup.clearCheck();
                 radioGroupMorEve.clearCheck();
+                collectionDetails.setVisibility(View.GONE);
             }
         });
 
@@ -292,7 +299,12 @@ public class CollectionActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 int m = month + 1;
-                date.setText(dayOfMonth + "-" + m + "-" + year);
+                String tmp = dayOfMonth + "-" + m + "-" + year;
+                date.setText(tmp);
+                todayDate.setText(tmp);
+                totAmt.setText(String.valueOf(dbClass.getCollecedAmtFromDate(tmp)));
+                totLit.setText(String.valueOf(dbClass.getCollecedMilkFromDate(tmp)));
+                collectionDetails.setVisibility(View.VISIBLE);
 
             }
         }, mYear, mMonth, mDay);
@@ -346,6 +358,7 @@ public class CollectionActivity extends AppCompatActivity {
                             radioGroupMorEve.clearCheck();
                             swapBoth.setVisibility(View.GONE);
                             swapCB.setVisibility(View.VISIBLE);
+                            collectionDetails.setVisibility(View.GONE);
                         }
 //                        else {
 //                            Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();

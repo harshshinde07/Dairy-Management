@@ -18,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,8 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
     String label;
     ArrayList<String> names;
     HashMap<String, Member> members;
+    TextView todayDate, totAmt;
+    LinearLayout cattleDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +77,10 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
 
         item.setOnItemSelectedListener(CattleFeedActivity.this);
         loadItemData();
+
+        cattleDetails = findViewById(R.id.cattle_details);
+        todayDate = findViewById(R.id.today_date);
+        totAmt = findViewById(R.id.tot_amt);
 
         qty.addTextChangedListener(new TextWatcher() {
 
@@ -134,6 +141,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                 qty.setText("");
                 item.setSelected(false);
                 particulars.setText("");
+                cattleDetails.setVisibility(View.GONE);
             }
         });
 
@@ -162,6 +170,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                     qty.setText("");
                     item.setSelected(false);
                     particulars.setText("");
+                    cattleDetails.setVisibility(View.GONE);
                 }
 
             }
@@ -213,7 +222,11 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 int m = month + 1;
-                date.setText(dayOfMonth + "-" + m + "-" + year);
+                String tmp = dayOfMonth + "-" + m + "-" + year;
+                date.setText(tmp);
+                todayDate.setText(tmp);
+                totAmt.setText(String.valueOf(dbClass.getCattleAmtFromDate(tmp)));
+                cattleDetails.setVisibility(View.VISIBLE);
 
             }
         }, mYear, mMonth, mDay);
