@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -210,5 +209,16 @@ public class DBQuery {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete("member", "memb_code='" + id + "'", null);
         return db.rawQuery(query, null);
+    }
+
+    public boolean checkDuplicateMember(String name) {
+        String query = "SELECT * from member where memb_name='" + name + "'";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
     }
 }
