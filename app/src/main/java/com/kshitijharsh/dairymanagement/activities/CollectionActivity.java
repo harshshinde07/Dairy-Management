@@ -434,7 +434,7 @@ public class CollectionActivity extends AppCompatActivity {
             cursor.moveToNext();
         }
         System.out.println("Names added: " + members.size());
-
+        cursor.close();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.item_name_list,
                 names);
@@ -471,6 +471,7 @@ public class CollectionActivity extends AppCompatActivity {
             //float m = dbQuery.getMilkCount();
             //Toast.makeText(this, String.valueOf(m), Toast.LENGTH_SHORT).show();
         }
+        c.close();
 //        else {
 //            Toast.makeText(this, "Value not found!", Toast.LENGTH_SHORT).show();
 //        }
@@ -506,6 +507,7 @@ public class CollectionActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Member not found!", Toast.LENGTH_SHORT).show();
         }
+        c.close();
     }
 
     /**

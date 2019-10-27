@@ -243,7 +243,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
             cursor.moveToNext();
         }
         System.out.println("Names added: " + members.size());
-
+        cursor.close();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.item_name_list,
                 names);
@@ -292,6 +292,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         } else {
             Toast.makeText(this, "Value not found!", Toast.LENGTH_SHORT).show();
         }
+        c.close();
     }
 
     public void getMemNameFromID(int id) {
@@ -305,6 +306,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         } else {
             Toast.makeText(this, "Member not found!", Toast.LENGTH_SHORT).show();
         }
+        c.close();
     }
 
     @Override

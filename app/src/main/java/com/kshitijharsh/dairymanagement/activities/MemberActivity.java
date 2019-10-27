@@ -170,8 +170,10 @@ public class MemberActivity extends AppCompatActivity {
         c.moveToFirst();
         if (c.getCount() > 0) {
             no = c.getInt(c.getColumnIndex("RateGrno"));
+            c.close();
             return no;
         } else {
+            c.close();
             return -1;
         }
     }
@@ -185,7 +187,7 @@ public class MemberActivity extends AppCompatActivity {
             names.add(name);
             cursor.moveToNext();
         }
-
+        cursor.close();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item,
                 names);

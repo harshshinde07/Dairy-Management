@@ -65,6 +65,7 @@ public class CollectionDetailActivity extends AppCompatActivity implements ItemC
             collectionList.add(collection);
             cursor.moveToNext();
         }
+        cursor.close();
         CollectionAdapter mAdapter = new CollectionAdapter(collectionList, this, this);
         recyclerView.setAdapter(mAdapter);
     }

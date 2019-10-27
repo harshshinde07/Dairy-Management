@@ -65,6 +65,7 @@ public class SaleDetailActivity extends AppCompatActivity implements ItemClickLi
             saleList.add(sale);
             cursor.moveToNext();
         }
+        cursor.close();
         SaleAdapter mAdapter = new SaleAdapter(saleList, this, this);
         recyclerView.setAdapter(mAdapter);
     }

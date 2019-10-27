@@ -83,6 +83,7 @@ public class CattleDetailActivity extends AppCompatActivity implements ItemClick
             cattleFeedList.add(cattleFeed);
             cursor.moveToNext();
         }
+        cursor.close();
         CattleAdapter mAdapter = new CattleAdapter(cattleFeedList, this, this);
         recyclerView.setAdapter(mAdapter);
     }

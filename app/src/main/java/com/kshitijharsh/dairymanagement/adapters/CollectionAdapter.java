@@ -154,6 +154,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         if (c != null) {
             collectionList.remove(position);
             notifyDataSetChanged();
+            c.close();
             Toast.makeText(context, "Deleted successfully!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "Couldn't delete, try again!", Toast.LENGTH_SHORT).show();
