@@ -331,7 +331,7 @@ public class SaleActivity extends AppCompatActivity {
     }
 
     private void initNames() {
-        Cursor cursor = dbQuery.getAllMembers("Member Name");
+        Cursor cursor = dbQuery.getAllMembers();
         names = new ArrayList<>();
         members = new HashMap<>();
         cursor.moveToFirst();

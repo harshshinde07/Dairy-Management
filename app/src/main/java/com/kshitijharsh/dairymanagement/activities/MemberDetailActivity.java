@@ -64,13 +64,13 @@ public class MemberDetailActivity extends AppCompatActivity implements MemberAda
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         memberList = new ArrayList<>();
 
-//        getMemDetails();
+        getMemDetails();
 
     }
 
-    public void getMemDetails(String filter) {
+    public void getMemDetails() {
 //        Log.e("TAAAAAAAAAAAAAAG", filter);
-        Cursor cursor = dbQuery.getAllMembers(filter);
+        Cursor cursor = dbQuery.getAllMembers();
         String memType = "", milkType = "", rateGrpName;
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -119,7 +119,7 @@ public class MemberDetailActivity extends AppCompatActivity implements MemberAda
         super.onStart();
 
         // Apply filters
-        onFilter(mViewModel.getFilters());
+//        onFilter(mViewModel.getFilters());
     }
 
     @Override
@@ -186,7 +186,7 @@ public class MemberDetailActivity extends AppCompatActivity implements MemberAda
 
         // Sort by (orderBy with direction)
 //        if (filters.hasSortBy()) {
-        getMemDetails(filters.getSortBy());
+//        getMemDetails(filters.getSortBy());
 //        }
 //
 //        // Limit items

@@ -62,23 +62,14 @@ public class DBQuery {
     public int getMembercount() {
         String query = "SELECT * FROM member;";
         Cursor cursor = db.rawQuery(query, null);
-        return cursor.getCount();
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
     }
 
-    public Cursor getAllMembers(String order) {
+    public Cursor getAllMembers() {
         String[] cols = {COLUMN_MEMB_CODE, COLUMN_MEMB_NAME, COLUMN_COWBF_TYPE, COLUMN_MEMB_TYPE, COLUMN_RATEGRP_NO};
 
-//        if (order.equals("code"))
-//            return db.query(
-//                    TABLE_MEMBER,
-//                    cols,
-//                    null,
-//                    null,
-//                    null,
-//                    null,
-//                    COLUMN_MEMB_CODE
-//            );
-//        else
         return db.query(
                 TABLE_MEMBER,
                 cols,
@@ -156,11 +147,12 @@ public class DBQuery {
         values.put("BankAcNo", bankAcNo);
         values.put("membNam_Eng", name);
         values.put("AcNo", acNo);
+        cursor.close();
         dbHelper.getWritableDatabase().insert("member", "memb_code", values);
     }
 
     public List<String> getAllItems() {
-        List<String> labels = new ArrayList<String>();
+        List<String> labels = new ArrayList<>();
 
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_ITEMS;
