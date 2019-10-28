@@ -49,7 +49,6 @@ public class CollectionActivity extends AppCompatActivity {
     EditText degree, fat, quantity, snf;
     Button save, clear;
     float a;
-    //    float f, q, d;
     DBHelper dbHelper;
     DatabaseClass dbClass;
     RadioGroup radioGroup, radioGroupMorEve;
@@ -59,7 +58,6 @@ public class CollectionActivity extends AppCompatActivity {
     String[] memb_type = {"Member", "Contractor", "Labour Contractor"};
     String settingsPrefs = "empty";
     int rateGroupNo;
-    //    SQLiteDatabase db;
     TextView todayDate, totLit, totAmt, todayLit, todayAmt;
     String id;
 
@@ -119,8 +117,6 @@ public class CollectionActivity extends AppCompatActivity {
             date.setText(bundle.getString("date"));
 
             getRateGrpFromID(Integer.valueOf(bundle.getString("memId")));
-
-//            Toast.makeText(this, bundle.getString("memId"), Toast.LENGTH_SHORT).show();
 
             switch (bundle.getString("milkType")) {
                 case "Morning":
@@ -490,7 +486,6 @@ public class CollectionActivity extends AppCompatActivity {
                 Member member = members.get(txtName.getText().toString());
                 int type = Integer.parseInt(member.getMembType());
                 type = type - 1;
-//                Log.e("11111111111", String.valueOf(type));
                 int cb = Integer.parseInt(member.getCowbfType());
                 rateGroupNo = Integer.parseInt(member.getRateGrpNo());
                 String cbText = "";

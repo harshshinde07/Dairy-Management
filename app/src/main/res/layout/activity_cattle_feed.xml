@@ -120,7 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="2dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -129,7 +129,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:text="@string/date"
-                android:textSize="18sp" />
+                android:padding="4dp"
+                android:textSize="@dimen/text_small" />
 
             <TextView
                 android:id="@+id/date"
@@ -138,7 +139,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:hint="@string/select_date"
-                android:textSize="18sp"
+                android:padding="4dp"
+                android:textSize="@dimen/text_small"
                 android:singleLine="true" />
 
         </LinearLayout>
@@ -147,7 +149,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="2dp">
 
             <EditText
                 android:id="@+id/edt_memb_id"
@@ -158,7 +160,7 @@
                 android:hint="@string/mem_id"
                 android:inputType="phone"
                 android:singleLine="true"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_small" />
 
             <AutoCompleteTextView
                 android:id="@+id/edt_memb_name"
@@ -166,6 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:singleLine="true"
+                android:textSize="@dimen/text_small"
                 android:hint="@string/member_name" />
         </LinearLayout>
 
@@ -173,7 +176,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="2dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -183,7 +186,7 @@
                 android:hint="@string/item"
                 android:padding="4dp"
                 android:singleLine="true"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_small" />
 
             <Spinner
                 android:id="@+id/spinnerItem"
@@ -197,7 +200,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="2dp">
 
             <EditText
                 android:id="@+id/rate"
@@ -208,7 +211,7 @@
                 android:hint="@string/rate"
                 android:inputType="phone"
                 android:singleLine="true"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_small" />
 
             <EditText
                 android:id="@+id/qty"
@@ -217,6 +220,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:hint="@string/quantity"
+                android:textSize="@dimen/text_small"
                 android:inputType="phone"
                 android:imeOptions="actionDone"
                 android:singleLine="true" />
@@ -227,7 +231,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="2dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -235,7 +239,7 @@
                 android:layout_weight="1"
                 android:hint="@string/amount"
                 android:padding="4dp"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_small" />
 
             <TextView
                 android:id="@+id/amt"
@@ -244,7 +248,7 @@
                 android:layout_weight="1"
                 android:hint="@string/spaces"
                 android:padding="4dp"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_small" />
 
         </LinearLayout>
 
@@ -252,7 +256,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="2dp">
 
             <EditText
                 android:id="@+id/particulars"
@@ -266,7 +270,7 @@
                 android:maxLines="4"
                 android:scrollbars="vertical"
                 android:singleLine="true"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_small" />
 
         </LinearLayout>
 
@@ -274,7 +278,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:padding="4dp">
 
             <Button
                 android:id="@+id/save"
@@ -288,7 +292,7 @@
                 android:paddingBottom="16dp"
                 android:text="@string/save"
                 android:textAlignment="center"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_button" />
 
             <Button
                 android:id="@+id/clear"
@@ -302,7 +306,7 @@
                 android:paddingBottom="16dp"
                 android:text="@string/clear"
                 android:textAlignment="center"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_button" />
         </LinearLayout>
 
     </LinearLayout>

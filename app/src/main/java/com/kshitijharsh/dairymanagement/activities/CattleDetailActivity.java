@@ -55,24 +55,7 @@ public class CattleDetailActivity extends AppCompatActivity implements ItemClick
     }
 
     public void getCattleDetails() {
-        //TODO
-//        Cursor cursor = db.getAllCattle();
-//        cursor.moveToFirst();
-//        while (!cursor.isAfterLast()) {
-//            Log.e("ERRRRRRRRRR: ",cursor.getString(cursor.getColumnIndex("itemName")));
-////            Toast.makeText(this, "INSIDE", Toast.LENGTH_SHORT).show();
-//            CattleFeed cattleFeed = new CattleFeed();
-//            cattleFeed.setAmt(cursor.getString(cursor.getColumnIndex("amount")));
-//            cattleFeed.setDate(cursor.getString(cursor.getColumnIndex("trnDate")));
-//            cattleFeed.setMemId(cursor.getString(cursor.getColumnIndex("memId")));
-//            cattleFeed.setItemName(cursor.getString(cursor.getColumnIndex("itemName")));
-//            cattleFeed.setRate(cursor.getString(cursor.getColumnIndex("rate")));
-//            cattleFeed.setQty(cursor.getString(cursor.getColumnIndex("quantity")));
-//            cattleFeed.setParticulars(cursor.getString(cursor.getColumnIndex("particulars")));
-////            Toast.makeText(this, "Item: "+cursor.getString(cursor.getColumnIndex("itemName")), Toast.LENGTH_SHORT).show();
-//            cattleFeedList.add(cattleFeed);
-//            cursor.moveToNext();
-//        }
+
         Cursor cursor = db.getAllCattle();
         int count = cursor.getCount();
         if (count == 0)

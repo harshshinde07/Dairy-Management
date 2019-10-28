@@ -47,14 +47,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         checkForStoragePermission();
         dc = new DatabaseClass(this);
-//        DBQuery query = new DBQuery(this);
-//        query.createDatabase();
-//        query.open();
-//        dc = new DatabaseClass(this);
-//        Log.d(getClass().getSimpleName(), "First Query Result: " + query.getMembercount());
-//        //Toast.makeText(this, DBHelper.DB_PATH, Toast.LENGTH_LONG).show();
-//        query.close();
-
     }
 
     /**
@@ -112,14 +104,6 @@ public class MainActivity extends AppCompatActivity {
             query.close();
         }
     }
-
-//    public void updateDatabase(View view) {
-//        DBQuery query = new DBQuery(this);
-//        query.createDatabase();
-//        query.open();
-//        Log.d(getClass().getSimpleName(), "First Query Result: " + query.getMembercount());
-//        query.close();
-//    }
 
     public void exitApp(){
         if(exit){

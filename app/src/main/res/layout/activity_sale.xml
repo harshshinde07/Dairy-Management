@@ -137,7 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="2dp">
 
             <TextView
                 android:layout_width="90dp"
@@ -145,7 +145,7 @@
                 android:layout_marginStart="8dp"
                 android:padding="4dp"
                 android:text="@string/date"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_small" />
 
             <TextView
                 android:id="@+id/date"
@@ -155,7 +155,7 @@
                 android:hint="@string/select_date"
                 android:padding="8dp"
                 android:singleLine="true"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_small" />
 
             <!--            <EditText-->
             <!--                android:id="@+id/branch"-->
@@ -171,7 +171,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="2dp">
 
             <EditText
                 android:id="@+id/edt_memb_id"
@@ -181,7 +181,7 @@
                 android:hint="@string/id"
                 android:inputType="phone"
                 android:singleLine="true"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_small" />
 
             <AutoCompleteTextView
                 android:id="@+id/edt_memb_name"
@@ -189,6 +189,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:hint="@string/member_name"
+                android:textSize="@dimen/text_small"
                 android:singleLine="true" />
         </LinearLayout>
 
@@ -196,7 +197,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="2dp">
 
             <RadioGroup
                 android:id="@+id/morEve"
@@ -213,7 +214,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/morning"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_small" />
 
                 <RadioButton
                     android:id="@+id/radioButtonEve"
@@ -221,7 +222,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/evening"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_small" />
             </RadioGroup>
         </LinearLayout>
 
@@ -230,7 +231,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="2dp">
 
             <TextView
                 android:id="@+id/txt_cow_buf"
@@ -239,7 +240,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/cow_buf"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_small" />
 
             <TextView
                 android:id="@+id/cow_buf"
@@ -248,7 +249,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:textAlignment="center"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_small" />
         </LinearLayout>
 
         <LinearLayout
@@ -256,7 +257,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp"
+            android:padding="2dp"
             android:visibility="gone">
 
             <RadioGroup
@@ -274,7 +275,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cow"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_small" />
 
                 <RadioButton
                     android:id="@+id/radioButtonBuff"
@@ -282,7 +283,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/buffalo"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_small" />
 
             </RadioGroup>
 
@@ -292,7 +293,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="2dp">
 
             <EditText
                 android:id="@+id/qty"
@@ -301,6 +302,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:hint="@string/qty"
+                android:textSize="@dimen/text_small"
                 android:inputType="phone"
                 android:singleLine="true" />
 
@@ -311,6 +313,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:hint="@string/fat"
+                android:textSize="@dimen/text_small"
                 android:inputType="phone"
                 android:singleLine="true" />
 
@@ -321,6 +324,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:hint="@string/rate"
+                android:textSize="@dimen/text_small"
                 android:imeOptions="actionDone"
                 android:inputType="phone"
                 android:singleLine="true" />
@@ -332,7 +336,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="2dp">
 
             <TextView
                 android:layout_width="90dp"
@@ -340,7 +344,7 @@
                 android:layout_marginStart="8dp"
                 android:padding="4dp"
                 android:text="@string/amount"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_small" />
 
             <TextView
                 android:id="@+id/amt"
@@ -348,7 +352,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="4dp"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_small" />
 
         </LinearLayout>
 
@@ -370,7 +374,7 @@
                 android:paddingBottom="16dp"
                 android:text="@string/save"
                 android:textAlignment="center"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_button" />
 
             <Button
                 android:id="@+id/clear"
@@ -384,7 +388,7 @@
                 android:paddingBottom="16dp"
                 android:text="@string/clear"
                 android:textAlignment="center"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_button" />
         </LinearLayout>
 
     </LinearLayout>
