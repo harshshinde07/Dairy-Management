@@ -30,7 +30,6 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
     private List<Member> memberList;
     private Context context;
     private List<Member> memberListFiltered;
-    //    private ItemClickListener clickListener;
     private MemberAdapterListener listener;
 
     public MemberAdapter(List<Member> memberList, Context context, MemberAdapterListener listener) {

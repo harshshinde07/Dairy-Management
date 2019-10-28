@@ -1,7 +1,6 @@
 package com.kshitijharsh.dairymanagement.activities;
 
 import android.app.SearchManager;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -11,26 +10,20 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.kshitijharsh.dairymanagement.ItemClickListener;
 import com.kshitijharsh.dairymanagement.R;
 import com.kshitijharsh.dairymanagement.adapters.MemberAdapter;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.model.Member;
-import com.kshitijharsh.dairymanagement.utils.FilterDialogFragment;
-import com.kshitijharsh.dairymanagement.utils.Filters;
-import com.kshitijharsh.dairymanagement.viewmodel.MemberDetailActivityViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MemberDetailActivity extends AppCompatActivity implements MemberAdapter.MemberAdapterListener, FilterDialogFragment.FilterListener {
+public class MemberDetailActivity extends AppCompatActivity implements MemberAdapter.MemberAdapterListener {
 
     private RecyclerView recyclerView;
     DBQuery dbQuery;
@@ -38,8 +31,6 @@ public class MemberDetailActivity extends AppCompatActivity implements MemberAda
     private SearchView searchView;
     MemberAdapter mAdapter;
 
-    private FilterDialogFragment mFilterDialog;
-    private MemberDetailActivityViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +38,6 @@ public class MemberDetailActivity extends AppCompatActivity implements MemberAda
         setContentView(R.layout.activity_member_detail);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("Member Details");
-
-        mViewModel = ViewModelProviders.of(this).get(MemberDetailActivityViewModel.class);
-        mFilterDialog = new FilterDialogFragment();
 
         dbQuery = new DBQuery(this);
         dbQuery.open();
@@ -69,7 +57,6 @@ public class MemberDetailActivity extends AppCompatActivity implements MemberAda
     }
 
     public void getMemDetails() {
-//        Log.e("TAAAAAAAAAAAAAAG", filter);
         Cursor cursor = dbQuery.getAllMembers();
         String memType = "", milkType = "", rateGrpName;
         cursor.moveToFirst();
@@ -115,14 +102,6 @@ public class MemberDetailActivity extends AppCompatActivity implements MemberAda
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        // Apply filters
-//        onFilter(mViewModel.getFilters());
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_filter, menu);
@@ -158,8 +137,7 @@ public class MemberDetailActivity extends AppCompatActivity implements MemberAda
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_filter) {// Show the dialog containing filter options
-            mFilterDialog.show(getSupportFragmentManager(), FilterDialogFragment.TAG);
+        if (item.getItemId() == R.id.menu_filter) {
             return true;
         }
         if (item.getItemId() == R.id.action_search) {
@@ -168,44 +146,7 @@ public class MemberDetailActivity extends AppCompatActivity implements MemberAda
         return super.onOptionsItemSelected(item);
     }
 
-    //TODO
-    @Override
-    public void onFilter(Filters filters) {
-        // Construct query basic query
-//        Query query = mFirestore.collection("restaurants");
-//
-        // Category (equality filter)
-//        if (filters.hasType()) {
-//            getMemDetails(filters.getType());
-//        }
-
-        // City (equality filter)
-//        if (filters.hasTime()) {
-//            getMemDetails(filters.getTime());
-//        }
-
-        // Sort by (orderBy with direction)
-//        if (filters.hasSortBy()) {
-//        getMemDetails(filters.getSortBy());
-//        }
-//
-//        // Limit items
-//        query = query.limit(LIMIT);
-//
-//        // Update the query
-//        mQuery = query;
-//        mAdapter.setQuery(query);
-//
-//        // Set header
-//        mCurrentSearchView.setText(Html.fromHtml(filters.getSearchDescription(this)));
-//        mCurrentSortByView.setText(filters.getOrderDescription(this));
-//
-        // Save filters
-        mViewModel.setFilters(filters);
-    }
-
     @Override
     public void onMemberSelected(Member member) {
-        Toast.makeText(getApplicationContext(), "Selected: " + member.getName(), Toast.LENGTH_LONG).show();
     }
 }

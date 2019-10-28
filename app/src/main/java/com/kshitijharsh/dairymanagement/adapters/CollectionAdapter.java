@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,18 +22,21 @@ import com.kshitijharsh.dairymanagement.activities.CollectionActivity;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
 import com.kshitijharsh.dairymanagement.model.Collection;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.ViewHolder> {
+public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.ViewHolder> implements Filterable {
 
     private List<Collection> collectionList;
     private Context context;
-    private ItemClickListener clickListener;
+    private List<Collection> collectionListFiltered;
+    private CollectionAdapterListener listener;
 
-    public CollectionAdapter(List<Collection> collectionList, Context context, ItemClickListener listener) {
+    public CollectionAdapter(List<Collection> collectionList, Context context, CollectionAdapterListener listener) {
         this.collectionList = collectionList;
         this.context = context;
-        this.clickListener = listener;
+        this.listener = listener;
+        this.collectionListFiltered = collectionList;
     }
 
     @Override
@@ -43,7 +48,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 
     @Override
     public void onBindViewHolder(CollectionAdapter.ViewHolder holder, final int position) {
-        final Collection collection = collectionList.get(position);
+        final Collection collection = collectionListFiltered.get(position);
         final Bundle bundle = new Bundle();
         final String id, name, date, milkType, morEve, rate, qty, amt, snf, fat, memType, _id;
         _id = collection.getId();
@@ -119,7 +124,42 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return collectionList.size();
+        return collectionListFiltered.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    collectionListFiltered = collectionList;
+                } else {
+                    List<Collection> filteredList = new ArrayList<>();
+                    for (Collection row : collectionList) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getMemName().toLowerCase().contains(charString.toLowerCase()) || row.getMemId().contains(charSequence) || row.getDate().contains(charSequence) || row.getMemType().toLowerCase().contains(charString.toLowerCase()) || row.getMilktype().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    collectionListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = collectionListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                collectionListFiltered = (ArrayList<Collection>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -143,9 +183,16 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
             amt = view.findViewById(R.id.amt);
 //            snf = view.findViewById(R.id.snf);
 
-
             edit = view.findViewById(R.id.edit);
             delete = view.findViewById(R.id.delete);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // send selected contact in callback
+                    listener.onCollectionSelected(collectionListFiltered.get(getAdapterPosition()));
+                }
+            });
         }
     }
 
@@ -153,13 +200,17 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         DatabaseClass databaseClass = new DatabaseClass(context);
         Cursor c = databaseClass.deleteCollectionItem(id);
         if (c != null) {
-            collectionList.remove(position);
+            collectionListFiltered.remove(position);
             notifyDataSetChanged();
             c.close();
             Toast.makeText(context, "Deleted successfully!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "Couldn't delete, try again!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public interface CollectionAdapterListener {
+        void onCollectionSelected(Collection collection);
     }
 
     private void editDetails(Bundle bundle) {

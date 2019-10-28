@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,18 +22,21 @@ import com.kshitijharsh.dairymanagement.activities.CattleFeedActivity;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
 import com.kshitijharsh.dairymanagement.model.CattleFeed;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CattleAdapter extends RecyclerView.Adapter<CattleAdapter.ViewHolder> {
+public class CattleAdapter extends RecyclerView.Adapter<CattleAdapter.ViewHolder> implements Filterable {
 
     private List<CattleFeed> cattleList;
     private Context context;
-    private ItemClickListener clickListener;
+    private List<CattleFeed> cattleListFiltered;
+    private CattleAdapterListener listener;
 
-    public CattleAdapter(List<CattleFeed> cattleList, Context context, ItemClickListener listener) {
+    public CattleAdapter(List<CattleFeed> cattleList, Context context, CattleAdapterListener listener) {
         this.cattleList = cattleList;
         this.context = context;
-        this.clickListener = listener;
+        this.listener = listener;
+        this.cattleListFiltered = cattleList;
     }
 
     @Override
@@ -43,7 +48,7 @@ public class CattleAdapter extends RecyclerView.Adapter<CattleAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(CattleAdapter.ViewHolder holder, final int position) {
-        final CattleFeed cattleFeed = cattleList.get(position);
+        final CattleFeed cattleFeed = cattleListFiltered.get(position);
         final Bundle bundle = new Bundle();
         final String id, name, date, item, rate, qty, amt, part, _id;
         _id = cattleFeed.getId();
@@ -111,7 +116,42 @@ public class CattleAdapter extends RecyclerView.Adapter<CattleAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return cattleList.size();
+        return cattleListFiltered.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    cattleListFiltered = cattleList;
+                } else {
+                    List<CattleFeed> filteredList = new ArrayList<>();
+                    for (CattleFeed row : cattleList) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase()) || row.getItemName().toLowerCase().contains(charString.toLowerCase()) || row.getDate().contains(charSequence) || row.getMemId().contains(charSequence)) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    cattleListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = cattleListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                cattleListFiltered = (ArrayList<CattleFeed>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -134,6 +174,14 @@ public class CattleAdapter extends RecyclerView.Adapter<CattleAdapter.ViewHolder
 
             edit = view.findViewById(R.id.edit);
             delete = view.findViewById(R.id.delete);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // send selected contact in callback
+                    listener.onCattleSelected(cattleListFiltered.get(getAdapterPosition()));
+                }
+            });
         }
     }
 
@@ -141,13 +189,17 @@ public class CattleAdapter extends RecyclerView.Adapter<CattleAdapter.ViewHolder
         DatabaseClass databaseClass = new DatabaseClass(context);
         Cursor c = databaseClass.deleteCattleItem(id);
         if (c != null) {
-            cattleList.remove(position);
+            cattleListFiltered.remove(position);
             notifyDataSetChanged();
             c.close();
             Toast.makeText(context, "Deleted successfully!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "Couldn't delete, try again!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public interface CattleAdapterListener {
+        void onCattleSelected(CattleFeed cattleFeed);
     }
 
     private void editDetails(Bundle bundle) {

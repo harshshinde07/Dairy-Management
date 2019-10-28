@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,18 +23,21 @@ import com.kshitijharsh.dairymanagement.database.DatabaseClass;
 import com.kshitijharsh.dairymanagement.model.Member;
 import com.kshitijharsh.dairymanagement.model.Sale;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
+public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> implements Filterable {
 
     private List<Sale> saleList;
     private Context context;
-    private ItemClickListener clickListener;
+    private List<Sale> saleListFiltered;
+    private SaleAdapterListener listener;
 
-    public SaleAdapter(List<Sale> saleList, Context context, ItemClickListener listener) {
+    public SaleAdapter(List<Sale> saleList, Context context, SaleAdapterListener listener) {
         this.saleList = saleList;
         this.context = context;
-        this.clickListener = listener;
+        this.listener = listener;
+        this.saleListFiltered = saleList;
     }
 
     @Override
@@ -44,7 +49,7 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(SaleAdapter.ViewHolder holder, final int position) {
-        final Sale sale = saleList.get(position);
+        final Sale sale = saleListFiltered.get(position);
         final Bundle bundle = new Bundle();
         final String id, name, date, milkType, morEve, rate, qty, amt, fat, _id;
         _id = sale.getId();
@@ -114,7 +119,42 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return saleList.size();
+        return saleListFiltered.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    saleListFiltered = saleList;
+                } else {
+                    List<Sale> filteredList = new ArrayList<>();
+                    for (Sale row : saleListFiltered) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getMemName().toLowerCase().contains(charString.toLowerCase()) || row.getMemId().contains(charSequence) || row.getDate().contains(charSequence) || row.getMilkType().toLowerCase().contains(charString.toLowerCase()) || row.getMorEve().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    saleListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = saleListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                saleListFiltered = (ArrayList<Sale>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -138,6 +178,14 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
 
             edit = view.findViewById(R.id.edit);
             delete = view.findViewById(R.id.delete);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // send selected contact in callback
+                    listener.onSaleSelected(saleListFiltered.get(getAdapterPosition()));
+                }
+            });
         }
     }
 
@@ -145,13 +193,17 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
         DatabaseClass databaseClass = new DatabaseClass(context);
         Cursor c = databaseClass.deleteSaleItem(id);
         if (c != null) {
-            saleList.remove(position);
+            saleListFiltered.remove(position);
             notifyDataSetChanged();
             c.close();
             Toast.makeText(context, "Deleted successfully!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "Couldn't delete, try again!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public interface SaleAdapterListener {
+        void onSaleSelected(Sale sale);
     }
 
     private void editDetails(Bundle bundle) {
