@@ -210,4 +210,53 @@ public class DatabaseClass extends SQLiteOpenHelper {
         c.close();
         return amt;
     }
+
+    //Edit entries
+    public void editColl(String id, String date, int membCode, String name, String cobf, String morEve, float degree, float liters, float fat, float rate, float amount) {
+        ContentValues values = new ContentValues(10);
+        values.put("trnDate", date);
+        values.put("membCode", membCode);
+        values.put("memName", name);
+        values.put("cobf", cobf);
+        values.put("morEve", morEve);
+        values.put("degree", degree);
+        values.put("liters", liters);
+        values.put("fat", fat);
+        values.put("rate", rate);
+        values.put("amount", amount);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.update("collectionTransactions", values, "_id=" + id, null);
+    }
+
+    public void editSale(String id, String date, int membCode, String name, String morEve, String cobf, float liters, float fat, float rate, float amount) {
+        ContentValues values = new ContentValues(10);
+        values.put("trnDate", date);
+        values.put("membCode", membCode);
+        values.put("memName", name);
+        values.put("mornEve", morEve);
+        values.put("cobf", cobf);
+        values.put("liters", liters);
+        values.put("fat", fat);
+        values.put("rate", rate);
+        values.put("amount", amount);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.update("saleTransactions", values, "_id=" + id, null);
+    }
+
+    public void editCattle(String id, String date, int lgr, String name, String item, float qty, float rate, float amt, String part) {
+        ContentValues values = new ContentValues(9);
+        values.put("trnDate", date);
+        values.put("memId", lgr);
+        values.put("memName", name);
+        values.put("itemName", item);
+        values.put("quantity", qty);
+        values.put("rate", rate);
+        values.put("amount", amt);
+        values.put("particulars", part);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.update("cattleTransactions", values, "_id=" + id, null);
+    }
 }

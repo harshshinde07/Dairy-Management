@@ -53,14 +53,15 @@ public class CollectionActivity extends AppCompatActivity {
     DBHelper dbHelper;
     DatabaseClass dbClass;
     RadioGroup radioGroup, radioGroupMorEve;
-    LinearLayout swapCB, swapBoth, addSNF, collectionDetails, todayDetails;
+    LinearLayout swapCB, swapBoth, addSNF, collectionDetails, todayDetails, typeLayout;
     String cowBuff;
     String mornEve;
     String[] memb_type = {"Member", "Contractor", "Labour Contractor"};
     String settingsPrefs = "empty";
     int rateGroupNo;
-//    SQLiteDatabase db;
-TextView todayDate, totLit, totAmt, todayLit, todayAmt;
+    //    SQLiteDatabase db;
+    TextView todayDate, totLit, totAmt, todayLit, todayAmt;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,11 +90,58 @@ TextView todayDate, totLit, totAmt, todayLit, todayAmt;
         todayLit = findViewById(R.id.today_lit);
         todayDetails = findViewById(R.id.today_details);
 
+        typeLayout = findViewById(R.id.typeLinearLayout);
+
         Objects.requireNonNull(getSupportActionBar()).setTitle("Milk Collection");
 
         settingsPrefs = SettingsActivity.MainPreferenceFragment.CALCULATE_PREF;
 
         Toast.makeText(this, "Preferences: " + settingsPrefs, Toast.LENGTH_SHORT).show();
+
+        radioGroupMorEve = findViewById(R.id.morEve);
+        radioGroupMorEve.clearCheck();
+        radioGroup = findViewById(R.id.cowBuff);
+        radioGroup.clearCheck();
+
+        final Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            typeLayout.setVisibility(View.GONE);
+            id = bundle.getString("id");
+            edtName.setText(bundle.getString("name"));
+            membType.setText(bundle.getString("memType"));
+            cowBuf.setText(bundle.getString("memType"));
+            txtCode.setText(bundle.getString("memId"));
+            rate.setText(bundle.getString("rate"));
+            amt.setText(bundle.getString("amt"));
+            degree.setText(bundle.getString("morEve"));
+            fat.setText(bundle.getString("qty"));
+            quantity.setText(bundle.getString("fat"));
+            date.setText(bundle.getString("date"));
+
+            getRateGrpFromID(Integer.valueOf(bundle.getString("memId")));
+
+//            Toast.makeText(this, bundle.getString("memId"), Toast.LENGTH_SHORT).show();
+
+            switch (bundle.getString("milkType")) {
+                case "Morning":
+                    ((RadioButton) radioGroupMorEve.findViewById(R.id.radioButtonMor)).setChecked(true);
+                    break;
+                case "Evening":
+                    ((RadioButton) radioGroupMorEve.findViewById(R.id.radioButtonEve)).setChecked(true);
+                    break;
+            }
+            switch (bundle.getString("memType")) {
+                case "Cow":
+                    ((RadioButton) radioGroup.findViewById(R.id.radioButtonCow)).setChecked(true);
+                    break;
+                case "Buffalo":
+                    ((RadioButton) radioGroup.findViewById(R.id.radioButtonBuff)).setChecked(true);
+                    break;
+                case "Both":
+                    ((RadioButton) radioGroup.findViewById(R.id.radioButtonBoth)).setChecked(true);
+                    break;
+            }
+        }
 
         if (settingsPrefs.equals("false")) {
             degree.setVisibility(View.VISIBLE);
@@ -234,9 +282,6 @@ TextView todayDate, totLit, totAmt, todayLit, todayAmt;
             }
         });
 
-        radioGroupMorEve = findViewById(R.id.morEve);
-        radioGroupMorEve.clearCheck();
-
         radioGroupMorEve.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -249,8 +294,6 @@ TextView todayDate, totLit, totAmt, todayLit, todayAmt;
             }
         });
 
-        radioGroup = findViewById(R.id.cowBuff);
-        radioGroup.clearCheck();
         swapBoth = findViewById(R.id.swapBoth);
         swapCB = findViewById(R.id.swapCB);
 
@@ -359,8 +402,16 @@ TextView todayDate, totLit, totAmt, todayLit, todayAmt;
                     if (!rate.getText().toString().equals("") || !amt.getText().toString().equals("")) {
                         float r = Float.parseFloat(rate.getText().toString());
                         float a = Float.parseFloat(amt.getText().toString());
+
+                        int selectedId = radioGroupMorEve.getCheckedRadioButtonId();
+                        RadioButton mE = findViewById(selectedId);
+
                         if (!cowBuf.getText().toString().equals("")) {
-                            dbClass.addColl(date.getText().toString(), memCode, edtName.getText().toString(), cowBuf.getText().toString(), mornEve, deg, lit, f, r, a);
+
+                            if (bundle != null)
+                                dbClass.editColl(id, date.getText().toString(), memCode, edtName.getText().toString(), cowBuf.getText().toString(), mE.getText().toString(), deg, lit, f, r, a);
+                            else
+                                dbClass.addColl(date.getText().toString(), memCode, edtName.getText().toString(), cowBuf.getText().toString(), mornEve, deg, lit, f, r, a);
                             Toast.makeText(CollectionActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                             edtName.setText("");
                             membType.setText("");
@@ -438,7 +489,7 @@ TextView todayDate, totLit, totAmt, todayLit, todayAmt;
                 TextView txtName = (TextView) view;
                 Member member = members.get(txtName.getText().toString());
                 int type = Integer.parseInt(member.getMembType());
-                type = type -1;
+                type = type - 1;
 //                Log.e("11111111111", String.valueOf(type));
                 int cb = Integer.parseInt(member.getCowbfType());
                 rateGroupNo = Integer.parseInt(member.getRateGrpNo());
@@ -514,6 +565,7 @@ TextView todayDate, totLit, totAmt, todayLit, todayAmt;
             } else if (settingsPrefs.equals("false")) {
                 c = dbQuery.getRate(deg, fat, cobf, rateGroupNo);
             } else {
+                Toast.makeText(this, String.valueOf(fat) + " " + cobf + rateGroupNo, Toast.LENGTH_SHORT).show();
                 c = dbQuery.getRateFromFat(fat, cobf, rateGroupNo);
             }
         }
@@ -521,18 +573,15 @@ TextView todayDate, totLit, totAmt, todayLit, todayAmt;
         c.moveToFirst();
         if (c.getCount() > 0) {
             val = c.getFloat(c.getColumnIndex("rate"));
-            //Toast.makeText(this, String.valueOf(val), Toast.LENGTH_SHORT).show();
             rate.setText(String.valueOf(val));
-            //q = Float.parseFloat(quantity.getText().toString());
             a = qty * val;
             amt.setText(String.valueOf(a));
-            //float m = dbQuery.getMilkCount();
-            //Toast.makeText(this, String.valueOf(m), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Value not found!", Toast.LENGTH_SHORT).show();
+            rate.setText("");
+            amt.setText("");
         }
         c.close();
-//        else {
-//            Toast.makeText(this, "Value not found!", Toast.LENGTH_SHORT).show();
-//        }
     }
 
     public void getMemNameFromID(int id) {
@@ -593,5 +642,15 @@ TextView todayDate, totLit, totAmt, todayLit, todayAmt;
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void getRateGrpFromID(int id) {
+        Cursor c = dbQuery.getRateGrp(id);
+        String no;
+        c.moveToFirst();
+        no = c.getString(c.getColumnIndex("rategrno"));
+        Toast.makeText(this, "No: " + no, Toast.LENGTH_SHORT).show();
+        rateGroupNo = Integer.parseInt(no);
+        c.close();
     }
 }

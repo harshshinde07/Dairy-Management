@@ -2,6 +2,7 @@ package com.kshitijharsh.dairymanagement.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.kshitijharsh.dairymanagement.ItemClickListener;
 import com.kshitijharsh.dairymanagement.R;
+import com.kshitijharsh.dairymanagement.activities.MemberActivity;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.model.Member;
 
@@ -91,15 +93,13 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 
             }
         });
-//
-//        holder.edit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //TODO edit code
-//                clickListener.onClick(bundle);
-//                Toast.makeText(context, "Edit: " + id, Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editDetails(bundle);
+            }
+        });
     }
 
 
@@ -158,7 +158,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
             memberType = view.findViewById(R.id.member_type);
             rateGrpName = view.findViewById(R.id.rate_grp_name);
 
-//            edit = view.findViewById(R.id.edit);
+            edit = view.findViewById(R.id.edit);
             delete = view.findViewById(R.id.delete);
 
             view.setOnClickListener(new View.OnClickListener() {
@@ -186,5 +186,12 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 
     public interface MemberAdapterListener {
         void onMemberSelected(Member member);
+    }
+
+    private void editDetails(Bundle bundle) {
+        Intent intent = new Intent(context, MemberActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 }

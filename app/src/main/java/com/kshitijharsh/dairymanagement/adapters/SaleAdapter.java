@@ -2,6 +2,7 @@ package com.kshitijharsh.dairymanagement.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.kshitijharsh.dairymanagement.ItemClickListener;
 import com.kshitijharsh.dairymanagement.R;
+import com.kshitijharsh.dairymanagement.activities.SaleActivity;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
 import com.kshitijharsh.dairymanagement.model.Member;
 import com.kshitijharsh.dairymanagement.model.Sale;
@@ -56,7 +58,8 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
         amt = sale.getAmount();
         fat = sale.getFat();
 
-        bundle.putString("id", id);
+        bundle.putString("id", _id);
+        bundle.putString("memId", id);
         bundle.putString("name", name);
         bundle.putString("morEve", morEve);
         bundle.putString("milkType", milkType);
@@ -99,15 +102,13 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
 
             }
         });
-//
-//        holder.edit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //TODO edit code
-//                clickListener.onClick(bundle);
-//                Toast.makeText(context, "Edit: " + id, Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editDetails(bundle);
+            }
+        });
     }
 
 
@@ -135,7 +136,7 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
             amt = view.findViewById(R.id.amt);
             fat = view.findViewById(R.id.fat);
 
-//            edit = view.findViewById(R.id.edit);
+            edit = view.findViewById(R.id.edit);
             delete = view.findViewById(R.id.delete);
         }
     }
@@ -151,5 +152,12 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.ViewHolder> {
         } else {
             Toast.makeText(context, "Couldn't delete, try again!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void editDetails(Bundle bundle) {
+        Intent intent = new Intent(context, SaleActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 }

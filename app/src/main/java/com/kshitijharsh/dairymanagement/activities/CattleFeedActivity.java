@@ -50,6 +50,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
     HashMap<String, Member> members;
     TextView todayDate, totAmt;
     LinearLayout cattleDetails;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,19 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         cattleDetails = findViewById(R.id.cattle_details);
         todayDate = findViewById(R.id.today_date);
         totAmt = findViewById(R.id.tot_amt);
+
+        final Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            id = bundle.getString("id");
+            date.setText(bundle.getString("date"));
+            edtName.setText(bundle.getString("name"));
+            txtCode.setText(bundle.getString("memId"));
+            qty.setText(bundle.getString("rate"));
+            rate.setText(bundle.getString("qty"));
+            particulars.setText(bundle.getString("part"));
+            amt.setText(bundle.getString("amt"));
+            item.setSelection(((ArrayAdapter) item.getAdapter()).getPosition(bundle.getString("itemName")));
+        }
 
         qty.addTextChangedListener(new TextWatcher() {
 
@@ -161,8 +175,13 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                         p = "None";
                     else
                         p = particulars.getText().toString();
-                    dbClass.addCattle(date.getText().toString(), memId, edtName.getText().toString(), label, quantity, r, a, p);
-                    Toast.makeText(CattleFeedActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
+
+                    if (bundle != null) {
+                        dbClass.editCattle(id, date.getText().toString(), memId, edtName.getText().toString(), label, quantity, r, a, p);
+                    } else {
+                        dbClass.addCattle(date.getText().toString(), memId, edtName.getText().toString(), label, quantity, r, a, p);
+                        Toast.makeText(CattleFeedActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
+                    }
                     date.setText(R.string.select_date);
                     txtCode.setText("");
                     edtName.setText("");

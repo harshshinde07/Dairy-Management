@@ -5,6 +5,7 @@
         android:id="@+id/menu_filter"
         app:showAsAction="always"
         android:title="Filter"
+        android:visible="false"
         android:orderInCategory="2"
         android:icon="@drawable/ic_tune_black_24dp" />
 

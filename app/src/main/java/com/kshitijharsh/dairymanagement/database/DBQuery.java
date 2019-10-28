@@ -186,6 +186,11 @@ public class DBQuery {
         return db.rawQuery(query, null);
     }
 
+    public Cursor getRateGrp(int id) {
+        String query = "SELECT rategrno from member where memb_code='" + id + "'";
+        return db.rawQuery(query, null);
+    }
+
     public Cursor getRateGrpNo(String rateGrpName) {
         String query = "SELECT RateGrno from Rt_grmst where RateGrname='" + rateGrpName + "'";
         return db.rawQuery(query, null);
@@ -212,5 +217,24 @@ public class DBQuery {
         }
         cursor.close();
         return true;
+    }
+
+    //Edit member
+    public void editMem(String id, String name, int zone, int cowBuff, int memType, int rateGrp) {
+        int acno = 1, bankcode = 1, bankAcNo = 1, acNo = 1;
+
+        ContentValues values = new ContentValues(10);
+        values.put("memb_name", name);
+        values.put("zoon_code", zone);
+        values.put("cobf_type", cowBuff);
+        values.put("memb_type", memType);
+        values.put("accno", acno);
+        values.put("rategrno", rateGrp);
+        values.put("bank_code", bankcode);
+        values.put("BankAcNo", bankAcNo);
+        values.put("membNam_Eng", name);
+        values.put("AcNo", acNo);
+
+        db.update("member", values, "memb_code=" + id, null);
     }
 }

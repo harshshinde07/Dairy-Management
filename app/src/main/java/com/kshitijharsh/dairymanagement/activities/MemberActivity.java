@@ -39,7 +39,7 @@ public class MemberActivity extends AppCompatActivity {
     RadioGroup radioGroup;
     DBHelper dbHelper;
     String cowBuf;
-    ProgressDialog p;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +61,25 @@ public class MemberActivity extends AppCompatActivity {
         radioGroup.clearCheck();
 
         initGroupNames();
+
+        final Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            id = bundle.getString("id");
+            name.setText(bundle.getString("name"));
+            rateGrp.setSelection(((ArrayAdapter) rateGrp.getAdapter()).getPosition(bundle.getString("rateName")));
+            type.setSelection(((ArrayAdapter) type.getAdapter()).getPosition(bundle.getString("memType")));
+            switch (bundle.getString("milkType")) {
+                case "Cow":
+                    ((RadioButton) radioGroup.findViewById(R.id.radioButtonCow)).setChecked(true);
+                    break;
+                case "Buffalo":
+                    ((RadioButton) radioGroup.findViewById(R.id.radioButtonBuff)).setChecked(true);
+                    break;
+                case "Both":
+                    ((RadioButton) radioGroup.findViewById(R.id.radioButtonBoth)).setChecked(true);
+                    break;
+            }
+        }
 
         name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -106,16 +125,20 @@ public class MemberActivity extends AppCompatActivity {
                 } else {
 //                    if(!zoon.getText().toString().equals(""))
 //                        zoonCode = Integer.parseInt(zoon.getText().toString());
+
+                    int selectedId = radioGroup.getCheckedRadioButtonId();
+                    RadioButton temp = findViewById(selectedId);
+
                     rateGrpName = rateGrp.getSelectedItem().toString();
                     rateGrpNo = getRateGrpNoFromName(rateGrpName);
                     if (rateGrpNo == -1) {
                         Toast.makeText(MemberActivity.this, "Invalid Rate group try again", Toast.LENGTH_SHORT).show();
                     } else {
-                        if (cowBuf.equals("Cow"))
+                        if (temp.getText().toString().equals("Cow"))
                             cb = 1;
-                        if (cowBuf.equals("Buffalo"))
+                        if (temp.getText().toString().equals("Buffalo"))
                             cb = 2;
-                        if (cowBuf.equals("Both"))
+                        if (temp.getText().toString().equals("Both"))
                             cb = 3;
                         if (type.getSelectedItem().toString().equals("Member"))
                             mType = 1;
@@ -123,7 +146,10 @@ public class MemberActivity extends AppCompatActivity {
                             mType = 2;
                         if (type.getSelectedItem().toString().equals("Labour Contractor"))
                             mType = 3;
-                        dbQuery.addNewMem(name.getText().toString(), zoonCode, cb, mType, rateGrpNo);
+                        if (bundle != null)
+                            dbQuery.editMem(id, name.getText().toString(), zoonCode, cb, mType, rateGrpNo);
+                        else
+                            dbQuery.addNewMem(name.getText().toString(), zoonCode, cb, mType, rateGrpNo);
                         Toast.makeText(MemberActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                         name.setText("");
 //                        zone.setText("");
