@@ -416,7 +416,7 @@ public class CollectionActivity extends AppCompatActivity {
                             degree.setText("");
                             fat.setText("");
                             quantity.setText("");
-                            date.setText(R.string.select_date);
+//                            date.setText(R.string.select_date);
                             rate.setText("");
                             amt.setText("");
                             radioGroup.clearCheck();
@@ -560,7 +560,7 @@ public class CollectionActivity extends AppCompatActivity {
             } else if (settingsPrefs.equals("false")) {
                 c = dbQuery.getRate(deg, fat, cobf, rateGroupNo);
             } else {
-                Toast.makeText(this, String.valueOf(fat) + " " + cobf + rateGroupNo, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, String.valueOf(fat) + " " + cobf + rateGroupNo, Toast.LENGTH_SHORT).show();
                 c = dbQuery.getRateFromFat(fat, cobf, rateGroupNo);
             }
         }
@@ -644,7 +644,7 @@ public class CollectionActivity extends AppCompatActivity {
         String no;
         c.moveToFirst();
         no = c.getString(c.getColumnIndex("rategrno"));
-        Toast.makeText(this, "No: " + no, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "No: " + no, Toast.LENGTH_SHORT).show();
         rateGroupNo = Integer.parseInt(no);
         c.close();
     }
