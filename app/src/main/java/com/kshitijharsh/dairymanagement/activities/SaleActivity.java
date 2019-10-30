@@ -303,7 +303,7 @@ public class SaleActivity extends AppCompatActivity {
                         fat.setText("");
                         amt.setText("");
                         quantity.setText("");
-                        date.setText(R.string.select_date);
+//                        date.setText(R.string.select_date);
                         radioGroup.clearCheck();
                         radioGroupCB.clearCheck();
                         swapBoth.setVisibility(View.GONE);

@@ -182,7 +182,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                         dbClass.addCattle(date.getText().toString(), memId, edtName.getText().toString(), label, quantity, r, a, p);
                         Toast.makeText(CattleFeedActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                     }
-                    date.setText(R.string.select_date);
+//                    date.setText(R.string.select_date);
                     txtCode.setText("");
                     edtName.setText("");
                     rate.setText("");
