@@ -13,7 +13,7 @@ import com.kshitijharsh.dairymanagement.R;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
-    private static final String TAG = SettingsActivity.class.getSimpleName();
+//    private static final String TAG = SettingsActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -23,6 +23,7 @@ import com.kshitijharsh.dairymanagement.database.DatabaseClass;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 import static com.kshitijharsh.dairymanagement.utils.Constants.CONST.BACKUP_DIRECTORY;
 import static com.kshitijharsh.dairymanagement.utils.Constants.CONST.EXT_DIRECTORY;
@@ -41,17 +42,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         setContentView(R.layout.activity_main);
         checkForStoragePermission();
         dc = new DatabaseClass(this);
-//        DBQuery query = new DBQuery(this);
-//        query.createDatabase();
-//        query.open();
-//        dc = new DatabaseClass(this);
-//        Log.d(getClass().getSimpleName(), "First Query Result: " + query.getMembercount());
-//        //Toast.makeText(this, DBHelper.DB_PATH, Toast.LENGTH_LONG).show();
-//        query.close();
-
     }
 
     /**
@@ -97,7 +92,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 },3*1000);
             }
-
+            member.close();
+            rateMaster.close();
+            item.close();
+            rateGrpMaster.close();
             DBQuery query = new DBQuery(this);
             query.createDatabase();
             query.open();
@@ -107,20 +105,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    public void updateDatabase(View view) {
-//        DBQuery query = new DBQuery(this);
-//        query.createDatabase();
-//        query.open();
-//        Log.d(getClass().getSimpleName(), "First Query Result: " + query.getMembercount());
-//        query.close();
-//    }
-
     public void exitApp(){
         if(exit){
             finish();
         }else {
             exit = true;
-            Toast.makeText(this,"Press back again to exit",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this,"Press back again to exit",Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -160,9 +150,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, CattleFeedActivity.class));
     }
 
-    public void launchDeduction(View view) {
-        startActivity(new Intent(MainActivity.this, DeductionActivity.class));
-    }
+//    public void launchDeduction(View view) {
+//        startActivity(new Intent(MainActivity.this, DeductionActivity.class));
+//    }
 
     public void launchMember(View view) {
         startActivity(new Intent(MainActivity.this, MemberActivity.class));

@@ -1,318 +1,460 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical"
-    android:background="@color/colorPrimaryDark"
     tools:context=".activities.CollectionActivity">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_view"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="4dp"
-        android:elevation="8dp"
-        android:paddingTop="50dp"
-        app:cardCornerRadius="4dp">
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!--        For displaying details    -->
 
         <LinearLayout
+            android:id="@+id/collection_details"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="4dp">
+                android:textAlignment="center"
+                android:padding="2dp">
 
                 <TextView
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:padding="4dp"
-                    android:text="Date"
-                    android:textSize="18sp" />
-
-                <EditText
-                    android:id="@+id/date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Select Date"
-                    android:padding="8dp" />
+                    android:padding="4dp"
+                    android:text="@string/date"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
-
-                <EditText
-                    android:id="@+id/edt_memb_id"
+                <TextView
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:hint="Id"
-                    android:inputType="phone"
-                    android:singleLine="true" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/edt_memb_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Member Name" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
+                    android:layout_weight="1"
+                    android:padding="4dp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:text="Total litres"
+                    android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/txt_mem_type"
-                    android:layout_width="wrap_content"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/member_type"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/mem_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:padding="4dp"
+                    android:textStyle="bold"
                     android:textAlignment="center"
-                    android:textSize="18sp" />
+                    android:text="Total amount"
+                    android:textSize="14sp" />
+
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/swapCB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="4dp">
+                android:padding="2dp">
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:background="#d1d1d1"
+                    android:layout_height="1dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="2dp">
 
                 <TextView
-                    android:id="@+id/txt_cow_buf"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/today_date"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/cow_buf"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/cow_buf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:padding="4dp"
                     android:textAlignment="center"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/swapBoth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp"
-                android:visibility="gone">
-
-                <RadioGroup
-                    android:id="@+id/cowBuff"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="4dp">
-
-                    <RadioButton
-                        android:id="@+id/radioButtonCow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Cow"
-                        android:textSize="18sp" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonBuff"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Buffalo"
-                        android:textSize="18sp" />
-
-                </RadioGroup>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
-
-                <RadioGroup
-                    android:id="@+id/morEve"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="4dp">
-
-                    <RadioButton
-                        android:id="@+id/radioButtonMor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Morning"
-                        android:textSize="18sp" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonEve"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Evening"
-                        android:textSize="18sp" />
-                </RadioGroup>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearAdd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
-
-                <EditText
-                    android:id="@+id/degree"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:hint="Degree"
-                    android:inputType="phone"
-                    android:singleLine="true" />
-
-                <EditText
-                    android:id="@+id/fat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:hint="Fat"
-                    android:inputType="phone"
-                    android:singleLine="true" />
-
-                <EditText
-                    android:id="@+id/qty"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:hint="Quantity"
-                    android:inputType="phone"
-                    android:singleLine="true" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tot_lit"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:padding="4dp"
-                    android:text="Rate"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/rate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Rate"
-                    android:padding="4dp"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="4dp"
-                    android:text="Amount"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/amt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Amount"
-                    android:padding="4dp"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <Button
-                    android:id="@+id/save"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp"
-                    android:text="Save"
                     android:textAlignment="center"
-                    android:textSize="16sp" />
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
 
-                <Button
-                    android:id="@+id/clear"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tot_amt"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp"
-                    android:text="Clear"
+                    android:padding="4dp"
                     android:textAlignment="center"
-                    android:textSize="16sp" />
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="2dp">
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:background="#d1d1d1"
+                    android:layout_height="1dp" />
+
             </LinearLayout>
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:padding="4dp"
+                android:text="@string/date"
+                android:textSize="@dimen/text_small" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:hint="@string/select_date"
+                android:textSize="@dimen/text_small"
+                android:padding="8dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <EditText
+                android:id="@+id/edt_memb_id"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:hint="@string/id"
+                android:textSize="@dimen/text_small"
+                android:inputType="phone"
+                android:singleLine="true" />
+
+            <AutoCompleteTextView
+                android:id="@+id/edt_memb_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:singleLine="true"
+                android:textSize="@dimen/text_small"
+                android:hint="@string/member_name" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/today_details"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:id="@+id/today_lit"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_small" />
+
+            <TextView
+                android:id="@+id/today_amt"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_small" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/typeLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:id="@+id/txt_mem_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/member_type"
+                android:textSize="@dimen/text_small" />
+
+            <TextView
+                android:id="@+id/mem_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:textAlignment="center"
+                android:textSize="@dimen/text_small" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/swapCB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:id="@+id/txt_cow_buf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/cow_buf"
+                android:textSize="@dimen/text_small" />
+
+            <TextView
+                android:id="@+id/cow_buf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:textAlignment="center"
+                android:textSize="@dimen/text_small" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/swapBoth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp"
+            android:visibility="gone">
+
+            <RadioGroup
+                android:id="@+id/cowBuff"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <RadioButton
+                    android:id="@+id/radioButtonCow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cow"
+                    android:textSize="@dimen/text_small" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonBuff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/buffalo"
+                    android:textSize="@dimen/text_small" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <RadioGroup
+                android:id="@+id/morEve"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:padding="2dp">
+
+                <RadioButton
+                    android:id="@+id/radioButtonMor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/morning"
+                    android:textSize="@dimen/text_small" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonEve"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/evening"
+                    android:textSize="@dimen/text_small" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <EditText
+                android:id="@+id/degree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:hint="@string/degree"
+                android:textSize="@dimen/text_small"
+                android:inputType="phone"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/fat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:hint="@string/fat"
+                android:inputType="phone"
+                android:textSize="@dimen/text_small"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/qty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:hint="@string/quantity"
+                android:textSize="@dimen/text_small"
+                android:imeOptions="actionDone"
+                android:inputType="phone"
+                android:singleLine="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:text="@string/rate"
+                android:textSize="@dimen/text_small" />
+
+            <TextView
+                android:id="@+id/rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:textSize="@dimen/text_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:text="@string/amount"
+                android:textSize="@dimen/text_small" />
+
+            <TextView
+                android:id="@+id/amt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:textSize="@dimen/text_small" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <Button
+                android:id="@+id/save"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="@string/save"
+                android:textAlignment="center"
+                android:textSize="@dimen/text_button" />
+
+            <Button
+                android:id="@+id/clear"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="@string/clear"
+                android:textAlignment="center"
+                android:textSize="@dimen/text_button" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

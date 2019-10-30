@@ -10,8 +10,8 @@ import java.io.File;
 
 public class DatabaseClass extends SQLiteOpenHelper {
 
-    public final static String DATABASE_NAME ="records.db";
-    private static final int DATABASE_VERSION = 2;
+    public final static String DATABASE_NAME = "records.db";
+    private static final int DATABASE_VERSION = 3;
     private SQLiteDatabase db;
     private File dbPath;
 
@@ -26,7 +26,7 @@ public class DatabaseClass extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //db.execSQL("CREATE TABLE member(memb_code INTEGER PRIMARY KEY, memb_name TEXT, zoon_code INTEGER, Cobf_type INTEGER, memb_type INTEGER, accno INTEGER, rategrno INTEGER, bank_code INTEGER, BankAcNo INTEGER, membNam_Eng TEXT, AcNo INTEGER);");
         db.execSQL("CREATE TABLE collectionTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, memName TEXT, cobf TEXT, morEve TEXT, degree FLOAT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
-        db.execSQL("CREATE TABLE saleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, brName TEXT, membCode INTEGER, memName TEXT, mornEve TEXT, cobf TEXT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
+        db.execSQL("CREATE TABLE saleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, memName TEXT, mornEve TEXT, cobf TEXT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
         db.execSQL("CREATE TABLE cattleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, memId INTEGER, memName TEXT, itemName TEXT, quantity FLOAT, rate FLOAT, amount FLOAT, particulars TEXT);");
     }
 
@@ -39,22 +39,7 @@ public class DatabaseClass extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addMember(int memCode, String memName, int zoonCode, int cobfType, int memType, int accNo, int rategrNo, int bankCode, int bankacNo, String memnameEng, int acNo) {
-        ContentValues values = new ContentValues(11);
-        values.put("memb_code", memCode);
-        values.put("memb_name", memName);
-        values.put("zoon_code", zoonCode);
-        values.put("Cobf_type", cobfType);
-        values.put("memb_type", memType);
-        values.put("accno", accNo);
-        values.put("rategrno", rategrNo);
-        values.put("bank_code", bankCode);
-        values.put("BankAcNo", bankacNo);
-        values.put("membNam_Eng", memnameEng);
-        values.put("AcNo", acNo);
-        getWritableDatabase().insert("member", "memb_code", values);
-    }
-
+    //add new entries to database
     public void addColl(String date, int membCode, String name, String cobf, String morEve, float degree, float liters, float fat, float rate, float amount) {
         ContentValues values = new ContentValues(10);
         values.put("trnDate", date);
@@ -70,10 +55,9 @@ public class DatabaseClass extends SQLiteOpenHelper {
         getWritableDatabase().insert("collectionTransactions", "trnDate", values);
     }
 
-    public void addSale(String date, String brName, int membCode, String name, String morEve, String cobf, float liters, float fat, float rate, float amount) {
+    public void addSale(String date, int membCode, String name, String morEve, String cobf, float liters, float fat, float rate, float amount) {
         ContentValues values = new ContentValues(10);
         values.put("trnDate", date);
-        values.put("brName", brName);
         values.put("membCode", membCode);
         values.put("memName", name);
         values.put("mornEve", morEve);
@@ -95,19 +79,10 @@ public class DatabaseClass extends SQLiteOpenHelper {
         values.put("rate", rate);
         values.put("amount", amt);
         values.put("particulars", part);
-        getWritableDatabase().insert("CattleTransactions", "trnDate", values);
+        getWritableDatabase().insert("cattleTransactions", "trnDate", values);
     }
 
-    public float getMilkCount() {
-        float milkCount = 0;
-        String query = "SELECT SUM(liters) from collectionTransactions;";
-        Cursor c = getReadableDatabase().rawQuery(query,null);
-        //c.moveToFirst();
-        if(c != null && c.getCount() >0)
-            milkCount = c.getFloat(c.getColumnIndex("liters"));
-        return milkCount;
-    }
-
+    //get all details queries
     public Cursor getAllCattle() {
         String query = "SELECT * FROM cattleTransactions";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -124,5 +99,164 @@ public class DatabaseClass extends SQLiteOpenHelper {
         String query = "SELECT * FROM collectionTransactions";
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery(query, null);
+    }
+
+    //delete queries
+    public Cursor deleteCollectionItem(String id) {
+        String query = "DELETE FROM collectionTransactions WHERE _id='" + id + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("collectionTransactions", "_id='" + id + "'", null);
+        return db.rawQuery(query, null);
+    }
+
+    public Cursor deleteSaleItem(String id) {
+        String query = "DELETE FROM saleTransactions WHERE _id='" + id + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("saleTransactions", "_id='" + id + "'", null);
+        return db.rawQuery(query, null);
+    }
+
+    public Cursor deleteCattleItem(String id) {
+        String query = "DELETE FROM cattleTransactions WHERE _id='" + id + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("cattleTransactions", "_id='" + id + "'", null);
+        return db.rawQuery(query, null);
+    }
+
+    //get amount and litres on a given date (For saleActivity)
+    public float getMilkFromDate(String date) {
+        float milkCount = 0;
+        String query = "SELECT SUM(liters) as Total from saleTransactions WHERE trnDate='" + date + "'";
+        Cursor c = getReadableDatabase().rawQuery(query, null);
+        //c.moveToFirst();
+        if (c.moveToFirst()) {
+            milkCount = c.getFloat(c.getColumnIndex("Total"));
+        }
+        c.close();
+        return milkCount;
+    }
+
+    public float getAmtFromDate(String date) {
+        float amt = 0;
+        String query = "SELECT SUM(amount) as Total from saleTransactions WHERE trnDate='" + date + "'";
+        Cursor c = getReadableDatabase().rawQuery(query, null);
+        //c.moveToFirst();
+        if (c.moveToFirst()) {
+            amt = c.getFloat(c.getColumnIndex("Total"));
+        }
+        c.close();
+        return amt;
+    }
+
+    //get amount and litres on a given date (For collectionActivity)
+    public float getCollecedMilkFromDate(String date) {
+        float milkCount = 0;
+        String query = "SELECT SUM(liters) as Total from collectionTransactions WHERE trnDate='" + date + "'";
+        Cursor c = getReadableDatabase().rawQuery(query, null);
+        //c.moveToFirst();
+        if (c.moveToFirst()) {
+            milkCount = c.getFloat(c.getColumnIndex("Total"));
+        }
+        c.close();
+        return milkCount;
+    }
+
+    public float getCollecedAmtFromDate(String date) {
+        float amt = 0;
+        String query = "SELECT SUM(amount) as Total from collectionTransactions WHERE trnDate='" + date + "'";
+        Cursor c = getReadableDatabase().rawQuery(query, null);
+        //c.moveToFirst();
+        if (c.moveToFirst()) {
+            amt = c.getFloat(c.getColumnIndex("Total"));
+        }
+        c.close();
+        return amt;
+    }
+
+    //get total cattle feed amount on a given date
+    public float getCattleAmtFromDate(String date) {
+        float amt = 0;
+        String query = "SELECT SUM(amount) as Total from cattleTransactions WHERE trnDate='" + date + "'";
+        Cursor c = getReadableDatabase().rawQuery(query, null);
+        //c.moveToFirst();
+        if (c.moveToFirst()) {
+            amt = c.getFloat(c.getColumnIndex("Total"));
+        }
+        c.close();
+        return amt;
+    }
+
+    //get member wise daily collection
+    public float getMemberWiseDailyLitre(String date, String name) {
+        float milkCount = 0;
+        String query = "SELECT SUM(liters) as Total from collectionTransactions WHERE trnDate='" + date + "' AND memName='" + name + "'";
+        Cursor c = getReadableDatabase().rawQuery(query, null);
+        //c.moveToFirst();
+        if (c.moveToFirst()) {
+            milkCount = c.getFloat(c.getColumnIndex("Total"));
+        }
+        c.close();
+        return milkCount;
+    }
+
+    public float getMemberWiseDailyAmt(String date, String name) {
+        float amt = 0;
+        String query = "SELECT SUM(amount) as Total from collectionTransactions WHERE trnDate='" + date + "' AND memName='" + name + "'";
+        Cursor c = getReadableDatabase().rawQuery(query, null);
+        //c.moveToFirst();
+        if (c.moveToFirst()) {
+            amt = c.getFloat(c.getColumnIndex("Total"));
+        }
+        c.close();
+        return amt;
+    }
+
+    //Edit entries
+    public void editColl(String id, String date, int membCode, String name, String cobf, String morEve, float degree, float liters, float fat, float rate, float amount) {
+        ContentValues values = new ContentValues(10);
+        values.put("trnDate", date);
+        values.put("membCode", membCode);
+        values.put("memName", name);
+        values.put("cobf", cobf);
+        values.put("morEve", morEve);
+        values.put("degree", degree);
+        values.put("liters", liters);
+        values.put("fat", fat);
+        values.put("rate", rate);
+        values.put("amount", amount);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.update("collectionTransactions", values, "_id=" + id, null);
+    }
+
+    public void editSale(String id, String date, int membCode, String name, String morEve, String cobf, float liters, float fat, float rate, float amount) {
+        ContentValues values = new ContentValues(10);
+        values.put("trnDate", date);
+        values.put("membCode", membCode);
+        values.put("memName", name);
+        values.put("mornEve", morEve);
+        values.put("cobf", cobf);
+        values.put("liters", liters);
+        values.put("fat", fat);
+        values.put("rate", rate);
+        values.put("amount", amount);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.update("saleTransactions", values, "_id=" + id, null);
+    }
+
+    public void editCattle(String id, String date, int lgr, String name, String item, float qty, float rate, float amt, String part) {
+        ContentValues values = new ContentValues(9);
+        values.put("trnDate", date);
+        values.put("memId", lgr);
+        values.put("memName", name);
+        values.put("itemName", item);
+        values.put("quantity", qty);
+        values.put("rate", rate);
+        values.put("amount", amt);
+        values.put("particulars", part);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.update("cattleTransactions", values, "_id=" + id, null);
     }
 }

@@ -18,8 +18,8 @@ public class SqliteExporter {
 
     private static final String TAG = SqliteExporter.class.getSimpleName();
 
-    public static final String DB_BACKUP_DB_VERSION_KEY = "dbVersion";
-    public static final String DB_BACKUP_TABLE_NAME = "table";
+    private static final String DB_BACKUP_DB_VERSION_KEY = "dbVersion";
+    private static final String DB_BACKUP_TABLE_NAME = "table";
 
     public static String export(SQLiteDatabase db) throws IOException {
         if( !FileUtils.isExternalStorageWritable() ){
@@ -47,13 +47,7 @@ public class SqliteExporter {
         return "db_backup_" + sdf.format(new Date()) + ".csv";
     }
 
-    /**
-     * Get all the table names we have in db
-     *
-     * @param db
-     * @return
-     */
-    public static List<String> getTablesOnDataBase(SQLiteDatabase db){
+    private static List<String> getTablesOnDataBase(SQLiteDatabase db) {
         Cursor c = null;
         List<String> tables = new ArrayList<>();
         try{

@@ -1,5 +1,6 @@
 package com.kshitijharsh.dairymanagement.activities;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -32,6 +33,7 @@ import com.kshitijharsh.dairymanagement.model.Member;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class SaleActivity extends AppCompatActivity {
 
@@ -39,17 +41,19 @@ public class SaleActivity extends AppCompatActivity {
     AutoCompleteTextView edtName;
     TextView cowBuf;
     ArrayList<String> names;
-    TextView amt;
+    TextView amt, date;
     EditText txtCode;
     HashMap<String, Member> members;
-    EditText branch, fat, quantity, date, rate;
+    EditText fat, quantity, rate;
     Button save, clear;
     DBHelper dbHelper;
     DatabaseClass dbClass;
     RadioGroup radioGroup, radioGroupCB;
-    LinearLayout swapCB, swapBoth;
+    LinearLayout swapCB, swapBoth, saleDetails;
     String cowBuff;
     String mornEve;
+    TextView todayDate, totLit, totAmt;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,14 +64,14 @@ public class SaleActivity extends AppCompatActivity {
         dbHelper = new DBHelper(this);
         dbClass = new DatabaseClass(this);
 
-        getSupportActionBar().setTitle("Milk Sale");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Milk Sale");
 
         edtName = findViewById(R.id.edt_memb_name);
         cowBuf = findViewById(R.id.cow_buf);
         txtCode = findViewById(R.id.edt_memb_id);
         rate = findViewById(R.id.rate);
         amt = findViewById(R.id.amt);
-        branch = findViewById(R.id.branch);
+//        branch = findViewById(R.id.branch);
         fat = findViewById(R.id.fat);
         quantity = findViewById(R.id.qty);
         date = findViewById(R.id.date);
@@ -76,6 +80,41 @@ public class SaleActivity extends AppCompatActivity {
         radioGroup = findViewById(R.id.morEve);
         initNames();
         radioGroup.clearCheck();
+
+        radioGroupCB = findViewById(R.id.cowBuff);
+        radioGroupCB.clearCheck();
+
+        final Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            id = bundle.getString("id");
+            edtName.setText(bundle.getString("name"));
+            cowBuf.setText(bundle.getString("milkType"));
+            txtCode.setText(bundle.getString("memId"));
+            rate.setText(bundle.getString("rate"));
+            amt.setText(bundle.getString("amt"));
+            fat.setText(bundle.getString("fat"));
+            quantity.setText(bundle.getString("qty"));
+            date.setText(bundle.getString("date"));
+            switch (bundle.getString("morEve")) {
+                case "Morning":
+                    ((RadioButton) radioGroup.findViewById(R.id.radioButtonMor)).setChecked(true);
+                    break;
+                case "Evening":
+                    ((RadioButton) radioGroup.findViewById(R.id.radioButtonEve)).setChecked(true);
+                    break;
+            }
+            switch (bundle.getString("milkType")) {
+                case "Cow":
+                    ((RadioButton) radioGroupCB.findViewById(R.id.radioButtonCow)).setChecked(true);
+                    break;
+                case "Buffalo":
+                    ((RadioButton) radioGroupCB.findViewById(R.id.radioButtonBuff)).setChecked(true);
+                    break;
+                case "Both":
+                    ((RadioButton) radioGroupCB.findViewById(R.id.radioButtonBoth)).setChecked(true);
+                    break;
+            }
+        }
 
         rate.addTextChangedListener(new TextWatcher() {
 
@@ -88,6 +127,7 @@ public class SaleActivity extends AppCompatActivity {
                                           int count, int after) {
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
@@ -105,9 +145,10 @@ public class SaleActivity extends AppCompatActivity {
                         qt = Float.parseFloat(quantity.getText().toString());
                     float a = qt * ra;
                     amt.setText(String.valueOf(a));
-                } else {
-                    Toast.makeText(SaleActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
                 }
+//                else {
+//                    Toast.makeText(SaleActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 
@@ -122,6 +163,7 @@ public class SaleActivity extends AppCompatActivity {
                                           int count, int after) {
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
@@ -139,9 +181,10 @@ public class SaleActivity extends AppCompatActivity {
                         ra = Float.parseFloat(rate.getText().toString());
                     float a = qt * ra;
                     amt.setText(String.valueOf(a));
-                } else {
-                    Toast.makeText(SaleActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
                 }
+//                else {
+//                    Toast.makeText(SaleActivity.this, "Please choose values first!", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 
@@ -157,13 +200,13 @@ public class SaleActivity extends AppCompatActivity {
             }
         });
 
-        //float count = dbClass.getMilkCount();
-        //Toast.makeText(this, String.valueOf(count), Toast.LENGTH_SHORT).show();
-
-        radioGroupCB = findViewById(R.id.cowBuff);
-        radioGroupCB.clearCheck();
         swapBoth = findViewById(R.id.swapBoth);
         swapCB = findViewById(R.id.swapCB);
+
+        saleDetails = findViewById(R.id.sale_details);
+        todayDate = findViewById(R.id.today_date);
+        totAmt = findViewById(R.id.tot_amt);
+        totLit = findViewById(R.id.tot_lit);
 
         radioGroupCB.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -181,16 +224,17 @@ public class SaleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 edtName.setText("");
-                branch.setText("");
+//                branch.setText("");
                 cowBuf.setText("");
                 txtCode.setText("");
                 rate.setText("");
                 amt.setText("");
                 fat.setText("");
                 quantity.setText("");
-                date.setText("");
+                date.setText(R.string.select_date);
                 radioGroup.clearCheck();
                 radioGroupCB.clearCheck();
+                saleDetails.setVisibility(View.GONE);
             }
         });
 
@@ -200,10 +244,16 @@ public class SaleActivity extends AppCompatActivity {
         final int mMonth = mcurrentDate.get(Calendar.MONTH);
         final int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
         datePickerDialog = new DatePickerDialog(SaleActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 int m = month + 1;
-                date.setText(dayOfMonth + "-" + m + "-" + year);
+                String tmp = dayOfMonth + "-" + m + "-" + year;
+                date.setText(tmp);
+                todayDate.setText(tmp);
+                totAmt.setText(String.valueOf(dbClass.getAmtFromDate(tmp)));
+                totLit.setText(String.valueOf(dbClass.getMilkFromDate(tmp)));
+                saleDetails.setVisibility(View.VISIBLE);
 
             }
         }, mYear, mMonth, mDay);
@@ -216,9 +266,10 @@ public class SaleActivity extends AppCompatActivity {
         });
 
         save.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || branch.getText().toString().equals("") || txtCode.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroup.getCheckedRadioButtonId() == -1) {
+                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || txtCode.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroup.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(SaleActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
                     int memCode = Integer.parseInt(txtCode.getText().toString());
@@ -233,24 +284,35 @@ public class SaleActivity extends AppCompatActivity {
                         if (cowBuff.equals("Buffalo"))
                             cowBuf.setText("Buffalo");
                     }
+
+                    int selectedId = radioGroup.getCheckedRadioButtonId();
+                    RadioButton mE = findViewById(selectedId);
+
                     if (!cowBuf.getText().toString().equals("")) {
-                        dbClass.addSale(date.getText().toString(), branch.getText().toString(), memCode, edtName.getText().toString(), mornEve, cowBuf.getText().toString(), lit, f, r, Float.parseFloat(amt.getText().toString()));
+
+                        if (bundle != null)
+                            dbClass.editSale(id, date.getText().toString(), memCode, edtName.getText().toString(), mE.getText().toString(), cowBuf.getText().toString(), lit, f, r, Float.parseFloat(amt.getText().toString()));
+                        else
+                            dbClass.addSale(date.getText().toString(), memCode, edtName.getText().toString(), mornEve, cowBuf.getText().toString(), lit, f, r, Float.parseFloat(amt.getText().toString()));
                         Toast.makeText(SaleActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                         edtName.setText("");
-                        branch.setText("");
+//                        branch.setText("");
                         cowBuf.setText("");
                         txtCode.setText("");
                         rate.setText("");
                         fat.setText("");
+                        amt.setText("");
                         quantity.setText("");
-                        date.setText("");
+                        date.setText(R.string.select_date);
                         radioGroup.clearCheck();
                         radioGroupCB.clearCheck();
                         swapBoth.setVisibility(View.GONE);
                         swapCB.setVisibility(View.VISIBLE);
-                    } else {
-//                        Toast.makeText(SaleActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
+                        saleDetails.setVisibility(View.GONE);
                     }
+//                    else {
+//                        Toast.makeText(SaleActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
+//                    }
                 }
 
             }
@@ -298,6 +360,7 @@ public class SaleActivity extends AppCompatActivity {
                     cowBuf.setText(cbText);
                 } else if (cb == 3) {
                     cbText = "Both";
+                    cowBuf.setText(cbText);
                     swapBoth.setVisibility(View.VISIBLE);
                     swapCB.setVisibility(View.GONE);
                 } else {
@@ -310,7 +373,7 @@ public class SaleActivity extends AppCompatActivity {
     }
 
     private void initNames() {
-        Cursor cursor = dbQuery.getAllMembers("Member Name");
+        Cursor cursor = dbQuery.getAllMembers();
         names = new ArrayList<>();
         members = new HashMap<>();
         cursor.moveToFirst();
@@ -326,7 +389,7 @@ public class SaleActivity extends AppCompatActivity {
             cursor.moveToNext();
         }
         System.out.println("Names added: " + members.size());
-
+        cursor.close();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.item_name_list,
                 names);
@@ -340,7 +403,7 @@ public class SaleActivity extends AppCompatActivity {
         String name;
         c.moveToFirst();
         edtName.setText("");
-        if (c.getCount() > 0 && c != null) {
+        if (c.getCount() > 0) {
             name = c.getString(c.getColumnIndex("memb_name"));
             edtName.setText(name);
             Member member = members.get(name);
@@ -355,6 +418,7 @@ public class SaleActivity extends AppCompatActivity {
                 cowBuf.setText(cbText);
             } else if (cb == 3) {
                 cbText = "Both";
+                cowBuf.setText(cbText);
                 swapBoth.setVisibility(View.VISIBLE);
                 swapCB.setVisibility(View.GONE);
             } else {
@@ -363,6 +427,7 @@ public class SaleActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Member not found!", Toast.LENGTH_SHORT).show();
         }
+        c.close();
     }
 
     @Override
@@ -374,12 +439,10 @@ public class SaleActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_details:
-                startActivity(new Intent(this, SaleDetailActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.menu_details) {
+            startActivity(new Intent(this, SaleDetailActivity.class));
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 }

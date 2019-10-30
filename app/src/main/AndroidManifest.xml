@@ -17,7 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".activities.MemberDetailActivity"></activity>
+        <activity android:name=".activities.MemberDetailActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activities.CattleDetailActivity" />
         <activity android:name=".activities.SaleDetailActivity" />
         <activity android:name=".activities.CollectionDetailActivity" />

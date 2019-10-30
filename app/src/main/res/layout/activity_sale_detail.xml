@@ -8,7 +8,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/sale_list"
-        android:background="#f1f5f8"
+        android:background="@color/recyclerView_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />

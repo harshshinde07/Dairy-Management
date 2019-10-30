@@ -1,5 +1,6 @@
 package com.kshitijharsh.dairymanagement.activities;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,11 +33,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class CattleFeedActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    EditText date, tran, bal, qty, rate, particulars;
+    EditText qty, rate, particulars;
     AutoCompleteTextView edtName;
-    TextView amt;
+    TextView amt, date;
     EditText txtCode;
     Spinner item;
     Button clear, save;
@@ -45,6 +48,9 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
     String label;
     ArrayList<String> names;
     HashMap<String, Member> members;
+    TextView todayDate, totAmt;
+    LinearLayout cattleDetails;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +61,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         dbQuery.open();
         dbHelper = new DBHelper(this);
 
-        getSupportActionBar().setTitle("CattleFeed");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("CattleFeed");
 
         dbClass = new DatabaseClass(this);
         date = findViewById(R.id.date);
@@ -72,6 +78,23 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
 
         item.setOnItemSelectedListener(CattleFeedActivity.this);
         loadItemData();
+
+        cattleDetails = findViewById(R.id.cattle_details);
+        todayDate = findViewById(R.id.today_date);
+        totAmt = findViewById(R.id.tot_amt);
+
+        final Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            id = bundle.getString("id");
+            date.setText(bundle.getString("date"));
+            edtName.setText(bundle.getString("name"));
+            txtCode.setText(bundle.getString("memId"));
+            qty.setText(bundle.getString("rate"));
+            rate.setText(bundle.getString("qty"));
+            particulars.setText(bundle.getString("part"));
+            amt.setText(bundle.getString("amt"));
+            item.setSelection(((ArrayAdapter) item.getAdapter()).getPosition(bundle.getString("itemName")));
+        }
 
         qty.addTextChangedListener(new TextWatcher() {
 
@@ -124,7 +147,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                date.setText("");
+                date.setText(R.string.select_date);
                 txtCode.setText("");
                 edtName.setText("");
                 rate.setText("");
@@ -132,6 +155,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                 qty.setText("");
                 item.setSelected(false);
                 particulars.setText("");
+                cattleDetails.setVisibility(View.GONE);
             }
         });
 
@@ -151,15 +175,21 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                         p = "None";
                     else
                         p = particulars.getText().toString();
-                    dbClass.addCattle(date.getText().toString(), memId, edtName.getText().toString(), label, quantity, r, a, p);
-                    Toast.makeText(CattleFeedActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
-                    date.setText("");
+
+                    if (bundle != null) {
+                        dbClass.editCattle(id, date.getText().toString(), memId, edtName.getText().toString(), label, quantity, r, a, p);
+                    } else {
+                        dbClass.addCattle(date.getText().toString(), memId, edtName.getText().toString(), label, quantity, r, a, p);
+                        Toast.makeText(CattleFeedActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
+                    }
+                    date.setText(R.string.select_date);
                     txtCode.setText("");
                     edtName.setText("");
                     rate.setText("");
                     qty.setText("");
                     item.setSelected(false);
                     particulars.setText("");
+                    cattleDetails.setVisibility(View.GONE);
                 }
 
             }
@@ -207,10 +237,15 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         final int mMonth = mcurrentDate.get(Calendar.MONTH);
         final int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
         datePickerDialog = new DatePickerDialog(CattleFeedActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 int m = month + 1;
-                date.setText(dayOfMonth + "-" + m + "-" + year);
+                String tmp = dayOfMonth + "-" + m + "-" + year;
+                date.setText(tmp);
+                todayDate.setText(tmp);
+                totAmt.setText(String.valueOf(dbClass.getCattleAmtFromDate(tmp)));
+                cattleDetails.setVisibility(View.VISIBLE);
 
             }
         }, mYear, mMonth, mDay);
@@ -224,7 +259,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
     }
 
     private void initNames() {
-        Cursor cursor = dbQuery.getAllMembers("Member Name");
+        Cursor cursor = dbQuery.getAllMembers();
         names = new ArrayList<>();
         members = new HashMap<>();
         cursor.moveToFirst();
@@ -240,7 +275,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
             cursor.moveToNext();
         }
         System.out.println("Names added: " + members.size());
-
+        cursor.close();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.item_name_list,
                 names);
@@ -257,7 +292,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         List<String> labels = db.getAllItems();
 
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, labels);
 
         // Drop down layout style - list view with radio button
@@ -283,12 +318,13 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         Cursor c = dbQuery.getItemRate(item);
         float val;
         c.moveToFirst();
-        if (c.getCount() > 0 && c != null) {
+        if (c.getCount() > 0) {
             val = c.getFloat(c.getColumnIndex("rate"));
             rate.setText(String.valueOf(val));
         } else {
             Toast.makeText(this, "Value not found!", Toast.LENGTH_SHORT).show();
         }
+        c.close();
     }
 
     public void getMemNameFromID(int id) {
@@ -296,12 +332,13 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         String name;
         c.moveToFirst();
         edtName.setText("");
-        if (c.getCount() > 0 && c != null) {
+        if (c.getCount() > 0) {
             name = c.getString(c.getColumnIndex("memb_name"));
             edtName.setText(name);
         } else {
             Toast.makeText(this, "Member not found!", Toast.LENGTH_SHORT).show();
         }
+        c.close();
     }
 
     @Override
@@ -313,12 +350,10 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_details:
-                startActivity(new Intent(this, CattleDetailActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.menu_details) {
+            startActivity(new Intent(this, CattleDetailActivity.class));
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 }

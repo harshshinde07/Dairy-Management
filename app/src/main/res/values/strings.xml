@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">WinDairy</string>
     <string name="cow_buf">Milk Type</string>
-    <string name="member_type">Member Type</string>
     <string name="winsoft_logo">Winsoft Logo</string>
     <string-array name="member_type">
         <item>Member</item>
@@ -19,6 +18,46 @@
 
     <string name="sort_by_name">Member Name</string>
     <string name="sort_by_code">Member Code</string>
+    <string name="app_name_main">Winsoft Dairy Management</string>
+    <string name="milk_collection">Milk Collection</string>
+    <string name="milk_sale">Milk Sale</string>
+    <string name="export_database">Export Database</string>
+    <string name="cattlefeed_entry">Cattlefeed Entry</string>
+    <string name="add_member">Add Member</string>
+    <string name="settings">Settings</string>
+    <string name="cancel">Cancel</string>
+    <string name="apply">Apply</string>
+    <string name="filter">Filter</string>
+    <string name="clear">Clear</string>
+    <string name="save">Save</string>
+    <string name="rate_group_name">Rate Group Name</string>
+    <string name="zone_code">Zone Code</string>
+    <string name="both">Both</string>
+    <string name="buffalo">Buffalo</string>
+    <string name="cow">Cow</string>
+    <string name="member_type">Member Type</string>
+    <string name="member_name">Member Name</string>
+    <string name="name">Name</string>
+    <string name="date">Date</string>
+    <string name="branch_name">Branch Name</string>
+    <string name="id">Id</string>
+    <string name="morning">Morning</string>
+    <string name="evening">Evening</string>
+    <string name="qty">Qty</string>
+    <string name="fat">Fat</string>
+    <string name="rate">Rate</string>
+    <string name="amount">Amount</string>
+    <string name="select_date">Select Date</string>
+    <string name="mem_id">Mem Id</string>
+    <string name="item">Item</string>
+    <string name="quantity">Quantity</string>
+    <string name="spaces" />
+    <string name="particulars">Particulars</string>
+    <string name="degree">Degree</string>
+    <string name="rate_group">Rate Group</string>
+    <string name="action_search">Search</string>
+    <string name="search_hint">Type name…</string>
+
     <!--    <string name="sort_by_amount">Amount</string>-->
 
     <!-- Types of Milk -->
