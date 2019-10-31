@@ -1,10 +1,9 @@
 package com.kshitijharsh.dairymanagement.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -15,7 +14,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -27,7 +25,6 @@ import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class MemberActivity extends AppCompatActivity {
@@ -131,7 +128,10 @@ public class MemberActivity extends AppCompatActivity {
 
                     rateGrpName = rateGrp.getSelectedItem().toString();
                     rateGrpNo = getRateGrpNoFromName(rateGrpName);
-                    if (rateGrpNo == -1) {
+
+                    if (dbQuery.checkDuplicateMember(name.getText().toString())) {
+                        name.setError("Name already exists! Try another");
+                    } else if (rateGrpNo == -1) {
                         Toast.makeText(MemberActivity.this, "Invalid Rate group try again", Toast.LENGTH_SHORT).show();
                     } else {
                         if (temp.getText().toString().equals("Cow"))
@@ -207,5 +207,11 @@ public class MemberActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         rateGrp.setAdapter(adapter);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        NavUtils.navigateUpFromSameTask(this);
     }
 }

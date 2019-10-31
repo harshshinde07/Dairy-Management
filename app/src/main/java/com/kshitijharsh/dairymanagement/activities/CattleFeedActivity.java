@@ -4,8 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +52,8 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
     HashMap<String, Member> members;
     TextView todayDate, totAmt;
     LinearLayout cattleDetails;
+    RadioGroup cashCredit;
+    LinearLayout memDetails;
     String id;
 
     @Override
@@ -75,6 +79,9 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         initNames();
         clear = findViewById(R.id.clear);
         save = findViewById(R.id.save);
+
+        cashCredit = findViewById(R.id.cash_credit);
+        memDetails = findViewById(R.id.member_details_layout);
 
         item.setOnItemSelectedListener(CattleFeedActivity.this);
         loadItemData();
@@ -156,6 +163,23 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                 item.setSelected(false);
                 particulars.setText("");
                 cattleDetails.setVisibility(View.GONE);
+
+                cashCredit.clearCheck();
+                memDetails.setVisibility(View.GONE);
+            }
+        });
+
+        cashCredit.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.radioButtonCash:
+                        memDetails.setVisibility(View.GONE);
+                        break;
+                    case R.id.radioButtonCredit:
+                        memDetails.setVisibility(View.VISIBLE);
+                        break;
+                }
             }
         });
 
@@ -163,10 +187,18 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
             @Override
             public void onClick(View view) {
                 String p;
-                if (date.getText().toString().equals("") || txtCode.getText().toString().equals("") || rate.getText().toString().equals("") || amt.getText().toString().equals("") || qty.getText().toString().equals("") || item.getSelectedItem().equals("Select Item")) {
+                if (date.getText().toString().equals("") || rate.getText().toString().equals("") || amt.getText().toString().equals("") || qty.getText().toString().equals("") || item.getSelectedItem().equals("Select Item") || cashCredit.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(CattleFeedActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
-                    int memId = Integer.parseInt(txtCode.getText().toString());
+                    int memId = 0;
+                    String memName = "Not available";
+                    int cashCrId = cashCredit.getCheckedRadioButtonId();
+                    if (cashCrId == R.id.radioButtonCredit) {
+                        if (!txtCode.getText().toString().equals(""))
+                            memId = Integer.parseInt(txtCode.getText().toString());
+                        if (!edtName.getText().toString().equals(""))
+                            memName = edtName.getText().toString();
+                    }
                     float quantity = Float.parseFloat(qty.getText().toString());
                     float r = Float.parseFloat(rate.getText().toString());
                     float a = quantity * r;
@@ -177,9 +209,9 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                         p = particulars.getText().toString();
 
                     if (bundle != null) {
-                        dbClass.editCattle(id, date.getText().toString(), memId, edtName.getText().toString(), label, quantity, r, a, p);
+                        dbClass.editCattle(id, date.getText().toString(), memId, memName, label, quantity, r, a, p);
                     } else {
-                        dbClass.addCattle(date.getText().toString(), memId, edtName.getText().toString(), label, quantity, r, a, p);
+                        dbClass.addCattle(date.getText().toString(), memId, memName, label, quantity, r, a, p);
                         Toast.makeText(CattleFeedActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                     }
 //                    date.setText(R.string.select_date);
@@ -190,6 +222,10 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                     item.setSelected(false);
                     particulars.setText("");
                     cattleDetails.setVisibility(View.GONE);
+                    txtCode.requestFocus();
+
+                    cashCredit.clearCheck();
+                    memDetails.setVisibility(View.GONE);
                 }
 
             }
@@ -355,5 +391,11 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        NavUtils.navigateUpFromSameTask(this);
     }
 }

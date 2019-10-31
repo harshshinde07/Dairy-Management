@@ -17,17 +17,16 @@
 
         <LinearLayout
             android:id="@+id/collection_details"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:textAlignment="center"
-                android:padding="2dp">
+                android:textAlignment="center">
 
                 <TextView
                     android:layout_width="90dp"
@@ -37,8 +36,8 @@
                     android:padding="4dp"
                     android:text="@string/date"
                     android:textAlignment="center"
-                    android:textStyle="bold"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="90dp"
@@ -46,10 +45,10 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:padding="4dp"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
                     android:text="Total litres"
-                    android:textSize="14sp" />
+                    android:textAlignment="center"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="90dp"
@@ -57,31 +56,29 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:padding="4dp"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
                     android:text="Total amount"
-                    android:textSize="14sp" />
+                    android:textAlignment="center"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="2dp">
+                android:orientation="horizontal">
 
                 <View
                     android:layout_width="fill_parent"
-                    android:background="#d1d1d1"
-                    android:layout_height="1dp" />
+                    android:layout_height="1dp"
+                    android:background="#d1d1d1" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="2dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/today_date"
@@ -91,8 +88,8 @@
                     android:layout_weight="1"
                     android:padding="4dp"
                     android:textAlignment="center"
-                    android:textStyle="bold"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tot_lit"
@@ -102,8 +99,8 @@
                     android:layout_weight="1"
                     android:padding="4dp"
                     android:textAlignment="center"
-                    android:textStyle="bold"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tot_amt"
@@ -113,21 +110,20 @@
                     android:layout_weight="1"
                     android:padding="4dp"
                     android:textAlignment="center"
-                    android:textStyle="bold"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="2dp">
+                android:orientation="horizontal">
 
                 <View
                     android:layout_width="fill_parent"
-                    android:background="#d1d1d1"
-                    android:layout_height="1dp" />
+                    android:layout_height="1dp"
+                    android:background="#d1d1d1" />
 
             </LinearLayout>
 
@@ -136,8 +132,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="2dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="90dp"
@@ -152,18 +147,49 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:singleLine="true"
                 android:hint="@string/select_date"
-                android:textSize="@dimen/text_small"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textSize="@dimen/text_small" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="2dp">
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/morEve"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <RadioButton
+                    android:id="@+id/radioButtonMor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/morning"
+                    android:textSize="@dimen/text_small" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonEve"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/evening"
+                    android:textSize="@dimen/text_small" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/edt_memb_id"
@@ -171,27 +197,26 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:hint="@string/id"
-                android:textSize="@dimen/text_small"
                 android:inputType="phone"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textSize="@dimen/text_small" />
 
             <AutoCompleteTextView
                 android:id="@+id/edt_memb_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:hint="@string/member_name"
                 android:singleLine="true"
-                android:textSize="@dimen/text_small"
-                android:hint="@string/member_name" />
+                android:textSize="@dimen/text_small" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/today_details"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="2dp">
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/today_lit"
@@ -200,8 +225,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:padding="4dp"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_small" />
+                android:textSize="@dimen/text_small"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/today_amt"
@@ -210,8 +235,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:padding="4dp"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_small" />
+                android:textSize="@dimen/text_small"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -220,7 +245,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="2dp">
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/txt_mem_type"
@@ -245,8 +270,7 @@
             android:id="@+id/swapCB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="2dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txt_cow_buf"
@@ -272,14 +296,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="2dp"
             android:visibility="gone">
 
             <RadioGroup
                 android:id="@+id/cowBuff"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:padding="4dp">
@@ -305,44 +327,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="2dp">
-
-            <RadioGroup
-                android:id="@+id/morEve"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:padding="2dp">
-
-                <RadioButton
-                    android:id="@+id/radioButtonMor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/morning"
-                    android:textSize="@dimen/text_small" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonEve"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/evening"
-                    android:textSize="@dimen/text_small" />
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/linearAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="2dp">
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/degree"
@@ -351,9 +339,9 @@
                 android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:hint="@string/degree"
-                android:textSize="@dimen/text_small"
                 android:inputType="phone"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textSize="@dimen/text_small" />
 
             <EditText
                 android:id="@+id/fat"
@@ -363,8 +351,8 @@
                 android:layout_weight="1"
                 android:hint="@string/fat"
                 android:inputType="phone"
-                android:textSize="@dimen/text_small"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textSize="@dimen/text_small" />
 
             <EditText
                 android:id="@+id/qty"
@@ -373,18 +361,17 @@
                 android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:hint="@string/quantity"
-                android:textSize="@dimen/text_small"
                 android:imeOptions="actionDone"
                 android:inputType="phone"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textSize="@dimen/text_small" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="2dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
