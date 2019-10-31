@@ -57,6 +57,8 @@
     <string name="rate_group">Rate Group</string>
     <string name="action_search">Search</string>
     <string name="search_hint">Type name…</string>
+    <string name="credit">Credit</string>
+    <string name="cash">Cash</string>
 
     <!--    <string name="sort_by_amount">Amount</string>-->
 

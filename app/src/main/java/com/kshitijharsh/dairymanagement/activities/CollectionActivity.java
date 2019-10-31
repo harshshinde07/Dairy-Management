@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
@@ -378,7 +379,7 @@ public class CollectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 float deg = 0, lit, f;
-                if (date.getText().toString().equals("Select Date") || edtName.getText().toString().equals("") || membType.getText().toString().equals("") || txtCode.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroupMorEve.getCheckedRadioButtonId() == -1) {
+                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || membType.getText().toString().equals("") || txtCode.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroupMorEve.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
                     int memCode = Integer.parseInt(txtCode.getText().toString());
@@ -420,9 +421,10 @@ public class CollectionActivity extends AppCompatActivity {
                             rate.setText("");
                             amt.setText("");
                             radioGroup.clearCheck();
-                            radioGroupMorEve.clearCheck();
+//                            radioGroupMorEve.clearCheck(); // Morning evening should not get cleared
                             swapBoth.setVisibility(View.GONE);
                             swapCB.setVisibility(View.VISIBLE);
+                            txtCode.requestFocus();
                             collectionDetails.setVisibility(View.GONE);
                             if (todayDetails.getVisibility() == View.VISIBLE)
                                 todayDetails.setVisibility(View.GONE);
@@ -647,5 +649,11 @@ public class CollectionActivity extends AppCompatActivity {
 //        Toast.makeText(this, "No: " + no, Toast.LENGTH_SHORT).show();
         rateGroupNo = Integer.parseInt(no);
         c.close();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        NavUtils.navigateUpFromSameTask(this);
     }
 }

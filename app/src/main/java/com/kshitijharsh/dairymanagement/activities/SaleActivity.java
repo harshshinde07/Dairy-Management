@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -39,7 +40,7 @@ public class SaleActivity extends AppCompatActivity {
 
     DBQuery dbQuery;
     AutoCompleteTextView edtName;
-    TextView cowBuf;
+    //    TextView cowBuf;
     ArrayList<String> names;
     TextView amt, date;
     EditText txtCode;
@@ -49,11 +50,14 @@ public class SaleActivity extends AppCompatActivity {
     DBHelper dbHelper;
     DatabaseClass dbClass;
     RadioGroup radioGroup, radioGroupCB;
-    LinearLayout swapCB, swapBoth, saleDetails;
+    //    LinearLayout swapCB;
+    LinearLayout swapBoth, saleDetails;
     String cowBuff;
     String mornEve;
     TextView todayDate, totLit, totAmt;
     String id;
+    RadioGroup cashCredit;
+    LinearLayout memDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +71,7 @@ public class SaleActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle("Milk Sale");
 
         edtName = findViewById(R.id.edt_memb_name);
-        cowBuf = findViewById(R.id.cow_buf);
+//        cowBuf = findViewById(R.id.cow_buf);
         txtCode = findViewById(R.id.edt_memb_id);
         rate = findViewById(R.id.rate);
         amt = findViewById(R.id.amt);
@@ -84,11 +88,14 @@ public class SaleActivity extends AppCompatActivity {
         radioGroupCB = findViewById(R.id.cowBuff);
         radioGroupCB.clearCheck();
 
+        cashCredit = findViewById(R.id.cash_credit);
+        memDetails = findViewById(R.id.member_details_layout);
+
         final Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             id = bundle.getString("id");
             edtName.setText(bundle.getString("name"));
-            cowBuf.setText(bundle.getString("milkType"));
+//            cowBuf.setText(bundle.getString("milkType"));
             txtCode.setText(bundle.getString("memId"));
             rate.setText(bundle.getString("rate"));
             amt.setText(bundle.getString("amt"));
@@ -110,8 +117,7 @@ public class SaleActivity extends AppCompatActivity {
                 case "Buffalo":
                     ((RadioButton) radioGroupCB.findViewById(R.id.radioButtonBuff)).setChecked(true);
                     break;
-                case "Both":
-                    ((RadioButton) radioGroupCB.findViewById(R.id.radioButtonBoth)).setChecked(true);
+                default:
                     break;
             }
         }
@@ -132,13 +138,13 @@ public class SaleActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 float ra = 0, qt = 0;
-                if(!cowBuf.getText().toString().equals("")) {
-                    if (swapBoth.getVisibility() == View.VISIBLE) {
-                        if (cowBuff.equals("Cow"))
-                            cowBuf.setText("Cow");
-                        if (cowBuff.equals("Buffalo"))
-                            cowBuf.setText("Buffalo");
-                    }
+                if (radioGroupCB.getCheckedRadioButtonId() != -1) {
+//                    if (swapBoth.getVisibility() == View.VISIBLE) {
+//                        if (cowBuff.equals("Cow"))
+//                            cowBuf.setText("Cow");
+//                        if (cowBuff.equals("Buffalo"))
+//                            cowBuf.setText("Buffalo");
+//                    }
                     if(!s.toString().equals(""))
                         ra = Float.parseFloat(s.toString());
                     if(!quantity.getText().toString().equals(""))
@@ -168,13 +174,13 @@ public class SaleActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 float ra = 0, qt = 0;
-                if(!cowBuf.getText().toString().equals("")) {
-                    if (swapBoth.getVisibility() == View.VISIBLE) {
-                        if (cowBuff.equals("Cow"))
-                            cowBuf.setText("Cow");
-                        if (cowBuff.equals("Buffalo"))
-                            cowBuf.setText("Buffalo");
-                    }
+                if (radioGroupCB.getCheckedRadioButtonId() != -1) {
+//                    if (swapBoth.getVisibility() == View.VISIBLE) {
+//                        if (cowBuff.equals("Cow"))
+//                            cowBuf.setText("Cow");
+//                        if (cowBuff.equals("Buffalo"))
+//                            cowBuf.setText("Buffalo");
+//                    }
                     if(!s.toString().equals(""))
                         qt = Float.parseFloat(s.toString());
                     if(!rate.getText().toString().equals(""))
@@ -201,7 +207,7 @@ public class SaleActivity extends AppCompatActivity {
         });
 
         swapBoth = findViewById(R.id.swapBoth);
-        swapCB = findViewById(R.id.swapCB);
+//        swapCB = findViewById(R.id.swapCB);
 
         saleDetails = findViewById(R.id.sale_details);
         todayDate = findViewById(R.id.today_date);
@@ -225,7 +231,7 @@ public class SaleActivity extends AppCompatActivity {
             public void onClick(View view) {
                 edtName.setText("");
 //                branch.setText("");
-                cowBuf.setText("");
+//                cowBuf.setText("");
                 txtCode.setText("");
                 rate.setText("");
                 amt.setText("");
@@ -235,6 +241,23 @@ public class SaleActivity extends AppCompatActivity {
                 radioGroup.clearCheck();
                 radioGroupCB.clearCheck();
                 saleDetails.setVisibility(View.GONE);
+
+                cashCredit.clearCheck();
+                memDetails.setVisibility(View.GONE);
+            }
+        });
+
+        cashCredit.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.radioButtonCash:
+                        memDetails.setVisibility(View.GONE);
+                        break;
+                    case R.id.radioButtonCredit:
+                        memDetails.setVisibility(View.VISIBLE);
+                        break;
+                }
             }
         });
 
@@ -269,46 +292,65 @@ public class SaleActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || txtCode.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroup.getCheckedRadioButtonId() == -1) {
+                if (date.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroup.getCheckedRadioButtonId() == -1 || cashCredit.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(SaleActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
-                    int memCode = Integer.parseInt(txtCode.getText().toString());
+
+                    int memCode = 0;
+                    String memName = "Not available";
+                    int cashCrId = cashCredit.getCheckedRadioButtonId();
+                    if (cashCrId == R.id.radioButtonCredit) {
+                        if (!txtCode.getText().toString().equals(""))
+                            memCode = Integer.parseInt(txtCode.getText().toString());
+                        if (!edtName.getText().toString().equals(""))
+                            memName = edtName.getText().toString();
+                    }
+
                     float lit = Float.parseFloat(quantity.getText().toString());
-                    float f = Float.parseFloat(fat.getText().toString());
+                    float f = 0;
+                    if (!fat.getText().toString().equals(""))
+                        f = Float.parseFloat(fat.getText().toString());
                     float r = Float.parseFloat(rate.getText().toString());
 //                    float a = lit * r;
 //                    amt.setText(String.valueOf(a));
-                    if (swapBoth.getVisibility() == View.VISIBLE) {
-                        if (cowBuff.equals("Cow"))
-                            cowBuf.setText("Cow");
-                        if (cowBuff.equals("Buffalo"))
-                            cowBuf.setText("Buffalo");
-                    }
+//                    if (swapBoth.getVisibility() == View.VISIBLE) {
+//                        if (cowBuff.equals("Cow"))
+//                            cowBuf.setText("Cow");
+//                        if (cowBuff.equals("Buffalo"))
+//                            cowBuf.setText("Buffalo");
+//                    }
 
                     int selectedId = radioGroup.getCheckedRadioButtonId();
                     RadioButton mE = findViewById(selectedId);
 
-                    if (!cowBuf.getText().toString().equals("")) {
+                    if (radioGroupCB.getCheckedRadioButtonId() != -1) {
+
+                        int selected = radioGroupCB.getCheckedRadioButtonId();
+                        RadioButton tempCB = findViewById(selected);
 
                         if (bundle != null)
-                            dbClass.editSale(id, date.getText().toString(), memCode, edtName.getText().toString(), mE.getText().toString(), cowBuf.getText().toString(), lit, f, r, Float.parseFloat(amt.getText().toString()));
+                            dbClass.editSale(id, date.getText().toString(), memCode, memName, mE.getText().toString(), tempCB.getText().toString(), lit, f, r, Float.parseFloat(amt.getText().toString()));
                         else
-                            dbClass.addSale(date.getText().toString(), memCode, edtName.getText().toString(), mornEve, cowBuf.getText().toString(), lit, f, r, Float.parseFloat(amt.getText().toString()));
+                            dbClass.addSale(date.getText().toString(), memCode, memName, mornEve, tempCB.getText().toString(), lit, f, r, Float.parseFloat(amt.getText().toString()));
                         Toast.makeText(SaleActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                         edtName.setText("");
 //                        branch.setText("");
-                        cowBuf.setText("");
+//                        cowBuf.setText("");
                         txtCode.setText("");
                         rate.setText("");
                         fat.setText("");
                         amt.setText("");
                         quantity.setText("");
 //                        date.setText(R.string.select_date);
-                        radioGroup.clearCheck();
+//                        radioGroup.clearCheck(); // Morning evening should not get cleared
                         radioGroupCB.clearCheck();
-                        swapBoth.setVisibility(View.GONE);
-                        swapCB.setVisibility(View.VISIBLE);
+//                        swapBoth.setVisibility(View.GONE);
+//                        swapCB.setVisibility(View.VISIBLE);
                         saleDetails.setVisibility(View.GONE);
+                        txtCode.requestFocus();
+
+                        cashCredit.clearCheck();
+                        memDetails.setVisibility(View.GONE);
                     }
 //                    else {
 //                        Toast.makeText(SaleActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
@@ -349,23 +391,23 @@ public class SaleActivity extends AppCompatActivity {
 
                 TextView txtName = (TextView) view;
                 Member member = members.get(txtName.getText().toString());
-                int cb = Integer.parseInt(member.getCowbfType());
-
-                String cbText = "";
-                if (cb == 1) {
-                    cbText = "Cow";
-                    cowBuf.setText(cbText);
-                } else if (cb == 2) {
-                    cbText = "Buffalo";
-                    cowBuf.setText(cbText);
-                } else if (cb == 3) {
-                    cbText = "Both";
-                    cowBuf.setText(cbText);
-                    swapBoth.setVisibility(View.VISIBLE);
-                    swapCB.setVisibility(View.GONE);
-                } else {
-                    cowBuf.setText(cbText);
-                }
+//                int cb = Integer.parseInt(member.getCowbfType());
+//
+//                String cbText = "";
+//                if (cb == 1) {
+//                    cbText = "Cow";
+//                    cowBuf.setText(cbText);
+//                } else if (cb == 2) {
+//                    cbText = "Buffalo";
+//                    cowBuf.setText(cbText);
+//                } else if (cb == 3) {
+//                    cbText = "Both";
+//                    cowBuf.setText(cbText);
+//                    swapBoth.setVisibility(View.VISIBLE);
+//                    swapCB.setVisibility(View.GONE);
+//                } else {
+//                    cowBuf.setText(cbText);
+//                }
                 txtCode.setText(member.getCode());
 
             }
@@ -406,24 +448,24 @@ public class SaleActivity extends AppCompatActivity {
         if (c.getCount() > 0) {
             name = c.getString(c.getColumnIndex("memb_name"));
             edtName.setText(name);
-            Member member = members.get(name);
-            int cb = Integer.parseInt(member.getCowbfType());
-
-            String cbText = "";
-            if (cb == 1) {
-                cbText = "Cow";
-                cowBuf.setText(cbText);
-            } else if (cb == 2) {
-                cbText = "Buffalo";
-                cowBuf.setText(cbText);
-            } else if (cb == 3) {
-                cbText = "Both";
-                cowBuf.setText(cbText);
-                swapBoth.setVisibility(View.VISIBLE);
-                swapCB.setVisibility(View.GONE);
-            } else {
-                cowBuf.setText(cbText);
-            }
+//            Member member = members.get(name);
+//            int cb = Integer.parseInt(member.getCowbfType());
+//
+//            String cbText = "";
+//            if (cb == 1) {
+//                cbText = "Cow";
+//                cowBuf.setText(cbText);
+//            } else if (cb == 2) {
+//                cbText = "Buffalo";
+//                cowBuf.setText(cbText);
+//            } else if (cb == 3) {
+//                cbText = "Both";
+//                cowBuf.setText(cbText);
+//                swapBoth.setVisibility(View.VISIBLE);
+//                swapCB.setVisibility(View.GONE);
+//            } else {
+//                cowBuf.setText(cbText);
+//            }
         } else {
             Toast.makeText(this, "Member not found!", Toast.LENGTH_SHORT).show();
         }
@@ -444,5 +486,11 @@ public class SaleActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        NavUtils.navigateUpFromSameTask(this);
     }
 }

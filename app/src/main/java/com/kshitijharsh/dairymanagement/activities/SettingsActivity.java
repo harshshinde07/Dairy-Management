@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.kshitijharsh.dairymanagement.utils.AppCompatPreferenceActivity;
 import com.kshitijharsh.dairymanagement.R;
+import com.kshitijharsh.dairymanagement.utils.AppCompatPreferenceActivity;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
@@ -91,5 +92,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        NavUtils.navigateUpFromSameTask(this);
     }
 }
