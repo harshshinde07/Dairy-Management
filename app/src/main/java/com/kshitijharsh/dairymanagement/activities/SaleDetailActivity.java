@@ -67,7 +67,17 @@ public class SaleDetailActivity extends AppCompatActivity implements SaleAdapter
             Toast.makeText(this, "No records found.", Toast.LENGTH_SHORT).show();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Sale sale = new Sale(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9));
+
+            String cb, me;
+            if (cursor.getString(5).equals("C"))
+                cb = "Cow";
+            else
+                cb = "Buffalo";
+            if (cursor.getString(4).equals("1"))
+                me = "Morning";
+            else
+                me = "Evening";
+            Sale sale = new Sale(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), me, cb, cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9));
             saleList.add(sale);
             cursor.moveToNext();
         }

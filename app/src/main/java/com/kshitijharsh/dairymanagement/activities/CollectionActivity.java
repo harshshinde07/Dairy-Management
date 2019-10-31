@@ -55,7 +55,7 @@ public class CollectionActivity extends AppCompatActivity {
     RadioGroup radioGroup, radioGroupMorEve;
     LinearLayout swapCB, swapBoth, addSNF, collectionDetails, todayDetails, typeLayout;
     String cowBuff;
-    String mornEve;
+    String mornEve = "";
     String[] memb_type = {"Member", "Contractor", "Labour Contractor"};
     String settingsPrefs = "empty";
     int rateGroupNo;
@@ -405,10 +405,26 @@ public class CollectionActivity extends AppCompatActivity {
 
                         if (!cowBuf.getText().toString().equals("")) {
 
-                            if (bundle != null)
-                                dbClass.editColl(id, date.getText().toString(), memCode, edtName.getText().toString(), cowBuf.getText().toString(), mE.getText().toString(), deg, lit, f, r, a);
+                            String cb, me, m = "";
+                            if (cowBuf.getText().toString().equals("Cow"))
+                                cb = "C";
                             else
-                                dbClass.addColl(date.getText().toString(), memCode, edtName.getText().toString(), cowBuf.getText().toString(), mornEve, deg, lit, f, r, a);
+                                cb = "B";
+                            if (mE.getText().toString().equals("Morning"))
+                                me = "1";
+                            else
+                                me = "2";
+
+                            if (!mornEve.equals("")) {
+                                if (mornEve.equals("Morning"))
+                                    m = "1";
+                                else
+                                    m = "2";
+                            }
+                            if (bundle != null)
+                                dbClass.editColl(id, date.getText().toString(), memCode, edtName.getText().toString(), cb, me, deg, lit, f, r, a);
+                            else
+                                dbClass.addColl(date.getText().toString(), memCode, edtName.getText().toString(), cb, m, deg, lit, f, r, a);
                             Toast.makeText(CollectionActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                             edtName.setText("");
                             membType.setText("");
