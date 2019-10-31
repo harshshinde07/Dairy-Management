@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -101,6 +102,16 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
             particulars.setText(bundle.getString("part"));
             amt.setText(bundle.getString("amt"));
             item.setSelection(((ArrayAdapter) item.getAdapter()).getPosition(bundle.getString("itemName")));
+
+            RadioButton button;
+            if (bundle.getString("memId").equals("0")) {
+                button = findViewById(R.id.radioButtonCash);
+                button.setChecked(true);
+            } else {
+                button = findViewById(R.id.radioButtonCredit);
+                button.setChecked(true);
+                memDetails.setVisibility(View.VISIBLE);
+            }
         }
 
         qty.addTextChangedListener(new TextWatcher() {

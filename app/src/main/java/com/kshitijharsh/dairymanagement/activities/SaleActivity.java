@@ -120,6 +120,17 @@ public class SaleActivity extends AppCompatActivity {
                 default:
                     break;
             }
+
+            RadioButton button;
+            if (bundle.getString("memId").equals("0")) {
+                button = findViewById(R.id.radioButtonCash);
+                button.setChecked(true);
+            } else {
+                button = findViewById(R.id.radioButtonCredit);
+                button.setChecked(true);
+                memDetails.setVisibility(View.VISIBLE);
+            }
+
         }
 
         rate.addTextChangedListener(new TextWatcher() {
