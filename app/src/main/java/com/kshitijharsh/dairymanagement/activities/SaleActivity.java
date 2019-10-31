@@ -53,7 +53,7 @@ public class SaleActivity extends AppCompatActivity {
     //    LinearLayout swapCB;
     LinearLayout swapBoth, saleDetails;
     String cowBuff;
-    String mornEve;
+    String mornEve = "";
     TextView todayDate, totLit, totAmt;
     String id;
     RadioGroup cashCredit;
@@ -328,10 +328,26 @@ public class SaleActivity extends AppCompatActivity {
                         int selected = radioGroupCB.getCheckedRadioButtonId();
                         RadioButton tempCB = findViewById(selected);
 
-                        if (bundle != null)
-                            dbClass.editSale(id, date.getText().toString(), memCode, memName, mE.getText().toString(), tempCB.getText().toString(), lit, f, r, Float.parseFloat(amt.getText().toString()));
+                        String cb, me, m = "";
+                        if (tempCB.getText().toString().equals("Cow"))
+                            cb = "C";
                         else
-                            dbClass.addSale(date.getText().toString(), memCode, memName, mornEve, tempCB.getText().toString(), lit, f, r, Float.parseFloat(amt.getText().toString()));
+                            cb = "B";
+                        if (mE.getText().toString().equals("Morning"))
+                            me = "1";
+                        else
+                            me = "2";
+
+                        if (!mornEve.equals("")) {
+                            if (mornEve.equals("Morning"))
+                                m = "1";
+                            else
+                                m = "2";
+                        }
+                        if (bundle != null)
+                            dbClass.editSale(id, date.getText().toString(), memCode, memName, me, cb, lit, f, r, Float.parseFloat(amt.getText().toString()));
+                        else
+                            dbClass.addSale(date.getText().toString(), memCode, memName, m, cb, lit, f, r, Float.parseFloat(amt.getText().toString()));
                         Toast.makeText(SaleActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                         edtName.setText("");
 //                        branch.setText("");

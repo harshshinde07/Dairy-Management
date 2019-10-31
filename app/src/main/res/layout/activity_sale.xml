@@ -208,19 +208,19 @@
                 android:padding="4dp">
 
                 <RadioButton
+                    android:id="@+id/radioButtonCash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.1"
+                    android:text="@string/cash"
+                    android:textSize="@dimen/text_small" />
+
+                <RadioButton
                     android:id="@+id/radioButtonCredit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/credit"
-                    android:textSize="@dimen/text_small" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonCash"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/cash"
                     android:textSize="@dimen/text_small" />
 
             </RadioGroup>
@@ -273,7 +273,7 @@
                     android:id="@+id/radioButtonCow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.2"
                     android:text="@string/cow"
                     android:textSize="@dimen/text_small" />
 

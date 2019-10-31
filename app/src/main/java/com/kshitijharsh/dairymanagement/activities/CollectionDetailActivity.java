@@ -10,6 +10,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -67,8 +68,19 @@ public class CollectionDetailActivity extends AppCompatActivity implements Colle
             Toast.makeText(this, "No records found.", Toast.LENGTH_SHORT).show();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Collection collection = new Collection(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10));
+
+            String cb, me;
+            if (cursor.getString(4).equals("C"))
+                cb = "Cow";
+            else
+                cb = "Buffalo";
+            if (cursor.getString(5).equals("1"))
+                me = "Morning";
+            else
+                me = "Evening";
+            Collection collection = new Collection(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cb, me, cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10));
             collectionList.add(collection);
+            Log.e("TAG ERROR:-", cursor.getString(0) + cursor.getString(1) + cursor.getString(2) + cursor.getString(3) + cursor.getString(4) + cb + me + cursor.getString(7) + cursor.getString(8) + cursor.getString(9) + cursor.getString(10));
             cursor.moveToNext();
         }
         cursor.close();
