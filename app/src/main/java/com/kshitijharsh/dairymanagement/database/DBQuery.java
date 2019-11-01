@@ -9,18 +9,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_BUFFALO_RATE;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_COWBF_TYPE;
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_COW_RATE;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_MEMB_CODE;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_MEMB_NAME;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_MEMB_TYPE;
-import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_RATEGRP_NO;
-import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_MEMBER;
-
-import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_RATEGRNO;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_RATEGRNAME;
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_RATEGRNO;
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_RATEGRP_NO;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_RATE_TYPE;
-import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_COW_RATE;
-import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.COLUMN_BUFFALO_RATE;
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_MEMBER;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_RATEGRPMASTER;
 
 public class DBQuery {
@@ -93,34 +92,108 @@ public class DBQuery {
                 COLUMN_RATEGRNAME);
     }
 
-    public Cursor getRate(float degree, float fat, String cobf, int rateGrpNo) {
+    //Getting Rate for particular degree/ fat/ milk type from database
+
+    public float getRate(float degree, float fat, String cobf, int rateGrpNo) {
         String cb;
         if (cobf.equals("Buffalo"))
             cb = "B";
         else
             cb = "C";
         String query = "SELECT rate from ratemst where degree='" + degree + "' AND fat='" + fat + "' AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
-        return db.rawQuery(query, null);
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        float val;
+        if (c.getCount() > 0) {
+            val = c.getFloat(c.getColumnIndex("rate"));
+            c.close();
+        } else {
+            String temp = "SELECT MIN(fat) as fat from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+            Cursor tmp = db.rawQuery(temp, null);
+            tmp.moveToFirst(); // Not checked for count > 0
+            float minFat = tmp.getFloat(0);
+            tmp.close();
+            String q;
+            if (fat < minFat) {
+                q = "SELECT MIN(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+            } else {
+                q = "SELECT MAX(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+            }
+            Cursor cursor = db.rawQuery(q, null);
+            cursor.moveToFirst(); // Not checked for count > 0
+            val = cursor.getFloat(0);
+            cursor.close();
+        }
+        return val;
     }
 
-    public Cursor getRateFromFat(float fat, String cobf, int rateGrpNo) {
+    public float getRateFromFat(float fat, String cobf, int rateGrpNo) {
         String cb;
         if (cobf.equals("Buffalo"))
             cb = "B";
         else
             cb = "C";
         String query = "SELECT rate from ratemst where fat='" + fat + "' AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
-        return db.rawQuery(query, null);
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        float val;
+        if (c.getCount() > 0) {
+            val = c.getFloat(c.getColumnIndex("rate"));
+            c.close();
+        } else {
+            String temp = "SELECT MIN(fat) as fat from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+            Cursor tmp = db.rawQuery(temp, null);
+            tmp.moveToFirst(); // Not checked for count > 0
+            float minFat = tmp.getFloat(0);
+            tmp.close();
+            String q;
+            if (fat < minFat) {
+                q = "SELECT MIN(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+            } else {
+                q = "SELECT MAX(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+            }
+            Cursor cursor = db.rawQuery(q, null);
+            cursor.moveToFirst(); // Not checked for count > 0
+            val = cursor.getFloat(0);
+            cursor.close();
+        }
+        return val;
     }
 
-    public Cursor getRateFromSNF(float snf, float fat, String cobf, int rateGrpNo) {
+    public float getRateFromSNF(float snf, float fat, String cobf, int rateGrpNo) {
         String cb;
         if (cobf.equals("Buffalo"))
             cb = "B";
         else
             cb = "C";
         String query = "SELECT rate from ratemst where snf='" + snf + "' AND fat='" + fat + "' AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
-        return db.rawQuery(query, null);
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        float val;
+        if (c.getCount() > 0) {
+            val = c.getFloat(0);
+            c.close();
+        } else {
+            String temp = "SELECT MIN(fat) as fat from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+            Cursor tmp = db.rawQuery(temp, null);
+            tmp.moveToFirst(); // Not checked for count > 0
+            float minFat = tmp.getFloat(c.getColumnIndex("fat"));
+            tmp.close();
+            String q;
+            if (fat < minFat) {
+                q = "SELECT MIN(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+            } else {
+                q = "SELECT MAX(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+            }
+            Cursor cursor = db.rawQuery(q, null);
+            cursor.moveToFirst(); // Not checked for count > 0
+            val = cursor.getFloat(0);
+            cursor.close();
+        }
+        return val;
     }
 
     public void addNewMem(String name, int zone, int cowBuff, int memType, int rateGrp) {

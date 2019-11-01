@@ -16,11 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kshitijharsh.dairymanagement.ItemClickListener;
 import com.kshitijharsh.dairymanagement.R;
 import com.kshitijharsh.dairymanagement.activities.SaleActivity;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
-import com.kshitijharsh.dairymanagement.model.Member;
 import com.kshitijharsh.dairymanagement.model.Sale;
 
 import java.util.ArrayList;

@@ -8,11 +8,11 @@ import static com.kshitijharsh.dairymanagement.utils.Constants.CONST.EXT_DIRECTO
 
 public class FileUtils {
 
-    static String getAppDir() {
+    public static String getAppDir() {
         return Environment.getExternalStorageDirectory() + EXT_DIRECTORY;
     }
 
-    static File createDirIfNotExist(String path) {
+    public static File createDirIfNotExist(String path) {
         File dir = new File(path);
         if( !dir.exists() ){
             dir.mkdir();

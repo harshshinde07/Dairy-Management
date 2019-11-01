@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kshitijharsh.dairymanagement.ItemClickListener;
 import com.kshitijharsh.dairymanagement.R;
 import com.kshitijharsh.dairymanagement.activities.CattleFeedActivity;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
