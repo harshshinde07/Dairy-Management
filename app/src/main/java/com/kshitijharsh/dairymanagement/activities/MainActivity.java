@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -16,24 +17,25 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.kshitijharsh.dairymanagement.R;
-import com.kshitijharsh.dairymanagement.utils.SqliteExporter;
 import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
+import com.kshitijharsh.dairymanagement.utils.SqliteExporter;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import static com.kshitijharsh.dairymanagement.utils.Constants.CONST.BACKUP_DIRECTORY;
-import static com.kshitijharsh.dairymanagement.utils.Constants.CONST.EXT_DIRECTORY;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_ITEM;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_MEMBER;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_RATEGRPMASTER;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_RATEMASTER;
+import static com.kshitijharsh.dairymanagement.utils.Constants.CONST.BACKUP_DIRECTORY;
+import static com.kshitijharsh.dairymanagement.utils.Constants.CONST.EXT_DIRECTORY;
 
 public class MainActivity extends AppCompatActivity {
     public static final int ACCESS_EXTERNAL_STORAGE = 1;
+    private static final String DB_FULL_PATH = Environment.getExternalStorageDirectory() + "/Winsoft/base.db";
     private boolean exit = false;
     DatabaseClass dc;
     DBHelper dbHelper;
@@ -68,13 +70,21 @@ public class MainActivity extends AppCompatActivity {
         // If request is cancelled, the result arrays are empty.
         if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
             //Permission is denied
-            Toast.makeText(this, "Storage permission was required, app will exit now...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Storage permission was required, app will exit now...", Toast.LENGTH_LONG).show();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     finish();
                 }
             },3*1000);
+        } else if (!checkDataBase()) {
+            Toast.makeText(this, "Database not found! App will exit now...", Toast.LENGTH_LONG).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            }, 3 * 1000);
         } else {
             dbHelper = new DBHelper(this);
             db = dbHelper.getReadableDatabase();
@@ -160,5 +170,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void launchSettings(View view) {
         startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+    }
+
+    private boolean checkDataBase() {
+        SQLiteDatabase checkDB = null;
+        try {
+            checkDB = SQLiteDatabase.openDatabase(DB_FULL_PATH, null,
+                    SQLiteDatabase.OPEN_READONLY);
+            checkDB.close();
+        } catch (SQLiteException e) {
+            return false;
+        }
+        return true;
     }
 }

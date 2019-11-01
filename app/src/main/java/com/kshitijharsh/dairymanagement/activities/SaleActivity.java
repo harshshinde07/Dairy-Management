@@ -91,6 +91,14 @@ public class SaleActivity extends AppCompatActivity {
         cashCredit = findViewById(R.id.cash_credit);
         memDetails = findViewById(R.id.member_details_layout);
 
+        swapBoth = findViewById(R.id.swapBoth);
+//        swapCB = findViewById(R.id.swapCB);
+
+        saleDetails = findViewById(R.id.sale_details);
+        todayDate = findViewById(R.id.today_date);
+        totAmt = findViewById(R.id.tot_amt);
+        totLit = findViewById(R.id.tot_lit);
+
         final Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             id = bundle.getString("id");
@@ -130,6 +138,11 @@ public class SaleActivity extends AppCompatActivity {
                 button.setChecked(true);
                 memDetails.setVisibility(View.VISIBLE);
             }
+
+            todayDate.setText(date.getText().toString());
+            totAmt.setText(String.valueOf(dbClass.getAmtFromDate(date.getText().toString())));
+            totLit.setText(String.valueOf(dbClass.getMilkFromDate(date.getText().toString())));
+            saleDetails.setVisibility(View.VISIBLE);
 
         }
 
@@ -217,13 +230,7 @@ public class SaleActivity extends AppCompatActivity {
             }
         });
 
-        swapBoth = findViewById(R.id.swapBoth);
-//        swapCB = findViewById(R.id.swapCB);
 
-        saleDetails = findViewById(R.id.sale_details);
-        todayDate = findViewById(R.id.today_date);
-        totAmt = findViewById(R.id.tot_amt);
-        totLit = findViewById(R.id.tot_lit);
 
         radioGroupCB.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -303,6 +310,7 @@ public class SaleActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+                String cashCr;
                 if (date.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroup.getCheckedRadioButtonId() == -1 || cashCredit.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(SaleActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
@@ -310,6 +318,12 @@ public class SaleActivity extends AppCompatActivity {
                     int memCode = 0;
                     String memName = "Not available";
                     int cashCrId = cashCredit.getCheckedRadioButtonId();
+                    RadioButton crDr = findViewById(cashCrId);
+                    if (crDr.getText().toString().equals("Cash"))
+                        cashCr = "1";
+                    else
+                        cashCr = "2";
+
                     if (cashCrId == R.id.radioButtonCredit) {
                         if (!txtCode.getText().toString().equals(""))
                             memCode = Integer.parseInt(txtCode.getText().toString());
@@ -356,9 +370,9 @@ public class SaleActivity extends AppCompatActivity {
                                 m = "2";
                         }
                         if (bundle != null)
-                            dbClass.editSale(id, date.getText().toString(), memCode, memName, me, cb, lit, f, r, Float.parseFloat(amt.getText().toString()));
+                            dbClass.editSale(id, date.getText().toString(), memCode, memName, me, cb, lit, f, r, Float.parseFloat(amt.getText().toString()), cashCr);
                         else
-                            dbClass.addSale(date.getText().toString(), memCode, memName, m, cb, lit, f, r, Float.parseFloat(amt.getText().toString()));
+                            dbClass.addSale(date.getText().toString(), memCode, memName, m, cb, lit, f, r, Float.parseFloat(amt.getText().toString()), cashCr);
                         Toast.makeText(SaleActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                         edtName.setText("");
 //                        branch.setText("");
@@ -375,8 +389,8 @@ public class SaleActivity extends AppCompatActivity {
 //                        swapCB.setVisibility(View.VISIBLE);
                         //Update day wise details
                         todayDate.setText(date.getText().toString());
-                        totAmt.setText(String.valueOf(dbClass.getCollecedAmtFromDate(date.getText().toString())));
-                        totLit.setText(String.valueOf(dbClass.getCollecedMilkFromDate(date.getText().toString())));
+                        totAmt.setText(String.valueOf(dbClass.getAmtFromDate(date.getText().toString())));
+                        totLit.setText(String.valueOf(dbClass.getMilkFromDate(date.getText().toString())));
 
                         txtCode.requestFocus();
 

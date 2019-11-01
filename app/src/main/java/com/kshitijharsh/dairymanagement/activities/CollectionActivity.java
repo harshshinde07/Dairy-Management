@@ -102,6 +102,14 @@ public class CollectionActivity extends AppCompatActivity {
         radioGroup = findViewById(R.id.cowBuff);
         radioGroup.clearCheck();
 
+        swapBoth = findViewById(R.id.swapBoth);
+        swapCB = findViewById(R.id.swapCB);
+
+        collectionDetails = findViewById(R.id.collection_details);
+        todayDate = findViewById(R.id.today_date);
+        totAmt = findViewById(R.id.tot_amt);
+        totLit = findViewById(R.id.tot_lit);
+
         final Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             typeLayout.setVisibility(View.GONE);
@@ -138,6 +146,11 @@ public class CollectionActivity extends AppCompatActivity {
                     ((RadioButton) radioGroup.findViewById(R.id.radioButtonBoth)).setChecked(true);
                     break;
             }
+
+            todayDate.setText(date.getText().toString());
+            totAmt.setText(String.valueOf(dbClass.getCollecedAmtFromDate(date.getText().toString())));
+            totLit.setText(String.valueOf(dbClass.getCollecedMilkFromDate(date.getText().toString())));
+            collectionDetails.setVisibility(View.VISIBLE);
         }
 
         if (settingsPrefs.equals("false")) {
@@ -290,14 +303,6 @@ public class CollectionActivity extends AppCompatActivity {
 
             }
         });
-
-        swapBoth = findViewById(R.id.swapBoth);
-        swapCB = findViewById(R.id.swapCB);
-
-        collectionDetails = findViewById(R.id.collection_details);
-        todayDate = findViewById(R.id.today_date);
-        totAmt = findViewById(R.id.tot_amt);
-        totLit = findViewById(R.id.tot_lit);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
