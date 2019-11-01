@@ -25,26 +25,26 @@ public class SqliteExporter {
         if( !FileUtils.isExternalStorageWritable() ){
             throw new IOException("Cannot write to external storage");
         }
-        File backupDir = FileUtils.createDirIfNotExist(FileUtils.getAppDir() + "/backup");
+        File backupDir = FileUtils.createDirIfNotExist(FileUtils.getAppDir() + "/exports");
         String fileName = createBackupFileName();
         File backupFile = new File(backupDir, fileName);
         boolean success = backupFile.createNewFile();
         if(!success){
-            throw new IOException("Failed to create the backup file");
+            throw new IOException("Failed to create the export file");
         }
         List<String> tables = getTablesOnDataBase(db);
-        Log.d(TAG, "Started to fill the backup file in " + backupFile.getAbsolutePath());
+        Log.d(TAG, "Started to fill the export file in " + backupFile.getAbsolutePath());
         long starTime = System.currentTimeMillis();
         writeCsv(backupFile, db, tables);
         long endTime = System.currentTimeMillis();
-        Log.d(TAG, "Creating backup took " + (endTime - starTime) + "ms.");
+        Log.d(TAG, "Creating export took " + (endTime - starTime) + "ms.");
 
         return backupFile.getAbsolutePath();
     }
 
     private static String createBackupFileName(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HHmm");
-        return "db_backup_" + sdf.format(new Date()) + ".csv";
+        return "db_export_" + sdf.format(new Date()) + ".csv";
     }
 
     private static List<String> getTablesOnDataBase(SQLiteDatabase db) {
