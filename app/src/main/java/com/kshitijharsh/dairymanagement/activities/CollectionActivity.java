@@ -304,8 +304,8 @@ public class CollectionActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton rb = group.findViewById(checkedId);
                 if (null != rb) {
-                    //Toast.makeText(SaleActivity.this, rb.getText(), Toast.LENGTH_SHORT).show();
                     cowBuff = rb.getText().toString();
+                    cowBuf.setText(cowBuff);
                 }
 
             }
@@ -329,6 +329,8 @@ public class CollectionActivity extends AppCompatActivity {
                     snf.setText("");
                 radioGroup.clearCheck();
                 radioGroupMorEve.clearCheck();
+                swapBoth.setVisibility(View.GONE);
+                swapCB.setVisibility(View.VISIBLE);
                 collectionDetails.setVisibility(View.GONE);
                 if (todayDetails.getVisibility() == View.VISIBLE)
                     todayDetails.setVisibility(View.GONE);
@@ -441,17 +443,17 @@ public class CollectionActivity extends AppCompatActivity {
                             swapBoth.setVisibility(View.GONE);
                             swapCB.setVisibility(View.VISIBLE);
                             txtCode.requestFocus();
-                            collectionDetails.setVisibility(View.GONE);
-                            if (todayDetails.getVisibility() == View.VISIBLE)
-                                todayDetails.setVisibility(View.GONE);
+                            //Update day wise details
+                            todayDate.setText(date.getText().toString());
+                            totAmt.setText(String.valueOf(dbClass.getCollecedAmtFromDate(date.getText().toString())));
+                            totLit.setText(String.valueOf(dbClass.getCollecedMilkFromDate(date.getText().toString())));
                         }
 //                        else {
 //                            Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
 //                        }
+                    } else {
+                        Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                     }
-//                    else {
-//                        Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
-//                    }
                 }
 
             }
@@ -566,35 +568,26 @@ public class CollectionActivity extends AppCompatActivity {
     }
 
     public void getRateAmt(float deg, float fat, float qty, String cobf) {
-        Cursor c;
+        float val;
+
         if (degree.getHint().toString().equals("SNF")) {
-            c = dbQuery.getRateFromSNF(deg, fat, cobf, rateGroupNo);
+            val = dbQuery.getRateFromSNF(deg, fat, cobf, rateGroupNo);
         } else {
             if (settingsPrefs.equals("true")) {
                 float s = 0;
                 if (!snf.getText().toString().equals(""))
                     s = Float.parseFloat(snf.getText().toString());
-                c = dbQuery.getRateFromSNF(s, fat, cobf, rateGroupNo);
+                val = dbQuery.getRateFromSNF(s, fat, cobf, rateGroupNo);
             } else if (settingsPrefs.equals("false")) {
-                c = dbQuery.getRate(deg, fat, cobf, rateGroupNo);
+                val = dbQuery.getRate(deg, fat, cobf, rateGroupNo);
             } else {
-//                Toast.makeText(this, String.valueOf(fat) + " " + cobf + rateGroupNo, Toast.LENGTH_SHORT).show();
-                c = dbQuery.getRateFromFat(fat, cobf, rateGroupNo);
+                val = dbQuery.getRateFromFat(fat, cobf, rateGroupNo);
             }
         }
-        float val;
-        c.moveToFirst();
-        if (c.getCount() > 0) {
-            val = c.getFloat(c.getColumnIndex("rate"));
-            rate.setText(String.valueOf(val));
-            a = qty * val;
-            amt.setText(String.valueOf(a));
-        } else {
-            Toast.makeText(this, "Value not found!", Toast.LENGTH_SHORT).show();
-            rate.setText("");
-            amt.setText("");
-        }
-        c.close();
+
+        rate.setText(String.valueOf(val));
+        a = qty * val;
+        amt.setText(String.valueOf(a));
     }
 
     public void getMemNameFromID(int id) {

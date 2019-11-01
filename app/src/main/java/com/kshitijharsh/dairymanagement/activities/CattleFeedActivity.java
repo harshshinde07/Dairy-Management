@@ -232,7 +232,10 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                     qty.setText("");
                     item.setSelected(false);
                     particulars.setText("");
-                    cattleDetails.setVisibility(View.GONE);
+                    //Update day wise details
+                    todayDate.setText(date.getText().toString());
+                    totAmt.setText(String.valueOf(dbClass.getCollecedAmtFromDate(date.getText().toString())));
+
                     txtCode.requestFocus();
 
                     cashCredit.clearCheck();

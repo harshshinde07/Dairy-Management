@@ -373,7 +373,11 @@ public class SaleActivity extends AppCompatActivity {
                         radioGroupCB.clearCheck();
 //                        swapBoth.setVisibility(View.GONE);
 //                        swapCB.setVisibility(View.VISIBLE);
-                        saleDetails.setVisibility(View.GONE);
+                        //Update day wise details
+                        todayDate.setText(date.getText().toString());
+                        totAmt.setText(String.valueOf(dbClass.getCollecedAmtFromDate(date.getText().toString())));
+                        totLit.setText(String.valueOf(dbClass.getCollecedMilkFromDate(date.getText().toString())));
+
                         txtCode.requestFocus();
 
                         cashCredit.clearCheck();
