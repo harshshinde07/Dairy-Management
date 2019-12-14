@@ -1,4 +1,4 @@
-# Dairy-Management
+# Dairy-Management [![Build Status](https://travis-ci.com/harshshinde07/Dairy-Management.svg?branch=master)](https://travis-ci.com/harshshinde07/Dairy-Management)
 
 A Dairy Management Application built specifically according to the client requirements
 
