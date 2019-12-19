@@ -180,7 +180,8 @@ public class DBQuery {
             String temp = "SELECT MIN(fat) as fat from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
             Cursor tmp = db.rawQuery(temp, null);
             tmp.moveToFirst(); // Not checked for count > 0
-            float minFat = tmp.getFloat(c.getColumnIndex("fat"));
+//            float minFat = tmp.getFloat(c.getColumnIndex("fat"));
+            float minFat = tmp.getFloat(0);
             tmp.close();
             String q;
             if (fat < minFat) {
@@ -309,5 +310,12 @@ public class DBQuery {
         values.put("AcNo", acNo);
 
         db.update("member", values, "memb_code=" + id, null);
+    }
+
+    public boolean validateIfTableHasData(SQLiteDatabase db) {
+        Cursor c = db.rawQuery("SELECT * FROM member LIMIT 1", null);
+        boolean res = c.moveToFirst();
+        c.close();
+        return res;
     }
 }

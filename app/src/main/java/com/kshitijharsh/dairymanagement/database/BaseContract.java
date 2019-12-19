@@ -7,7 +7,7 @@ public class BaseContract {
         public static final String TABLE_ITEM = "item";
         public static final String TABLE_RATEMASTER = "ratemst";
         public static final String TABLE_RATEGRPMASTER = "Rt_grmst";
-        public static final String TABLE_ZOOMMASTER = "zoonmst";
+        public static final String TABLE_CUSTOMER = "customer";
 
         //COLUMN NAMES
         public static final String COLUMN_MEMB_CODE = "memb_code";
