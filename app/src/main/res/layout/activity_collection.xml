@@ -137,9 +137,9 @@
             <TextView
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:padding="4dp"
                 android:text="@string/date"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/text_small" />
 
             <TextView
@@ -147,7 +147,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/select_date"
+                android:text="@string/select_date"
+                android:textColor="@android:color/black"
                 android:padding="8dp"
                 android:singleLine="true"
                 android:textSize="@dimen/text_small" />
@@ -276,9 +277,9 @@
                 android:id="@+id/txt_cow_buf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:padding="4dp"
                 android:text="@string/cow_buf"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/text_small" />
 
             <TextView
@@ -286,8 +287,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
+                android:padding="4dp"
                 android:textAlignment="center"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/text_small" />
         </LinearLayout>
 
@@ -336,7 +338,7 @@
                 android:id="@+id/degree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+
                 android:layout_weight="1"
                 android:hint="@string/degree"
                 android:inputType="phone"
@@ -347,7 +349,7 @@
                 android:id="@+id/fat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+
                 android:layout_weight="1"
                 android:hint="@string/fat"
                 android:inputType="phone"
@@ -358,7 +360,7 @@
                 android:id="@+id/qty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+
                 android:layout_weight="1"
                 android:hint="@string/quantity"
                 android:imeOptions="actionDone"
@@ -379,6 +381,7 @@
                 android:layout_weight="1"
                 android:padding="4dp"
                 android:text="@string/rate"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/text_small" />
 
             <TextView
@@ -387,6 +390,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="4dp"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/text_small" />
 
             <TextView
@@ -395,6 +399,7 @@
                 android:layout_weight="1"
                 android:padding="4dp"
                 android:text="@string/amount"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/text_small" />
 
             <TextView
@@ -403,6 +408,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="4dp"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/text_small" />
 
         </LinearLayout>

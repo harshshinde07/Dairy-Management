@@ -120,11 +120,11 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:padding="4dp"
                 android:text="@string/date"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/text_small" />
 
             <TextView
@@ -133,7 +133,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
-                android:hint="@string/select_date"
+                android:text="@string/select_date"
+                android:textColor="@android:color/black"
                 android:padding="4dp"
                 android:singleLine="true"
                 android:textSize="@dimen/text_small" />
@@ -209,9 +210,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:hint="@string/item"
+                android:text="@string/item"
+                android:textColor="@android:color/black"
                 android:padding="4dp"
                 android:singleLine="true"
                 android:textSize="@dimen/text_small" />
@@ -233,7 +234,7 @@
                 android:id="@+id/rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+
                 android:layout_weight="1"
                 android:hint="@string/rate"
                 android:inputType="phone"
@@ -244,7 +245,7 @@
                 android:id="@+id/qty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+
                 android:layout_weight="1"
                 android:hint="@string/quantity"
                 android:imeOptions="actionDone"
@@ -263,7 +264,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/amount"
+                android:text="@string/amount"
+                android:textColor="@android:color/black"
                 android:padding="4dp"
                 android:textSize="@dimen/text_small" />
 
@@ -271,8 +273,9 @@
                 android:id="@+id/amt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:hint="@string/spaces"
+                android:textColor="@android:color/black"
                 android:padding="4dp"
                 android:textSize="@dimen/text_small" />
 
@@ -288,12 +291,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="top|start"
                 android:hint="@string/particulars"
-                android:inputType="textMultiLine"
-                android:lines="1"
-                android:maxLines="4"
-                android:scrollbars="vertical"
+
                 android:textSize="@dimen/text_small" />
 
         </LinearLayout>

@@ -172,7 +172,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                 date.setText(R.string.select_date);
                 txtCode.setText("");
                 edtName.setText("");
-                rate.setText("");
+//                rate.setText("");
                 amt.setText("");
                 qty.setText("");
                 item.setSelected(false);

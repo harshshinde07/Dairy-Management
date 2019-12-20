@@ -93,9 +93,10 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="phone_number">Phone number:</string>
+    <string name="contact_number">Contact number:</string>
     <string name="phone_number_value">9423039902,9011064474</string>
     <string name="customer_id">Customer ID</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="licensed_to">Licensed to</string>
 </resources>

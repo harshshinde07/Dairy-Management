@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void initiateExport(View view) {
 
-        builder.setMessage("Are you sure you want to export?\nNOTE: This will erase all your data!")
+        builder.setMessage("Are you sure you want to export data to CSV file ?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
