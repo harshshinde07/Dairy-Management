@@ -32,6 +32,7 @@ import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
 import com.kshitijharsh.dairymanagement.model.Member;
+import com.kshitijharsh.dairymanagement.utils.RoundUtil;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -361,10 +362,11 @@ public class CollectionActivity extends AppCompatActivity {
 
                 if (!edtName.getText().toString().equals("")) {
                     float amt = dbClass.getMemberWiseDailyAmt(tmp, edtName.getText().toString());
+                    amt = RoundUtil.roundTwoDecimals(amt);
                     float lit = dbClass.getMemberWiseDailyLitre(tmp, edtName.getText().toString());
                     if (amt != 0 && lit != 0) {
-                        todayAmt.setText(String.valueOf(amt) + " Rupees");
-                        todayLit.setText(String.valueOf(lit) + " Litres");
+                        todayAmt.setText("₹" + amt + " on " + tmp);
+                        todayLit.setText(lit + " Litres");
                         todayDetails.setVisibility(View.VISIBLE);
                     } else {
                         todayDetails.setVisibility(View.GONE);
@@ -428,6 +430,9 @@ public class CollectionActivity extends AppCompatActivity {
                                 else
                                     m = "2";
                             }
+
+                            a = RoundUtil.roundTwoDecimals(a);
+
                             if (bundle != null)
                                 dbClass.editColl(id, date.getText().toString(), memCode, edtName.getText().toString(), cb, me, deg, lit, f, r, a);
                             else
@@ -479,10 +484,11 @@ public class CollectionActivity extends AppCompatActivity {
 
                     if (!date.getText().toString().equals("Select Date")) {
                         float amt = dbClass.getMemberWiseDailyAmt(date.getText().toString(), edtName.getText().toString());
+                        amt = RoundUtil.roundTwoDecimals(amt);
                         float lit = dbClass.getMemberWiseDailyLitre(date.getText().toString(), edtName.getText().toString());
                         if (amt != 0 && lit != 0) {
-                            todayAmt.setText(String.valueOf(amt) + " Rupees");
-                            todayLit.setText(String.valueOf(lit) + " Litres");
+                            todayAmt.setText("₹" + amt + " on " + date.getText());
+                            todayLit.setText(lit + " Litres");
                             todayDetails.setVisibility(View.VISIBLE);
                         } else {
                             todayDetails.setVisibility(View.GONE);
@@ -532,10 +538,11 @@ public class CollectionActivity extends AppCompatActivity {
 
                 if (!date.getText().toString().equals("Select Date")) {
                     float amt = dbClass.getMemberWiseDailyAmt(date.getText().toString(), edtName.getText().toString());
+                    amt = RoundUtil.roundTwoDecimals(amt);
                     float lit = dbClass.getMemberWiseDailyLitre(date.getText().toString(), edtName.getText().toString());
                     if (amt != 0 && lit != 0) {
-                        todayAmt.setText(String.valueOf(amt) + " Rupees");
-                        todayLit.setText(String.valueOf(lit) + " Litres");
+                        todayAmt.setText("₹" + amt + " on " + date.getText());
+                        todayLit.setText(lit + " Litres");
                         todayDetails.setVisibility(View.VISIBLE);
                     } else {
                         todayDetails.setVisibility(View.GONE);

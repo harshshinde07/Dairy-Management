@@ -65,25 +65,26 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="casual"
-                android:text="@string/app_name_main"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Button"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:fontFamily="casual"-->
+            <!--                android:text="@string/app_name_main"-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:textAppearance="@style/TextAppearance.AppCompat.Button"-->
+            <!--                android:textColor="@color/colorPrimaryDark"-->
+            <!--                android:textSize="20sp"-->
+            <!--                android:textStyle="bold" />-->
 
             <TextView
+                android:id="@+id/licensee"
+                android:padding="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="casual"
-                android:text="@string/licensed_to"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -151,7 +152,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="casual"
-                    android:text="@string/add_member"
+                    android:text="@string/members"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Button"
                     android:textColor="@color/colorPrimaryDark"
@@ -236,7 +237,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:background="@color/colorPrimaryDark"
+        android:background="#e0e0e0"
         android:padding="2dp">
 
         <ImageView
@@ -260,7 +261,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="serif"
                 android:text="@string/contact_number"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -268,7 +269,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:text="@string/phone_number_value"
                 android:textSize="16sp"
                 android:textStyle="bold" />

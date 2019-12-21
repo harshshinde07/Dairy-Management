@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:elevation="10dp"
-    app:cardCornerRadius="4dp">
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:elevation="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,9 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="4dp"
-            android:padding="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:padding="4dp"
             android:src="@drawable/ic_edit_black_24dp" />
 
         <ImageView
@@ -39,8 +38,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/edit"
             android:layout_alignParentEnd="true"
-            android:layout_margin="4dp"
-            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="4dp"
             android:src="@drawable/ic_delete_black_24dp" />
 
         <LinearLayout
@@ -52,14 +52,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginStart="8dp"
                 android:padding="4dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+
                     android:padding="2dp"
-                    android:text="Date:"
+                    android:text="Date: "
                     android:textStyle="bold" />
 
 
@@ -67,7 +68,7 @@
                     android:id="@+id/date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+
                     android:padding="2dp" />
 
                 <!--                <TextView-->
@@ -93,22 +94,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginStart="8dp"
                 android:padding="4dp">
 
                 <TextView
                     android:id="@+id/mem_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:padding="2dp" />
+
+                    android:padding="2dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
 
 
                 <TextView
                     android:id="@+id/mem_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:padding="2dp" />
+
+                    android:padding="2dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -116,112 +122,163 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginStart="8dp"
                 android:padding="4dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Time:"
-                    android:textStyle="bold" />
+
+                    android:text="Time: "
+                    android:textStyle="bold"
+                    android:padding="2dp" />
 
                 <TextView
                     android:id="@+id/mor_eve"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
+                    android:layout_weight="1"
+                    android:padding="2dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Milk Type:"
+                    android:padding="2dp"
+                    android:text="Milk: "
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/milk_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp" />
+                    android:layout_weight="1"
+                    android:padding="2dp" />
 
             </LinearLayout>
+
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                android:padding="4dp">-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="8dp"-->
+            <!--                    android:text="Milk Type:"-->
+            <!--                    android:textStyle="bold" />-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/milk_type"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="8dp" />-->
+
+            <!--            </LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginStart="8dp"
                 android:padding="4dp">
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Quantity:"
-                    android:textStyle="bold" />
+
+                    android:text="Quantity: "
+                    android:textStyle="bold"
+                    android:padding="2dp" />
 
                 <TextView
                     android:id="@+id/qty"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp" />
+                    android:padding="2dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Fat:"
+                    android:padding="2dp"
+                    android:text="Fat: "
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/fat"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
+                    android:padding="2dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Rate:"
+                    android:padding="2dp"
+                    android:text="Rate: "
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/rate"
+                    android:padding="2dp"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Amount:"
+                    android:padding="2dp"
+                    android:text="Amount: "
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/amt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp" />
+                    android:textColor="@color/colorAccent"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:padding="2dp" />
 
             </LinearLayout>
+
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                android:padding="4dp">-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:padding="2dp"-->
+            <!--                    android:text="Rate: "-->
+            <!--                    android:textStyle="bold" />-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/rate"-->
+            <!--                    android:padding="2dp"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content" />-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:padding="2dp"-->
+            <!--                    android:text="Amount: "-->
+            <!--                    android:textStyle="bold" />-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/amt"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:padding="2dp" />-->
+
+            <!--            </LinearLayout>-->
 
         </LinearLayout>
 

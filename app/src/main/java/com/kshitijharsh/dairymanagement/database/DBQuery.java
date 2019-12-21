@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.kshitijharsh.dairymanagement.model.Customer;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +78,7 @@ public class DBQuery {
                 null,
                 null,
                 null,
-                COLUMN_MEMB_NAME
+                COLUMN_MEMB_CODE
         );
     }
 
@@ -109,16 +111,16 @@ public class DBQuery {
             val = c.getFloat(c.getColumnIndex("rate"));
             c.close();
         } else {
-            String temp = "SELECT MIN(fat) as fat from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+            String temp = "SELECT MIN(fat) as fat from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND degree='" + degree + "'";
             Cursor tmp = db.rawQuery(temp, null);
             tmp.moveToFirst(); // Not checked for count > 0
             float minFat = tmp.getFloat(0);
             tmp.close();
             String q;
             if (fat < minFat) {
-                q = "SELECT MIN(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+                q = "SELECT MIN(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND degree='" + degree + "'";
             } else {
-                q = "SELECT MAX(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+                q = "SELECT MAX(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND degree='" + degree + "'";
             }
             Cursor cursor = db.rawQuery(q, null);
             cursor.moveToFirst(); // Not checked for count > 0
@@ -177,7 +179,7 @@ public class DBQuery {
             val = c.getFloat(0);
             c.close();
         } else {
-            String temp = "SELECT MIN(fat) as fat from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+            String temp = "SELECT MIN(fat) as fat from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND snf='" + snf + "'";
             Cursor tmp = db.rawQuery(temp, null);
             tmp.moveToFirst(); // Not checked for count > 0
 //            float minFat = tmp.getFloat(c.getColumnIndex("fat"));
@@ -185,9 +187,9 @@ public class DBQuery {
             tmp.close();
             String q;
             if (fat < minFat) {
-                q = "SELECT MIN(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+                q = "SELECT MIN(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND snf='" + snf + "'";
             } else {
-                q = "SELECT MAX(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+                q = "SELECT MAX(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND snf='" + snf + "'";
             }
             Cursor cursor = db.rawQuery(q, null);
             cursor.moveToFirst(); // Not checked for count > 0
@@ -317,5 +319,31 @@ public class DBQuery {
         boolean res = c.moveToFirst();
         c.close();
         return res;
+    }
+
+    public Customer getCustomerDetails() {
+        String query = "SELECT * FROM customer;";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+        String name, branch, branchCode;
+//        Blob id, password;
+
+        byte[] id = cursor.getBlob(0);
+        name = cursor.getString(1);
+        branch = cursor.getString(2);
+        branchCode = cursor.getString(3);
+        byte[] password = cursor.getBlob(4);
+
+//        while (!cursor.isAfterLast()) {
+        Customer customer = new Customer(id,
+                name,
+                branch,
+                branchCode,
+                password);
+        cursor.moveToNext();
+//        }
+        cursor.close();
+        return customer;
     }
 }

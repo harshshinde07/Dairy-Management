@@ -218,6 +218,7 @@ public class SqliteImporter {
                 }
 
             }
+            org.apache.commons.io.FileUtils.cleanDirectory(new File(IMPORT_PATH));
             return 1;
         }
         Log.e("Return:", "0 No files");

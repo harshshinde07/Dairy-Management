@@ -21,18 +21,24 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kshitijharsh.dairymanagement.R;
 import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
+import com.kshitijharsh.dairymanagement.model.Customer;
 import com.kshitijharsh.dairymanagement.utils.FileUtils;
 import com.kshitijharsh.dairymanagement.utils.SqliteExporter;
 import com.kshitijharsh.dairymanagement.utils.SqliteImporter;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Objects;
 
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_CUSTOMER;
@@ -53,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     DBQuery query;
     ProgressDialog progressDialog;
     AlertDialog.Builder builder;
+    TextView licensee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         setContentView(R.layout.activity_main);
+        licensee = findViewById(R.id.licensee);
         checkForStoragePermission();
         dc = new DatabaseClass(this);
 
@@ -113,8 +121,61 @@ public class MainActivity extends AppCompatActivity {
                     ImportTask task = new ImportTask();
                     task.execute();
 
+                    Customer c = query.getCustomerDetails();
+                    licensee.setText(c.getName());
+
+                    // TODO Replace later when login is implemented
+                    byte[] bytesID = new byte[0];
+                    try {
+                        bytesID = "8005".getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                    MessageDigest mdID = null;
+                    try {
+                        mdID = MessageDigest.getInstance("MD5");
+                        byte[] encID = mdID.digest(bytesID);
+
+                        if (Arrays.equals(encID, c.getId())) {
+                            Log.e("mainActivity", "checkForStoragePermission: TRUE");
+                        } else {
+                            Log.e("mainActivity", "checkForStoragePermission: FALSE");
+                        }
+
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
+
+
                 } else {
                     Log.d(getClass().getSimpleName(), "First Query Result: " + query.getMembercount());
+
+                    Customer c = query.getCustomerDetails();
+                    licensee.setText(c.getName());
+
+                    // TODO Replace later when login is implemented
+                    byte[] bytesID = new byte[0];
+                    try {
+                        bytesID = "8005".getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                    MessageDigest mdID = null;
+                    try {
+                        mdID = MessageDigest.getInstance("MD5");
+                        byte[] encID = mdID.digest(bytesID);
+
+                        if (Arrays.equals(encID, c.getId())) {
+                            Log.e("mainActivity", "checkForStoragePermission: TRUE");
+                        } else {
+                            Log.e("mainActivity", "checkForStoragePermission: FALSE");
+                        }
+
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
                 }
                 member.close();
                 rateMaster.close();
@@ -268,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     public void launchMember(View view) {
-        startActivity(new Intent(MainActivity.this, MemberActivity.class));
+        startActivity(new Intent(MainActivity.this, MemberDetailActivity.class));
     }
 
     public void launchSettings(View view) {

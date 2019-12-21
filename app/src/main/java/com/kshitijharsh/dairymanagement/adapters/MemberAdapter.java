@@ -1,11 +1,9 @@
 package com.kshitijharsh.dairymanagement.adapters;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,36 +65,36 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
         holder.rateGrpName.setText(member.getRateGrpNo());
 
 
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case DialogInterface.BUTTON_POSITIVE:
-                                deleteEntry(v.getContext(), id, position);
-                                break;
-
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                dialog.dismiss();
-                                break;
-                        }
-                    }
-                };
-                AlertDialog.Builder ab = new AlertDialog.Builder(v.getContext());
-                ab.setMessage("Are you sure you want to delete?").setPositiveButton("Yes", dialogClickListener)
-                        .setNegativeButton("No", dialogClickListener).show();
-
-            }
-        });
-
-        holder.edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editDetails(bundle);
-            }
-        });
+//        holder.delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(final View v) {
+//                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        switch (which) {
+//                            case DialogInterface.BUTTON_POSITIVE:
+//                                deleteEntry(v.getContext(), id, position);
+//                                break;
+//
+//                            case DialogInterface.BUTTON_NEGATIVE:
+//                                dialog.dismiss();
+//                                break;
+//                        }
+//                    }
+//                };
+//                AlertDialog.Builder ab = new AlertDialog.Builder(v.getContext());
+//                ab.setMessage("Are you sure you want to delete?").setPositiveButton("Yes", dialogClickListener)
+//                        .setNegativeButton("No", dialogClickListener).show();
+//
+//            }
+//        });
+//
+//        holder.edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                editDetails(bundle);
+//            }
+//        });
     }
 
 

@@ -30,13 +30,14 @@ public class SqliteExporter {
 
 //        Log.d(TAG, "Started to fill the export file in " + backupFile.getAbsolutePath());
 //        long starTime = System.currentTimeMillis();
+        org.apache.commons.io.FileUtils.cleanDirectory(backupDir);
 
         for (int i = 2; i < tables.size(); i++) {
 
-            String fileName = createBackupFileName(tables.get(i));
-            File backupFile = new File(backupDir, fileName);
+//            String fileName = createBackupFileName(tables.get(i));
+//            File backupFile = new File(backupDir, fileName);
 
-//            File backupFile = new File(backupDir, tables.get(i) + ".csv");
+            File backupFile = new File(backupDir, tables.get(i) + ".csv");
 
 //            if(!backupFile.exists()) {
             boolean success = backupFile.createNewFile();
