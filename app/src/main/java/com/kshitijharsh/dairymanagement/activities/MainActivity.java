@@ -1,36 +1,47 @@
 package com.kshitijharsh.dairymanagement.activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kshitijharsh.dairymanagement.R;
 import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
+import com.kshitijharsh.dairymanagement.model.Customer;
 import com.kshitijharsh.dairymanagement.utils.FileUtils;
 import com.kshitijharsh.dairymanagement.utils.SqliteExporter;
 import com.kshitijharsh.dairymanagement.utils.SqliteImporter;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Objects;
 
+import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_CUSTOMER;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_ITEM;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_MEMBER;
 import static com.kshitijharsh.dairymanagement.database.BaseContract.BaseEntry.TABLE_RATEGRPMASTER;
@@ -45,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
     DatabaseClass dc;
     DBHelper dbHelper;
     SQLiteDatabase db;
+    DBQuery query;
+    ProgressDialog progressDialog;
+    AlertDialog.Builder builder;
+    TextView licensee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +67,12 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         setContentView(R.layout.activity_main);
+        licensee = findViewById(R.id.licensee);
         checkForStoragePermission();
         dc = new DatabaseClass(this);
+
+        query = new DBQuery(this);
+        builder = new AlertDialog.Builder(this);
     }
 
     /**
@@ -67,6 +86,107 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     ACCESS_EXTERNAL_STORAGE);
+        } else {
+            query = new DBQuery(this);
+            dbHelper = new DBHelper(this);
+            db = dbHelper.getReadableDatabase();
+
+            if (!checkDataBase()) {
+                Toast.makeText(this, "Database not found! App will exit now...", Toast.LENGTH_LONG).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 3 * 1000);
+            } else {
+                FileUtils.createDirIfNotExist(FileUtils.getAppDir() + "/imports");
+                query.open();
+                Cursor member = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + TABLE_MEMBER + "'", null);
+                Cursor rateMaster = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + TABLE_RATEMASTER + "'", null);
+                Cursor item = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + TABLE_ITEM + "'", null);
+                Cursor rateGrpMaster = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + TABLE_RATEGRPMASTER + "'", null);
+                Cursor customer = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + TABLE_CUSTOMER + "'", null);
+
+                if (member.getCount() <= 0 || rateMaster.getCount() <= 0 || item.getCount() <= 0 || rateGrpMaster.getCount() <= 0 || customer.getCount() <= 0) {
+                    Toast.makeText(this, "Required tables not found in database, app will exit now...", Toast.LENGTH_LONG).show();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    }, 3 * 1000);
+                } else if (!query.validateIfTableHasData(db)) {
+                    Toast.makeText(this, "Empty tables found, Importing data...", Toast.LENGTH_SHORT).show();
+                    ImportTask task = new ImportTask();
+                    task.execute();
+
+                    Customer c = query.getCustomerDetails();
+                    licensee.setText(c.getName());
+
+                    // TODO Replace later when login is implemented
+                    byte[] bytesID = new byte[0];
+                    try {
+                        bytesID = "8005".getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                    MessageDigest mdID = null;
+                    try {
+                        mdID = MessageDigest.getInstance("MD5");
+                        byte[] encID = mdID.digest(bytesID);
+
+                        if (Arrays.equals(encID, c.getId())) {
+                            Log.e("mainActivity", "checkForStoragePermission: TRUE");
+                        } else {
+                            Log.e("mainActivity", "checkForStoragePermission: FALSE");
+                        }
+
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
+
+
+                } else {
+                    Log.d(getClass().getSimpleName(), "First Query Result: " + query.getMembercount());
+
+                    Customer c = query.getCustomerDetails();
+                    licensee.setText(c.getName());
+
+                    // TODO Replace later when login is implemented
+                    byte[] bytesID = new byte[0];
+                    try {
+                        bytesID = "8005".getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                    MessageDigest mdID = null;
+                    try {
+                        mdID = MessageDigest.getInstance("MD5");
+                        byte[] encID = mdID.digest(bytesID);
+
+                        if (Arrays.equals(encID, c.getId())) {
+                            Log.e("mainActivity", "checkForStoragePermission: TRUE");
+                        } else {
+                            Log.e("mainActivity", "checkForStoragePermission: FALSE");
+                        }
+
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
+                }
+                member.close();
+                rateMaster.close();
+                item.close();
+                rateGrpMaster.close();
+                customer.close();
+                query.close();
+                db.close();
+                dbHelper.close();
+            }
+
         }
     }
 
@@ -74,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // If request is cancelled, the result arrays are empty.
+
         if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
             //Permission is denied
             Toast.makeText(this, "Storage permission was required, app will exit now...", Toast.LENGTH_LONG).show();
@@ -92,15 +213,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }, 3 * 1000);
         } else {
-            FileUtils.createDirIfNotExist(FileUtils.getAppDir() + "/imports");
             dbHelper = new DBHelper(this);
             db = dbHelper.getReadableDatabase();
+            FileUtils.createDirIfNotExist(FileUtils.getAppDir() + "/imports");
+            query.open();
             Cursor member = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + TABLE_MEMBER + "'", null);
             Cursor rateMaster = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + TABLE_RATEMASTER + "'", null);
             Cursor item = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + TABLE_ITEM + "'", null);
             Cursor rateGrpMaster = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + TABLE_RATEGRPMASTER + "'", null);
+            Cursor customer = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + TABLE_CUSTOMER + "'", null);
 
-            if (member.getCount() <= 0 || rateMaster.getCount() <= 0 || item.getCount() <= 0 || rateGrpMaster.getCount() <= 0) {
+            if (member.getCount() <= 0 || rateMaster.getCount() <= 0 || item.getCount() <= 0 || rateGrpMaster.getCount() <= 0 || customer.getCount() <= 0) {
                 Toast.makeText(this, "Required tables not found in database, app will exit now...", Toast.LENGTH_LONG).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -108,15 +231,24 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     }
                 }, 3 * 1000);
+            } else if (!query.validateIfTableHasData(db)) {
+                Toast.makeText(this, "Empty tables found, Importing data...", Toast.LENGTH_SHORT).show();
+//                initiateImport();
+                ImportTask task = new ImportTask();
+                task.execute();
+
+            } else {
+                Log.d(getClass().getSimpleName(), "First Query Result: " + query.getMembercount());
             }
             member.close();
             rateMaster.close();
             item.close();
             rateGrpMaster.close();
-            DBQuery query = new DBQuery(this);
-            query.createDatabase();
-            query.open();
-            Log.d(getClass().getSimpleName(), "First Query Result: " + query.getMembercount());
+            customer.close();
+//            DBQuery query = new DBQuery(this);
+//            query.createDatabase();
+//            query.open();
+
             //Toast.makeText(this, DBHelper.DB_PATH, Toast.LENGTH_LONG).show();
             query.close();
 //            db.endTransaction();
@@ -155,15 +287,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initiateExport(View view) {
-        try {
-            SqliteExporter.export(dc.getReadableDatabase());
-            Toast.makeText(this, "Successfully exported to " + Environment.getExternalStorageDirectory()
-                    + EXT_DIRECTORY
-                    + File.separator + BACKUP_DIRECTORY, Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-        }
+
+        builder.setMessage("Are you sure you want to export data to CSV file ?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        try {
+                            SqliteExporter.export(dc.getReadableDatabase());
+                            Toast.makeText(MainActivity.this, "Successfully exported to " + Environment.getExternalStorageDirectory()
+                                    + EXT_DIRECTORY
+                                    + File.separator + BACKUP_DIRECTORY, Toast.LENGTH_SHORT).show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Toast.makeText(MainActivity.this, "Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //  Action for 'NO' Button
+                        dialog.cancel();
+
+                    }
+                });
+        //Creating dialog box
+        AlertDialog alert = builder.create();
+        //Setting the title manually
+        alert.setTitle("Export to CSV");
+        alert.show();
+
     }
 
     public void launchCattleFeed(View view) {
@@ -175,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     public void launchMember(View view) {
-        startActivity(new Intent(MainActivity.this, MemberActivity.class));
+        startActivity(new Intent(MainActivity.this, MemberDetailActivity.class));
     }
 
     public void launchSettings(View view) {
@@ -204,38 +358,98 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_main) {
-            initiateImport();
+//            initiateImport();
+
+            builder.setMessage("Are you sure you want to import data from CSV file ?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            ImportTask task = new ImportTask();
+                            task.execute();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //  Action for 'NO' Button
+                            dialog.cancel();
+
+                        }
+                    });
+            //Creating dialog box
+            AlertDialog alert = builder.create();
+            //Setting the title manually
+            alert.setTitle("Import from CSV");
+            alert.show();
+
+
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void initiateImport() {
+    public int initiateImport() {
         DBHelper helper = new DBHelper(this);
         SQLiteDatabase sqLiteDatabase = helper.getWritableDatabase();
+        int retval = -1;
         try {
 
             int res = SqliteImporter.importData(sqLiteDatabase);
 //            Toast.makeText(this, res, Toast.LENGTH_SHORT).show();
             switch (res) {
                 case 0:
-                    Toast.makeText(this, "No CSV files to import", Toast.LENGTH_SHORT).show();
-                    break;
-                case -1:
-                    Toast.makeText(this, "File names does not match!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "No CSV files to import", Toast.LENGTH_SHORT).show();
                     break;
                 case 1:
-                    Toast.makeText(this, "Successfully Imported.", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "Successfully Imported.", Toast.LENGTH_SHORT).show();
+                    retval = 0;
                     break;
                 default:
-                    Toast.makeText(this, "Some problem occurred...", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "Some problem occurred...", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Error while importing, try again.", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Error while importing, try again.", Toast.LENGTH_SHORT).show();
             Log.e("Import Exception: ", e.toString());
         }
 //        sqLiteDatabase.endTransaction();
         sqLiteDatabase.close();
         helper.close();
+        return retval;
+    }
+
+    private class ImportTask extends AsyncTask<Integer, Integer, Integer> {
+
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+            return initiateImport();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setMessage("Importing data..."); // Setting Message
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+            progressDialog.show(); // Display Progress Dialog
+            progressDialog.setCancelable(false);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+
+            progressDialog.dismiss();
+            switch (integer) {
+                case -1:
+                    Toast.makeText(MainActivity.this, "No CSV files to import", Toast.LENGTH_SHORT).show();
+                    break;
+                case 0:
+                    Toast.makeText(MainActivity.this, "Successfully Imported.", Toast.LENGTH_SHORT).show();
+
+                    break;
+                default:
+                    Toast.makeText(MainActivity.this, "Some problem occurred...", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

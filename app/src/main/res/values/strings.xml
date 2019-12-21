@@ -23,7 +23,7 @@
     <string name="milk_sale">Milk Sale</string>
     <string name="export_database">Export Database</string>
     <string name="cattlefeed_entry">Cattlefeed Entry</string>
-    <string name="add_member">Add Member</string>
+    <string name="members">Members</string>
     <string name="settings">Settings</string>
     <string name="cancel">Cancel</string>
     <string name="apply">Apply</string>
@@ -84,4 +84,23 @@
         <item>@string/sort_by_name</item>
         <item>@string/sort_by_code</item>
     </string-array>
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="contact_number">Contact number:</string>
+    <string name="phone_number_value">9423039902,9011064474</string>
+    <string name="customer_id">Customer ID</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="licensed_to">Licensed to</string>
+    <string name="please_select_dates">Please select dates to Export</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="export">Export</string>
 </resources>

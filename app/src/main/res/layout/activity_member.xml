@@ -26,10 +26,10 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
-                android:hint="@string/name"
+                android:text="@string/name"
+                android:textColor="@android:color/black"
                 android:padding="4dp"
                 android:singleLine="true"
                 android:textSize="@dimen/text_small" />
@@ -57,7 +57,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/member_type"
+                android:text="@string/member_type"
+                android:textColor="@android:color/black"
                 android:padding="4dp"
                 android:singleLine="true"
                 android:textSize="@dimen/text_small" />
@@ -131,7 +132,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/rate_group"
+                android:text="@string/rate_group"
+                android:textColor="@android:color/black"
                 android:padding="4dp"
                 android:singleLine="true"
                 android:textSize="@dimen/text_small" />
@@ -140,7 +142,7 @@
                 android:id="@+id/rateGrNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1.5" />
         </LinearLayout>
 
         <LinearLayout

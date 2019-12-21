@@ -31,6 +31,7 @@ import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
 import com.kshitijharsh.dairymanagement.model.Member;
+import com.kshitijharsh.dairymanagement.utils.RoundUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -172,7 +173,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                 date.setText(R.string.select_date);
                 txtCode.setText("");
                 edtName.setText("");
-                rate.setText("");
+//                rate.setText("");
                 amt.setText("");
                 qty.setText("");
                 item.setSelected(false);
@@ -228,6 +229,8 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                         p = "None";
                     else
                         p = particulars.getText().toString();
+
+                    a = RoundUtil.roundTwoDecimals(a);
 
                     if (bundle != null) {
                         dbClass.editCattle(id, date.getText().toString(), memId, memName, label, quantity, r, a, p, cashCr);

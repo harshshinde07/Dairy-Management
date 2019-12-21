@@ -48,7 +48,7 @@ public class MemberDetailActivity extends AppCompatActivity implements MemberAda
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, linearLayoutManager.getOrientation());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(dividerItemDecoration);
+//        recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         memberList = new ArrayList<>();
 
@@ -89,7 +89,7 @@ public class MemberDetailActivity extends AppCompatActivity implements MemberAda
 
     public String getRateGrpNoFromNo(String no) {
         Cursor c = dbQuery.getRateGrpName(no);
-        String name = "";
+        String name = "Not available";
         c.moveToFirst();
         if (c.getCount() > 0) {
             name = c.getString(c.getColumnIndex("RateGrname"));

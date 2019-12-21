@@ -30,6 +30,7 @@ import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
 import com.kshitijharsh.dairymanagement.model.Member;
+import com.kshitijharsh.dairymanagement.utils.RoundUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -369,10 +370,13 @@ public class SaleActivity extends AppCompatActivity {
                             else
                                 m = "2";
                         }
+
+                        float a = RoundUtil.roundTwoDecimals(Float.parseFloat(amt.getText().toString()));
+
                         if (bundle != null)
-                            dbClass.editSale(id, date.getText().toString(), memCode, memName, me, cb, lit, f, r, Float.parseFloat(amt.getText().toString()), cashCr);
+                            dbClass.editSale(id, date.getText().toString(), memCode, memName, me, cb, lit, f, r, a, cashCr);
                         else
-                            dbClass.addSale(date.getText().toString(), memCode, memName, m, cb, lit, f, r, Float.parseFloat(amt.getText().toString()), cashCr);
+                            dbClass.addSale(date.getText().toString(), memCode, memName, m, cb, lit, f, r, a, cashCr);
                         Toast.makeText(SaleActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                         edtName.setText("");
 //                        branch.setText("");

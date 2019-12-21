@@ -30,7 +30,7 @@ import java.util.Objects;
 public class MemberActivity extends AppCompatActivity {
 
     DBQuery dbQuery;
-    EditText name, zone;
+    EditText name;
     Button save, clear;
     Spinner type, rateGrp;
     RadioGroup radioGroup;
@@ -106,7 +106,6 @@ public class MemberActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 name.setText("");
-                zone.setText("");
                 radioGroup.clearCheck();
             }
         });

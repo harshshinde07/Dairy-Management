@@ -78,14 +78,14 @@ public class SqliteImporter {
                         cv.put("rategrno", str[6].trim());
                         cv.put("bank_code", str[7].trim());
                         cv.put("BankAcNo", str[8].trim());
-                        cv.put("membName_Eng", str[9].trim());
+                        cv.put("membNam_Eng", str[9].trim());
                         cv.put("AcNo", str[10].trim());
-                        db.insert(tableName, "memb_code", cv);
+                        db.insertWithOnConflict(tableName, "memb_code", cv, SQLiteDatabase.CONFLICT_IGNORE);
                     }
                     db.setTransactionSuccessful();
                     db.endTransaction();
 
-                    return 1;
+
                 }
                 if (fileName.equalsIgnoreCase("item.csv")) {
                     String tableName = "item";
@@ -130,12 +130,12 @@ public class SqliteImporter {
                         cv.put("purchAc", str[9].trim());
                         cv.put("saleAc", str[10].trim());
                         cv.put("saleCr", str[11].trim());
-                        db.insert(tableName, "itcode", cv);
+                        db.insertWithOnConflict(tableName, "itcode", cv, SQLiteDatabase.CONFLICT_IGNORE);
                     }
                     db.setTransactionSuccessful();
                     db.endTransaction();
 
-                    return 1;
+
                 }
                 if (fileName.equalsIgnoreCase("ratemst.csv")) {
                     String tableName = "ratemst";
@@ -172,12 +172,12 @@ public class SqliteImporter {
                         cv.put("rate", str[5].trim());
                         cv.put("degree", str[6].trim());
                         cv.put("snf", str[7].trim());
-                        db.insert(tableName, "rtno", cv);
+                        db.insertWithOnConflict(tableName, "rtno", cv, SQLiteDatabase.CONFLICT_IGNORE);
                     }
                     db.setTransactionSuccessful();
                     db.endTransaction();
 
-                    return 1;
+
                 }
                 if (fileName.equalsIgnoreCase("Rt_grmst.csv")) {
                     String tableName = "Rt_grmst";
@@ -208,16 +208,18 @@ public class SqliteImporter {
                         cv.put("RateTyp", str[2].trim());
                         cv.put("CowRate", str[3].trim());
                         cv.put("BufRate", str[4].trim());
+                        db.insertWithOnConflict(tableName, "RateGrno", cv, SQLiteDatabase.CONFLICT_IGNORE);
 
                     }
                     db.setTransactionSuccessful();
                     db.endTransaction();
 
-                    return 1;
+
                 }
-                Log.e("Return:", "-1 Bad file name");
-                return -1;
+
             }
+            org.apache.commons.io.FileUtils.cleanDirectory(new File(IMPORT_PATH));
+            return 1;
         }
         Log.e("Return:", "0 No files");
         return 0;

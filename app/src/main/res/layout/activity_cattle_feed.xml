@@ -13,8 +13,7 @@
         android:orientation="vertical"
         android:paddingStart="16dp"
         android:paddingTop="8dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="8dp">
+        android:paddingEnd="16dp">
 
         <!--        For displaying details    -->
 
@@ -23,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@color/colorAccent"
             android:visibility="gone">
 
             <LinearLayout
@@ -38,6 +38,7 @@
                     android:layout_weight="1"
                     android:padding="4dp"
                     android:text="@string/date"
+                    android:textColor="@android:color/white"
                     android:textAlignment="center"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -49,6 +50,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:padding="4dp"
+                    android:textColor="@android:color/white"
                     android:text="Total amount"
                     android:textAlignment="center"
                     android:textSize="14sp"
@@ -64,7 +66,7 @@
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
-                    android:background="#d1d1d1" />
+                    android:background="@android:color/white" />
 
             </LinearLayout>
 
@@ -80,6 +82,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:padding="4dp"
+                    android:textColor="@android:color/white"
                     android:textAlignment="center"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -94,21 +97,22 @@
                     android:padding="4dp"
                     android:textAlignment="center"
                     android:textSize="14sp"
+                    android:textColor="@android:color/white"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:orientation="horizontal">-->
 
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:background="#d1d1d1" />
+            <!--                <View-->
+            <!--                    android:layout_width="fill_parent"-->
+            <!--                    android:layout_height="1dp"-->
+            <!--                    android:background="#d1d1d1" />-->
 
-            </LinearLayout>
+            <!--            </LinearLayout>-->
 
         </LinearLayout>
 
@@ -118,22 +122,22 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_weight="1"
                 android:padding="4dp"
                 android:text="@string/date"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/text_small" />
 
             <TextView
                 android:id="@+id/date"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
-                android:hint="@string/select_date"
+                android:text="@string/select_date"
+                android:textColor="@android:color/black"
                 android:padding="4dp"
                 android:singleLine="true"
                 android:textSize="@dimen/text_small" />
@@ -207,18 +211,17 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:hint="@string/item"
+                android:text="@string/item"
+                android:textColor="@android:color/black"
                 android:padding="4dp"
                 android:singleLine="true"
                 android:textSize="@dimen/text_small" />
 
             <Spinner
                 android:id="@+id/spinnerItem"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:entries="@array/array_item" />
@@ -233,7 +236,7 @@
                 android:id="@+id/rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+
                 android:layout_weight="1"
                 android:hint="@string/rate"
                 android:inputType="phone"
@@ -244,7 +247,7 @@
                 android:id="@+id/qty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+
                 android:layout_weight="1"
                 android:hint="@string/quantity"
                 android:imeOptions="actionDone"
@@ -260,19 +263,20 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/amount"
+                android:text="@string/amount"
+                android:textColor="@android:color/black"
                 android:padding="4dp"
                 android:textSize="@dimen/text_small" />
 
             <TextView
                 android:id="@+id/amt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/spaces"
+                android:textColor="@android:color/black"
                 android:padding="4dp"
                 android:textSize="@dimen/text_small" />
 
@@ -288,12 +292,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="top|start"
                 android:hint="@string/particulars"
-                android:inputType="textMultiLine"
-                android:lines="1"
-                android:maxLines="4"
-                android:scrollbars="vertical"
+
                 android:textSize="@dimen/text_small" />
 
         </LinearLayout>

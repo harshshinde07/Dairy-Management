@@ -19,6 +19,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
             android:name=".activities.MemberDetailActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.searchable"
@@ -30,6 +31,7 @@
         </activity>
         <activity
             android:name=".activities.CattleDetailActivity"
+            android:parentActivityName=".activities.CattleFeedActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.searchable"
@@ -41,6 +43,7 @@
         </activity>
         <activity
             android:name=".activities.SaleDetailActivity"
+            android:parentActivityName=".activities.SaleActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.searchable"
@@ -52,6 +55,7 @@
         </activity>
         <activity
             android:name=".activities.CollectionDetailActivity"
+            android:parentActivityName=".activities.CollectionActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.searchable"
@@ -66,14 +70,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.CollectionActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:parentActivityName=".activities.MainActivity" />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.SaleActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:parentActivityName=".activities.MainActivity" />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
@@ -94,14 +98,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.CattleFeedActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:parentActivityName=".activities.MainActivity" />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.MemberActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:parentActivityName=".activities.MainActivity" />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.SettingsActivity"
             android:parentActivityName=".activities.MainActivity"
