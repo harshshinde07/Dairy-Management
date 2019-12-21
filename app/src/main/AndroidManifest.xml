@@ -66,6 +66,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -109,6 +112,7 @@
         <activity
             android:name=".activities.SettingsActivity"
             android:parentActivityName=".activities.MainActivity"
+            android:noHistory="true"
             android:screenOrientation="portrait" />
     </application>
 
