@@ -1,5 +1,6 @@
 package com.kshitijharsh.dairymanagement.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -46,7 +47,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(CollectionAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(CollectionAdapter.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         final Collection collection = collectionListFiltered.get(position);
         final Bundle bundle = new Bundle();
         final String id, name, date, milkType, morEve, rate, qty, amt, snf, fat, memType, _id;

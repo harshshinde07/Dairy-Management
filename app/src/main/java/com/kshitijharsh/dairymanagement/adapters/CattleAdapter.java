@@ -1,5 +1,6 @@
 package com.kshitijharsh.dairymanagement.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -46,7 +47,7 @@ public class CattleAdapter extends RecyclerView.Adapter<CattleAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(CattleAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(CattleAdapter.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         final CattleFeed cattleFeed = cattleListFiltered.get(position);
         final Bundle bundle = new Bundle();
         final String id, name, date, item, rate, qty, amt, part, _id;

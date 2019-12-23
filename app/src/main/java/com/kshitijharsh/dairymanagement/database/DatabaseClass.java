@@ -12,19 +12,16 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
     public final static String DATABASE_NAME = "records.db";
     private static final int DATABASE_VERSION = 4;
-    private SQLiteDatabase db;
-    private File dbPath;
 
     public DatabaseClass(final Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        dbPath = context.getDatabasePath(DATABASE_NAME);
-        db = SQLiteDatabase.openDatabase(dbPath.toString(), null, SQLiteDatabase.CREATE_IF_NECESSARY);
+        File dbPath = context.getDatabasePath(DATABASE_NAME);
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(dbPath.toString(), null, SQLiteDatabase.CREATE_IF_NECESSARY);
         db = getReadableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //db.execSQL("CREATE TABLE member(memb_code INTEGER PRIMARY KEY, memb_name TEXT, zoon_code INTEGER, Cobf_type INTEGER, memb_type INTEGER, accno INTEGER, rategrno INTEGER, bank_code INTEGER, BankAcNo INTEGER, membNam_Eng TEXT, AcNo INTEGER);");
         db.execSQL("CREATE TABLE collectionTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, memName TEXT, cobf TEXT, morEve TEXT, degree FLOAT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
         db.execSQL("CREATE TABLE saleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, memName TEXT, mornEve TEXT, cobf TEXT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT, cashCr TEXT);");
         db.execSQL("CREATE TABLE cattleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, memId INTEGER, memName TEXT, itemName TEXT, quantity FLOAT, rate FLOAT, amount FLOAT, particulars TEXT, cashCr TEXT);");
@@ -32,7 +29,6 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //db.execSQL("DROP TABLE IF EXISTS member");
         db.execSQL("DROP TABLE IF EXISTS collectionTransactions");
         db.execSQL("DROP TABLE IF EXISTS saleTransactions");
         db.execSQL("DROP TABLE IF EXISTS cattleTransactions");
@@ -130,7 +126,6 @@ public class DatabaseClass extends SQLiteOpenHelper {
         float milkCount = 0;
         String query = "SELECT SUM(liters) as Total from saleTransactions WHERE trnDate='" + date + "'";
         Cursor c = getReadableDatabase().rawQuery(query, null);
-        //c.moveToFirst();
         if (c.moveToFirst()) {
             milkCount = c.getFloat(c.getColumnIndex("Total"));
         }
@@ -142,7 +137,6 @@ public class DatabaseClass extends SQLiteOpenHelper {
         float amt = 0;
         String query = "SELECT SUM(amount) as Total from saleTransactions WHERE trnDate='" + date + "'";
         Cursor c = getReadableDatabase().rawQuery(query, null);
-        //c.moveToFirst();
         if (c.moveToFirst()) {
             amt = c.getFloat(c.getColumnIndex("Total"));
         }
@@ -155,7 +149,6 @@ public class DatabaseClass extends SQLiteOpenHelper {
         float milkCount = 0;
         String query = "SELECT SUM(liters) as Total from collectionTransactions WHERE trnDate='" + date + "'";
         Cursor c = getReadableDatabase().rawQuery(query, null);
-        //c.moveToFirst();
         if (c.moveToFirst()) {
             milkCount = c.getFloat(c.getColumnIndex("Total"));
         }
@@ -167,7 +160,6 @@ public class DatabaseClass extends SQLiteOpenHelper {
         float amt = 0;
         String query = "SELECT SUM(amount) as Total from collectionTransactions WHERE trnDate='" + date + "'";
         Cursor c = getReadableDatabase().rawQuery(query, null);
-        //c.moveToFirst();
         if (c.moveToFirst()) {
             amt = c.getFloat(c.getColumnIndex("Total"));
         }
@@ -180,7 +172,6 @@ public class DatabaseClass extends SQLiteOpenHelper {
         float amt = 0;
         String query = "SELECT SUM(amount) as Total from cattleTransactions WHERE trnDate='" + date + "'";
         Cursor c = getReadableDatabase().rawQuery(query, null);
-        //c.moveToFirst();
         if (c.moveToFirst()) {
             amt = c.getFloat(c.getColumnIndex("Total"));
         }
@@ -193,7 +184,6 @@ public class DatabaseClass extends SQLiteOpenHelper {
         float milkCount = 0;
         String query = "SELECT SUM(liters) as Total from collectionTransactions WHERE trnDate='" + date + "' AND memName='" + name + "'";
         Cursor c = getReadableDatabase().rawQuery(query, null);
-        //c.moveToFirst();
         if (c.moveToFirst()) {
             milkCount = c.getFloat(c.getColumnIndex("Total"));
         }
@@ -205,7 +195,6 @@ public class DatabaseClass extends SQLiteOpenHelper {
         float amt = 0;
         String query = "SELECT SUM(amount) as Total from collectionTransactions WHERE trnDate='" + date + "' AND memName='" + name + "'";
         Cursor c = getReadableDatabase().rawQuery(query, null);
-        //c.moveToFirst();
         if (c.moveToFirst()) {
             amt = c.getFloat(c.getColumnIndex("Total"));
         }

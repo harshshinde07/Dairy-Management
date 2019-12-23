@@ -32,7 +32,6 @@ public class CollectionDetailActivity extends AppCompatActivity implements Colle
     DBQuery dbQuery;
     List<Collection> collectionList;
     DatabaseClass db;
-    private SearchView searchView;
     CollectionAdapter mAdapter;
 
     @Override
@@ -95,8 +94,9 @@ public class CollectionDetailActivity extends AppCompatActivity implements Colle
 
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.action_search)
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
                 .getActionView();
+        assert searchManager != null;
         searchView.setSearchableInfo(searchManager
                 .getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);

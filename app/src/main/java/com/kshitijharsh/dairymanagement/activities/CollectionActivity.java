@@ -132,7 +132,7 @@ public class CollectionActivity extends AppCompatActivity {
 
             getRateGrpFromID(Integer.valueOf(bundle.getString("memId")));
 
-            switch (bundle.getString("milkType")) {
+            switch (Objects.requireNonNull(bundle.getString("milkType"))) {
                 case "Morning":
                     ((RadioButton) radioGroupMorEve.findViewById(R.id.radioButtonMor)).setChecked(true);
                     break;
@@ -140,7 +140,7 @@ public class CollectionActivity extends AppCompatActivity {
                     ((RadioButton) radioGroupMorEve.findViewById(R.id.radioButtonEve)).setChecked(true);
                     break;
             }
-            switch (bundle.getString("memType")) {
+            switch (Objects.requireNonNull(bundle.getString("memType"))) {
                 case "Cow":
                     ((RadioButton) radioGroup.findViewById(R.id.radioButtonCow)).setChecked(true);
                     break;
@@ -479,6 +479,7 @@ public class CollectionActivity extends AppCompatActivity {
 
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 int val;
@@ -513,6 +514,7 @@ public class CollectionActivity extends AppCompatActivity {
 
 
         edtName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -675,7 +677,6 @@ public class CollectionActivity extends AppCompatActivity {
         String no;
         c.moveToFirst();
         no = c.getString(c.getColumnIndex("rategrno"));
-//        Toast.makeText(this, "No: " + no, Toast.LENGTH_SHORT).show();
         rateGroupNo = Integer.parseInt(no);
         c.close();
     }

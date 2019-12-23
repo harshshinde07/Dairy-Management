@@ -25,7 +25,7 @@ import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
 import com.kshitijharsh.dairymanagement.model.Customer;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -98,21 +98,13 @@ public class LoginActivity extends AppCompatActivity {
 
         // ID
         byte[] bytesID = new byte[0];
-        try {
-            bytesID = id.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        bytesID = id.getBytes(StandardCharsets.UTF_8);
 
         MessageDigest mdID = null;
 
         // Password
         byte[] bytesPassword = new byte[0];
-        try {
-            bytesPassword = password.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        bytesPassword = password.getBytes(StandardCharsets.UTF_8);
 
         MessageDigest mdPassword = null;
 

@@ -31,7 +31,6 @@ public class CattleDetailActivity extends AppCompatActivity implements CattleAda
     DBQuery dbQuery;
     List<CattleFeed> cattleFeedList;
     DatabaseClass db;
-    private SearchView searchView;
     CattleAdapter mAdapter;
 
     @Override
@@ -53,7 +52,6 @@ public class CattleDetailActivity extends AppCompatActivity implements CattleAda
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, linearLayoutManager.getOrientation());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-//        recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         cattleFeedList = new ArrayList<>();
 
@@ -84,8 +82,9 @@ public class CattleDetailActivity extends AppCompatActivity implements CattleAda
 
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.action_search)
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
                 .getActionView();
+        assert searchManager != null;
         searchView.setSearchableInfo(searchManager
                 .getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);

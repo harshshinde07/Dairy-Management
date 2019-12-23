@@ -330,7 +330,6 @@ public class DBQuery {
         cursor.moveToFirst();
 
         String name, branch, branchCode;
-//        Blob id, password;
 
         byte[] id = cursor.getBlob(0);
         name = cursor.getString(1);
@@ -338,14 +337,12 @@ public class DBQuery {
         branchCode = cursor.getString(3);
         byte[] password = cursor.getBlob(4);
 
-//        while (!cursor.isAfterLast()) {
         Customer customer = new Customer(id,
                 name,
                 branch,
                 branchCode,
                 password);
         cursor.moveToNext();
-//        }
         cursor.close();
         return customer;
     }
