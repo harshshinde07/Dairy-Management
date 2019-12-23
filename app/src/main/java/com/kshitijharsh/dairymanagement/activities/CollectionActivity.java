@@ -392,7 +392,7 @@ public class CollectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 float deg = 0, lit, f;
-                if (date.getText().toString().equals("") || edtName.getText().toString().equals("") || membType.getText().toString().equals("") || txtCode.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroupMorEve.getCheckedRadioButtonId() == -1) {
+                if (date.getText().toString().equals("Select Date") || edtName.getText().toString().equals("") || membType.getText().toString().equals("") || txtCode.getText().toString().equals("") || fat.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroupMorEve.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(CollectionActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
                     int memCode = Integer.parseInt(txtCode.getText().toString());
@@ -436,11 +436,12 @@ public class CollectionActivity extends AppCompatActivity {
                             }
 
                             a = RoundUtil.roundTwoDecimals(a);
+                            int zone = dbQuery.getZoneCode(memCode);
 
                             if (bundle != null)
-                                dbClass.editColl(id, date.getText().toString(), memCode, edtName.getText().toString(), cb, me, deg, lit, f, r, a);
+                                dbClass.editColl(id, date.getText().toString(), memCode, edtName.getText().toString(), cb, me, deg, lit, f, r, a, zone);
                             else
-                                dbClass.addColl(date.getText().toString(), memCode, edtName.getText().toString(), cb, m, deg, lit, f, r, a);
+                                dbClass.addColl(date.getText().toString(), memCode, edtName.getText().toString(), cb, m, deg, lit, f, r, a, zone);
                             Toast.makeText(CollectionActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                             edtName.setText("");
                             membType.setText("");

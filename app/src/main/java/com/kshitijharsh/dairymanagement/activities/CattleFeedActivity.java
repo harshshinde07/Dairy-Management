@@ -207,7 +207,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
             @Override
             public void onClick(View view) {
                 String p, cashCr;
-                if (date.getText().toString().equals("") || rate.getText().toString().equals("") || amt.getText().toString().equals("") || qty.getText().toString().equals("") || item.getSelectedItem().equals("Select Item") || cashCredit.getCheckedRadioButtonId() == -1) {
+                if (date.getText().toString().equals("Select Date") || rate.getText().toString().equals("") || amt.getText().toString().equals("") || qty.getText().toString().equals("") || item.getSelectedItem().equals("Select Item") || cashCredit.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(CattleFeedActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
                     int memId = 0;
@@ -236,16 +236,17 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
 
                     a = RoundUtil.roundTwoDecimals(a);
 
+                    int zone = dbQuery.getZoneCode(memId);
+
                     if (bundle != null) {
-                        dbClass.editCattle(id, date.getText().toString(), memId, memName, label, quantity, r, a, p, cashCr);
+                        dbClass.editCattle(id, date.getText().toString(), memId, memName, label, quantity, r, a, p, cashCr, zone);
                     } else {
-                        dbClass.addCattle(date.getText().toString(), memId, memName, label, quantity, r, a, p, cashCr);
+                        dbClass.addCattle(date.getText().toString(), memId, memName, label, quantity, r, a, p, cashCr, zone);
                         Toast.makeText(CattleFeedActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                     }
 //                    date.setText(R.string.select_date);
                     txtCode.setText("");
                     edtName.setText("");
-                    rate.setText("");
                     qty.setText("");
                     item.setSelected(false);
                     particulars.setText("");

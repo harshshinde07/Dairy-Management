@@ -346,4 +346,20 @@ public class DBQuery {
         cursor.close();
         return customer;
     }
+
+    public int getZoneCode(int memId) {
+        String query = "SELECT zoon_code from member where memb_code='" + memId + "'";
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        int val;
+        if (c.getCount() > 0) {
+            val = c.getInt(0);
+            c.close();
+            return val;
+        } else {
+            c.close();
+            return -1;
+        }
+    }
 }
