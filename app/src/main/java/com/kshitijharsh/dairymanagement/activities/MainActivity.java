@@ -299,15 +299,17 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        try {
-                            SqliteExporter.export(dc.getReadableDatabase());
-                            Toast.makeText(MainActivity.this, "Successfully exported to " + Environment.getExternalStorageDirectory()
-                                    + EXT_DIRECTORY
-                                    + File.separator + BACKUP_DIRECTORY, Toast.LENGTH_SHORT).show();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            Toast.makeText(MainActivity.this, "Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                        }
+                        ExportTask task = new ExportTask();
+                        task.execute();
+//                        try {
+//                            SqliteExporter.export(dc.getReadableDatabase());
+//                            Toast.makeText(MainActivity.this, "Successfully exported to " + Environment.getExternalStorageDirectory()
+//                                    + EXT_DIRECTORY
+//                                    + File.separator + BACKUP_DIRECTORY, Toast.LENGTH_SHORT).show();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                            Toast.makeText(MainActivity.this, "Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                        }
 
                     }
                 })
@@ -451,6 +453,55 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 0:
                     Toast.makeText(MainActivity.this, "Successfully Imported.", Toast.LENGTH_SHORT).show();
+
+                    break;
+                default:
+                    Toast.makeText(MainActivity.this, "Some problem occurred...", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public int exportTables() {
+        try {
+            SqliteExporter.export(dc.getReadableDatabase());
+            return 0;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 1;
+        }
+    }
+
+    private class ExportTask extends AsyncTask<Integer, Integer, Integer> {
+
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+            return exportTables();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setMessage("Exporting data..."); // Setting Message
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+            progressDialog.show(); // Display Progress Dialog
+            progressDialog.setCancelable(false);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+
+            progressDialog.dismiss();
+            switch (integer) {
+                case 1:
+                    Toast.makeText(MainActivity.this, "Error while exporting, try again", Toast.LENGTH_SHORT).show();
+                    break;
+                case 0:
+                    Toast.makeText(MainActivity.this, "Successfully exported to " + Environment.getExternalStorageDirectory()
+                            + EXT_DIRECTORY
+                            + File.separator + BACKUP_DIRECTORY, Toast.LENGTH_SHORT).show();
 
                     break;
                 default:
