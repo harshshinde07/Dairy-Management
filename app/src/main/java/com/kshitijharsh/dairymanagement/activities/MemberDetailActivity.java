@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.kshitijharsh.dairymanagement.R;
 import com.kshitijharsh.dairymanagement.adapters.MemberAdapter;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
+import com.kshitijharsh.dairymanagement.model.Customer;
 import com.kshitijharsh.dairymanagement.model.Member;
 
 import java.util.ArrayList;
@@ -42,6 +43,9 @@ public class MemberDetailActivity extends AppCompatActivity implements MemberAda
         dbQuery = new DBQuery(this);
         dbQuery.open();
 
+        Customer c = dbQuery.getCustomerDetails();
+        String zoonCode = c.getBranchCode();
+
         recyclerView = findViewById(R.id.member_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -52,12 +56,12 @@ public class MemberDetailActivity extends AppCompatActivity implements MemberAda
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         memberList = new ArrayList<>();
 
-        getMemDetails();
+        getMemDetails(zoonCode);
 
     }
 
-    public void getMemDetails() {
-        Cursor cursor = dbQuery.getAllMembers();
+    public void getMemDetails(String zoonCode) {
+        Cursor cursor = dbQuery.getAllMembers(zoonCode);
         String memType = "", milkType = "", rateGrpName;
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {

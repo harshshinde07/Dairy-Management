@@ -31,6 +31,7 @@ import com.kshitijharsh.dairymanagement.R;
 import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
+import com.kshitijharsh.dairymanagement.model.Customer;
 import com.kshitijharsh.dairymanagement.model.Member;
 import com.kshitijharsh.dairymanagement.utils.RoundUtil;
 
@@ -85,6 +86,9 @@ public class CollectionActivity extends AppCompatActivity {
         date = findViewById(R.id.date);
         degree.setVisibility(View.GONE);
         addSNF = findViewById(R.id.linearAdd);
+
+        Customer c = dbQuery.getCustomerDetails();
+        final String zoonCode = c.getBranchCode();
 
         todayAmt = findViewById(R.id.today_amt);
         todayLit = findViewById(R.id.today_lit);
@@ -316,7 +320,7 @@ public class CollectionActivity extends AppCompatActivity {
 
             }
         });
-        initNames();
+        initNames(zoonCode);
 
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -480,7 +484,7 @@ public class CollectionActivity extends AppCompatActivity {
                 int val;
                 if (!charSequence.toString().equals("")) {
                     val = Integer.parseInt(charSequence.toString());
-                    getMemNameFromID(val);
+                    getMemNameFromID(val, zoonCode);
 
                     if (!date.getText().toString().equals("Select Date")) {
                         float amt = dbClass.getMemberWiseDailyAmt(date.getText().toString(), edtName.getText().toString());
@@ -553,8 +557,8 @@ public class CollectionActivity extends AppCompatActivity {
         });
     }
 
-    private void initNames() {
-        Cursor cursor = dbQuery.getAllMembers();
+    private void initNames(String zoonCode) {
+        Cursor cursor = dbQuery.getAllMembers(zoonCode);
         names = new ArrayList<>();
         members = new HashMap<>();
         cursor.moveToFirst();
@@ -602,8 +606,8 @@ public class CollectionActivity extends AppCompatActivity {
         amt.setText(String.valueOf(a));
     }
 
-    public void getMemNameFromID(int id) {
-        Cursor c = dbQuery.getMemName(id);
+    public void getMemNameFromID(int id, String zoonCode) {
+        Cursor c = dbQuery.getMemName(id, zoonCode);
         String name;
         c.moveToFirst();
         edtName.setText("");
@@ -611,9 +615,12 @@ public class CollectionActivity extends AppCompatActivity {
             name = c.getString(c.getColumnIndex("memb_name"));
             edtName.setText(name);
             Member member = members.get(name);
-            int type = Integer.parseInt(member.getMembType());
-            int cb = Integer.parseInt(member.getCowbfType());
-            rateGroupNo = Integer.parseInt(member.getRateGrpNo());
+            int type = -1, cb = 0;
+            if (member != null) {
+                type = Integer.parseInt(member.getMembType());
+                cb = Integer.parseInt(member.getCowbfType());
+                rateGroupNo = Integer.parseInt(member.getRateGrpNo());
+            }
             String cbText = "";
             if (cb == 1) {
                 cbText = "Cow";
@@ -628,7 +635,8 @@ public class CollectionActivity extends AppCompatActivity {
             } else {
                 cowBuf.setText(cbText);
             }
-            membType.setText(memb_type[type - 1]);
+            if (type != -1)
+                membType.setText(memb_type[type - 1]);
         } else {
             Toast.makeText(this, "Member not found!", Toast.LENGTH_SHORT).show();
         }

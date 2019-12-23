@@ -29,6 +29,7 @@ import com.kshitijharsh.dairymanagement.R;
 import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
+import com.kshitijharsh.dairymanagement.model.Customer;
 import com.kshitijharsh.dairymanagement.model.Member;
 import com.kshitijharsh.dairymanagement.utils.RoundUtil;
 
@@ -69,6 +70,9 @@ public class SaleActivity extends AppCompatActivity {
         dbHelper = new DBHelper(this);
         dbClass = new DatabaseClass(this);
 
+        Customer c = dbQuery.getCustomerDetails();
+        final String zoonCode = c.getBranchCode();
+
         Objects.requireNonNull(getSupportActionBar()).setTitle("Milk Sale");
 
         edtName = findViewById(R.id.edt_memb_name);
@@ -83,7 +87,7 @@ public class SaleActivity extends AppCompatActivity {
         save = findViewById(R.id.save);
         clear = findViewById(R.id.clear);
         radioGroup = findViewById(R.id.morEve);
-        initNames();
+        initNames(zoonCode);
         radioGroup.clearCheck();
 
         radioGroupCB = findViewById(R.id.cowBuff);
@@ -420,7 +424,7 @@ public class SaleActivity extends AppCompatActivity {
                 int val;
                 if (!charSequence.toString().equals("")) {
                     val = Integer.parseInt(charSequence.toString());
-                    getMemNameFromID(val);
+                    getMemNameFromID(val, zoonCode);
                 } else {
                     edtName.setText("");
                 }
@@ -463,8 +467,8 @@ public class SaleActivity extends AppCompatActivity {
         });
     }
 
-    private void initNames() {
-        Cursor cursor = dbQuery.getAllMembers();
+    private void initNames(String zoonCode) {
+        Cursor cursor = dbQuery.getAllMembers(zoonCode);
         names = new ArrayList<>();
         members = new HashMap<>();
         cursor.moveToFirst();
@@ -489,8 +493,8 @@ public class SaleActivity extends AppCompatActivity {
         edtName.setThreshold(1);
     }
 
-    public void getMemNameFromID(int id) {
-        Cursor c = dbQuery.getMemName(id);
+    public void getMemNameFromID(int id, String zoonCode) {
+        Cursor c = dbQuery.getMemName(id, zoonCode);
         String name;
         c.moveToFirst();
         edtName.setText("");

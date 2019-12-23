@@ -68,14 +68,17 @@ public class DBQuery {
         return count;
     }
 
-    public Cursor getAllMembers() {
+    public Cursor getAllMembers(String code) {
         String[] cols = {COLUMN_MEMB_CODE, COLUMN_MEMB_NAME, COLUMN_COWBF_TYPE, COLUMN_MEMB_TYPE, COLUMN_RATEGRP_NO};
+
+        String selection = "zoon_code =?";
+        String[] selectionArgs = {code};
 
         return db.query(
                 TABLE_MEMBER,
                 cols,
-                null,
-                null,
+                selection,
+                selectionArgs,
                 null,
                 null,
                 COLUMN_MEMB_CODE
@@ -257,8 +260,8 @@ public class DBQuery {
         return db.rawQuery(query, null);
     }
 
-    public Cursor getMemName(int id) {
-        String query = "SELECT memb_name from member where memb_code='" + id + "'";
+    public Cursor getMemName(int id, String zoonCode) {
+        String query = "SELECT memb_name from member where memb_code='" + id + "' AND zoon_code='" + zoonCode + "'";
         return db.rawQuery(query, null);
     }
 
