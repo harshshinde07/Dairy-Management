@@ -30,6 +30,7 @@ import com.kshitijharsh.dairymanagement.R;
 import com.kshitijharsh.dairymanagement.database.DBHelper;
 import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
+import com.kshitijharsh.dairymanagement.model.Customer;
 import com.kshitijharsh.dairymanagement.model.Member;
 import com.kshitijharsh.dairymanagement.utils.RoundUtil;
 
@@ -67,6 +68,9 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         dbQuery.open();
         dbHelper = new DBHelper(this);
 
+        Customer c = dbQuery.getCustomerDetails();
+        final String zoonCode = c.getBranchCode();
+
         Objects.requireNonNull(getSupportActionBar()).setTitle("CattleFeed");
 
         dbClass = new DatabaseClass(this);
@@ -78,7 +82,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         particulars = findViewById(R.id.particulars);
         amt = findViewById(R.id.amt);
         item = findViewById(R.id.spinnerItem);
-        initNames();
+        initNames(zoonCode);
         clear = findViewById(R.id.clear);
         save = findViewById(R.id.save);
 
@@ -269,7 +273,7 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                 int val;
                 if (!charSequence.toString().equals("")) {
                     val = Integer.parseInt(charSequence.toString());
-                    getMemNameFromID(val);
+                    getMemNameFromID(val, zoonCode);
                 } else {
                     edtName.setText("");
                 }
@@ -321,8 +325,8 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         });
     }
 
-    private void initNames() {
-        Cursor cursor = dbQuery.getAllMembers();
+    private void initNames(String zoonCode) {
+        Cursor cursor = dbQuery.getAllMembers(zoonCode);
         names = new ArrayList<>();
         members = new HashMap<>();
         cursor.moveToFirst();
@@ -390,8 +394,8 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
         c.close();
     }
 
-    public void getMemNameFromID(int id) {
-        Cursor c = dbQuery.getMemName(id);
+    public void getMemNameFromID(int id, String zoonCode) {
+        Cursor c = dbQuery.getMemName(id, zoonCode);
         String name;
         c.moveToFirst();
         edtName.setText("");
