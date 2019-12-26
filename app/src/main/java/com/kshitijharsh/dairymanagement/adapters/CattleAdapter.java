@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.kshitijharsh.dairymanagement.R;
 import com.kshitijharsh.dairymanagement.activities.CattleFeedActivity;
+import com.kshitijharsh.dairymanagement.database.DBQuery;
 import com.kshitijharsh.dairymanagement.database.DatabaseClass;
 import com.kshitijharsh.dairymanagement.model.CattleFeed;
 
@@ -31,6 +32,7 @@ public class CattleAdapter extends RecyclerView.Adapter<CattleAdapter.ViewHolder
     private Context context;
     private List<CattleFeed> cattleListFiltered;
     private CattleAdapterListener listener;
+    DBQuery dbQuery;
 
     public CattleAdapter(List<CattleFeed> cattleList, Context context, CattleAdapterListener listener) {
         this.cattleList = cattleList;
@@ -61,11 +63,16 @@ public class CattleAdapter extends RecyclerView.Adapter<CattleAdapter.ViewHolder
         amt = cattleFeed.getAmt();
         part = cattleFeed.getParticulars();
 
+        dbQuery = new DBQuery(context);
+        dbQuery.open();
+
+        String itemName = dbQuery.getItemNameFromId(Integer.parseInt(item));
+
         bundle.putString("id", _id);
         bundle.putString("memId", id);
         bundle.putString("name", name);
         bundle.putString("date", date);
-        bundle.putString("itemName", item);
+        bundle.putString("itemName", itemName);
         bundle.putString("rate", rate);
         bundle.putString("qty", qty);
         bundle.putString("amt", amt);
@@ -74,7 +81,7 @@ public class CattleAdapter extends RecyclerView.Adapter<CattleAdapter.ViewHolder
         holder.memberId.setText(cattleFeed.getMemId());
         holder.memberName.setText(cattleFeed.getName());
         holder.date.setText(cattleFeed.getDate());
-        holder.itemName.setText(cattleFeed.getItemName());
+        holder.itemName.setText(itemName);
         holder.rate.setText(cattleFeed.getRate());
         holder.qty.setText(cattleFeed.getQty());
         holder.amt.setText(cattleFeed.getAmt());

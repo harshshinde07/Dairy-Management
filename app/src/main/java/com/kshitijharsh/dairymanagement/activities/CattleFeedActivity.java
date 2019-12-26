@@ -237,11 +237,11 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
                     a = RoundUtil.roundTwoDecimals(a);
 
                     int zone = dbQuery.getZoneCode(memId);
-
+                    int itemCode = dbQuery.getItemIdFromName(label);
                     if (bundle != null) {
-                        dbClass.editCattle(id, date.getText().toString(), memId, memName, label, quantity, r, a, p, cashCr, zone);
+                        dbClass.editCattle(id, date.getText().toString(), memId, memName, itemCode, quantity, r, a, p, cashCr, zone);
                     } else {
-                        dbClass.addCattle(date.getText().toString(), memId, memName, label, quantity, r, a, p, cashCr, zone);
+                        dbClass.addCattle(date.getText().toString(), memId, memName, itemCode, quantity, r, a, p, cashCr, zone);
                         Toast.makeText(CattleFeedActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                     }
 //                    date.setText(R.string.select_date);

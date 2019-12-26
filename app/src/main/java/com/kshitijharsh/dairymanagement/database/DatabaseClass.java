@@ -11,7 +11,7 @@ import java.io.File;
 public class DatabaseClass extends SQLiteOpenHelper {
 
     public final static String DATABASE_NAME = "records.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 7; // Add snf in collectionTransactions table
 
     public DatabaseClass(final Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -22,9 +22,9 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE collectionTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, memName TEXT, cobf TEXT, morEve TEXT, degree FLOAT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT, zoonCode INTEGER);");
+        db.execSQL("CREATE TABLE collectionTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, memName TEXT, cobf TEXT, morEve TEXT, degree FLOAT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT, zoonCode INTEGER, snf FLOAT);");
         db.execSQL("CREATE TABLE saleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, memName TEXT, mornEve TEXT, cobf TEXT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT, cashCr TEXT, zoonCode INTEGER);");
-        db.execSQL("CREATE TABLE cattleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, memId INTEGER, memName TEXT, itemName TEXT, quantity FLOAT, rate FLOAT, amount FLOAT, particulars TEXT, cashCr TEXT, zoonCode INTEGER);");
+        db.execSQL("CREATE TABLE cattleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, memId INTEGER, memName TEXT, itemId INTEGER, quantity FLOAT, rate FLOAT, amount FLOAT, particulars TEXT, cashCr TEXT, zoonCode INTEGER);");
     }
 
     @Override
@@ -36,8 +36,8 @@ public class DatabaseClass extends SQLiteOpenHelper {
     }
 
     //add new entries to database
-    public void addColl(String date, int membCode, String name, String cobf, String morEve, float degree, float liters, float fat, float rate, float amount, int zoonCode) {
-        ContentValues values = new ContentValues(10);
+    public void addColl(String date, int membCode, String name, String cobf, String morEve, float degree, float liters, float fat, float rate, float amount, int zoonCode, float snf) {
+        ContentValues values = new ContentValues(12);
         values.put("trnDate", date);
         values.put("membCode", membCode);
         values.put("memName", name);
@@ -49,6 +49,7 @@ public class DatabaseClass extends SQLiteOpenHelper {
         values.put("rate", rate);
         values.put("amount", amount);
         values.put("zoonCode", zoonCode);
+        values.put("snf", snf);
         getWritableDatabase().insert("collectionTransactions", "trnDate", values);
     }
 
@@ -68,12 +69,12 @@ public class DatabaseClass extends SQLiteOpenHelper {
         getWritableDatabase().insert("saleTransactions", "trnDate", values);
     }
 
-    public void addCattle(String date, int lgr, String name, String item, float qty, float rate, float amt, String part, String crdr, int zoonCode) {
+    public void addCattle(String date, int lgr, String name, int itemId, float qty, float rate, float amt, String part, String crdr, int zoonCode) {
         ContentValues values = new ContentValues(9);
         values.put("trnDate", date);
         values.put("memId", lgr);
         values.put("memName", name);
-        values.put("itemName", item);
+        values.put("itemId", itemId);
         values.put("quantity", qty);
         values.put("rate", rate);
         values.put("amount", amt);
@@ -206,8 +207,8 @@ public class DatabaseClass extends SQLiteOpenHelper {
     }
 
     //Edit entries
-    public void editColl(String id, String date, int membCode, String name, String cobf, String morEve, float degree, float liters, float fat, float rate, float amount, int zoonCode) {
-        ContentValues values = new ContentValues(10);
+    public void editColl(String id, String date, int membCode, String name, String cobf, String morEve, float degree, float liters, float fat, float rate, float amount, int zoonCode, float snf) {
+        ContentValues values = new ContentValues(12);
         values.put("trnDate", date);
         values.put("membCode", membCode);
         values.put("memName", name);
@@ -219,7 +220,7 @@ public class DatabaseClass extends SQLiteOpenHelper {
         values.put("rate", rate);
         values.put("amount", amount);
         values.put("zoonCode", zoonCode);
-
+        values.put("snf", snf);
         SQLiteDatabase db = this.getWritableDatabase();
         db.update("collectionTransactions", values, "_id=" + id, null);
     }
@@ -242,12 +243,12 @@ public class DatabaseClass extends SQLiteOpenHelper {
         db.update("saleTransactions", values, "_id=" + id, null);
     }
 
-    public void editCattle(String id, String date, int lgr, String name, String item, float qty, float rate, float amt, String part, String crdr, int zoonCode) {
+    public void editCattle(String id, String date, int lgr, String name, int itemId, float qty, float rate, float amt, String part, String crdr, int zoonCode) {
         ContentValues values = new ContentValues(9);
         values.put("trnDate", date);
         values.put("memId", lgr);
         values.put("memName", name);
-        values.put("itemName", item);
+        values.put("itemId", itemId);
         values.put("quantity", qty);
         values.put("rate", rate);
         values.put("amount", amt);

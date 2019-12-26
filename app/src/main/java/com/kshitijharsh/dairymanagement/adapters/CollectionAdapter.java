@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
     public void onBindViewHolder(CollectionAdapter.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         final Collection collection = collectionListFiltered.get(position);
         final Bundle bundle = new Bundle();
-        final String id, name, date, milkType, morEve, rate, qty, amt, snf, fat, memType, _id;
+        final String id, name, date, milkType, morEve, rate, qty, amt, snf, fat, memType, _id, degree;
         _id = collection.getId();
         id = collection.getMemId();
         name = collection.getMemName();
@@ -64,6 +65,21 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 //        snf = collection.getDegree();
         fat = collection.getFat();
 
+
+        String val;
+        degree = collection.getMorEve();
+        snf = collection.getSnf();
+
+        Log.e("CollectionAdapter: ", " Milk type: " + milkType + " MorEve: " + morEve + " memType: " + memType + " rate: " + rate + " qty: " + qty + " amt: " + amt + "fat: " + fat + " snf: " + snf + "degree: " + collection.getDegree());
+
+
+        if (snf.equals("0") && degree.equals("0"))
+            val = "0";
+        else if (!snf.equals("0") && degree.equals("0"))
+            val = snf;
+        else
+            val = degree;
+
         bundle.putString("id", _id);
         bundle.putString("memId", id);
         bundle.putString("name", name);
@@ -74,12 +90,12 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         bundle.putString("rate", rate);
         bundle.putString("qty", qty);
         bundle.putString("amt", amt);
-//        bundle.putString("snf", snf);
+        bundle.putString("snf", val);
         bundle.putString("fat", fat);
 
         holder.memberId.setText(collection.getMemId());
         holder.memberName.setText(collection.getMemName());
-        holder.morEve.setText(collection.getMorEve());
+        holder.morEve.setText(val);
         holder.milkType.setText(collection.getMilktype());
         holder.memberType.setText(collection.getMemType());
         holder.date.setText(collection.getDate());

@@ -51,7 +51,7 @@ public class CollectionActivity extends AppCompatActivity {
     HashMap<String, Member> members;
     EditText degree, fat, quantity, snf;
     Button save, clear;
-    float a;
+    float a, snfVal = 0;
     DBHelper dbHelper;
     DatabaseClass dbClass;
     RadioGroup radioGroup, radioGroupMorEve;
@@ -438,10 +438,18 @@ public class CollectionActivity extends AppCompatActivity {
                             a = RoundUtil.roundTwoDecimals(a);
                             int zone = dbQuery.getZoneCode(memCode);
 
+                            if (settingsPrefs.equals("false")) {
+                                snfVal = deg;
+                                deg = 0;
+                            }
+                            if (settingsPrefs.equals("true")) {
+                                snfVal = Float.parseFloat(snf.getText().toString());
+                            }
+
                             if (bundle != null)
-                                dbClass.editColl(id, date.getText().toString(), memCode, edtName.getText().toString(), cb, me, deg, lit, f, r, a, zone);
+                                dbClass.editColl(id, date.getText().toString(), memCode, edtName.getText().toString(), cb, me, deg, lit, f, r, a, zone, snfVal);
                             else
-                                dbClass.addColl(date.getText().toString(), memCode, edtName.getText().toString(), cb, m, deg, lit, f, r, a, zone);
+                                dbClass.addColl(date.getText().toString(), memCode, edtName.getText().toString(), cb, m, deg, lit, f, r, a, zone, snfVal);
                             Toast.makeText(CollectionActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                             edtName.setText("");
                             membType.setText("");
