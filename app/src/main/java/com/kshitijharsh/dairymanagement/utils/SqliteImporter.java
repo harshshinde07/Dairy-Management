@@ -41,33 +41,13 @@ public class SqliteImporter {
 
                 if (fileName.equalsIgnoreCase("member.csv")) {
                     String tableName = "member";
-//                    String columns = "memb_code, memb_name, zoon_code, Cobf_type, memb_type, accno, rategrno, bank_code, BankAcNo, membName_Eng, AcNo";
-//                    String str1 = "INSERT INTO " + tableName + " (" + columns + ") values(";
-//                    String str2 = ");";
 
                     Log.e("member", "IN");
                     db.beginTransaction();
                     while ((line = buffer.readLine()) != null) {
                         Log.e("Lines:", line);
-//                        StringBuilder sb = new StringBuilder(str1);
                         String[] str = line.split(",");
-//                    if (str.length != 11) {
-//                        Log.d("CSVParser", "Skipping Bad CSV Row");
-//                        continue;
-//                    }
-//                        sb.append("'" + str[0] + "',");
-//                        sb.append(str[1] + "',");
-//                        sb.append(str[2] + "',");
-//                        sb.append(str[3] + "',");
-//                        sb.append(str[4] + "',");
-//                        sb.append(str[5] + "',");
-//                        sb.append(str[6] + "',");
-//                        sb.append(str[7] + "',");
-//                        sb.append(str[8] + "',");
-//                        sb.append(str[9] + "',");
-//                        sb.append(str[10] + "'");
-//                        sb.append(str2);
-//                        db.execSQL(sb.toString());
+
                         ContentValues cv = new ContentValues(11);
                         cv.put("memb_code", str[0].trim());
                         cv.put("memb_name", str[1].trim());
@@ -89,34 +69,13 @@ public class SqliteImporter {
                 }
                 if (fileName.equalsIgnoreCase("item.csv")) {
                     String tableName = "item";
-//                    String columns = "itcode, itname, opqty, oprate, opbal, issue, rece, clqty, rate, purchAc, saleAc, saleCr";
-//                    String str1 = "INSERT INTO " + tableName + " (" + columns + ") values(";
-//                    String str2 = ");";
 
                     Log.e("item", "IN");
                     db.beginTransaction();
                     while ((line = buffer.readLine()) != null) {
                         Log.e("Lines:", line);
-//                        StringBuilder sb = new StringBuilder(str1);
                         String[] str = line.split(",");
-//                    if (str.length != 12) {
-//                        Log.d("CSVParser", "Skipping Bad CSV Row");
-//                        continue;
-//                    }
-//                        sb.append("'" + str[0] + "',");
-//                        sb.append(str[1] + "',");
-//                        sb.append(str[2] + "',");
-//                        sb.append(str[3] + "',");
-//                        sb.append(str[4] + "',");
-//                        sb.append(str[5] + "',");
-//                        sb.append(str[6] + "',");
-//                        sb.append(str[7] + "',");
-//                        sb.append(str[8] + "',");
-//                        sb.append(str[9] + "',");
-//                        sb.append(str[10] + "',");
-//                        sb.append(str[11] + "'");
-//                        sb.append(str2);
-//                        db.execSQL(sb.toString());
+
                         ContentValues cv = new ContentValues(12);
                         cv.put("itcode", str[0].trim());
                         cv.put("itname", str[1].trim());
@@ -139,30 +98,13 @@ public class SqliteImporter {
                 }
                 if (fileName.equalsIgnoreCase("ratemst.csv")) {
                     String tableName = "ratemst";
-//                    String columns = "rtgrno, RtDate, cobf, rtno, fat, rate, degree, snf";
-//                    String str1 = "INSERT INTO " + tableName + " (" + columns + ") values(";
-//                    String str2 = ");";
 
                     Log.e("ratemaster", "IN");
                     db.beginTransaction();
                     while ((line = buffer.readLine()) != null) {
                         Log.e("Lines:", line);
-//                        StringBuilder sb = new StringBuilder(str1);
                         String[] str = line.split(",");
-//                    if (str.length != 8) {
-//                        Log.d("CSVParser", "Skipping Bad CSV Row");
-//                        continue;
-//                    }
-//                        sb.append("'" + str[0] + "',");
-//                        sb.append(str[1] + "',");
-//                        sb.append(str[2] + "',");
-//                        sb.append(str[3] + "',");
-//                        sb.append(str[4] + "',");
-//                        sb.append(str[5] + "',");
-//                        sb.append(str[6] + "',");
-//                        sb.append(str[7] + "'");
-//                        sb.append(str2);
-//                        db.execSQL(sb.toString());
+
                         ContentValues cv = new ContentValues(8);
                         cv.put("rtgrno", str[0].trim());
                         cv.put("RtDate", str[1].trim());
@@ -181,27 +123,17 @@ public class SqliteImporter {
                 }
                 if (fileName.equalsIgnoreCase("Rt_grmst.csv")) {
                     String tableName = "Rt_grmst";
-//                    String columns = "RateGrno, RateGrname, RateTyp, CowRate, BufRate";
-//                    String str1 = "INSERT INTO " + tableName + " (" + columns + ") values(";
-//                    String str2 = ");";
 
                     Log.e("Rt_grmst", "IN");
                     db.beginTransaction();
                     while ((line = buffer.readLine()) != null) {
                         Log.e("Lines:", line);
-//                        StringBuilder sb = new StringBuilder(str1);
                         String[] str = line.split(",");
                         if (str.length != 5) {
                             Log.e("CSVParser", "Skipping Bad CSV Row");
                             continue;
                         }
-//                        sb.append("'" + str[0] + "',");
-//                        sb.append(str[1] + "',");
-//                        sb.append(str[2] + "',");
-//                        sb.append(str[3] + "'");
-//                        sb.append(str[4] + "'");
-//                        sb.append(str2);
-//                        db.execSQL(sb.toString());
+
                         ContentValues cv = new ContentValues(5);
                         cv.put("RateGrno", str[0].trim());
                         cv.put("RateGrname", str[1].trim());

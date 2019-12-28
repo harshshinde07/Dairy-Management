@@ -14,8 +14,6 @@ import com.kshitijharsh.dairymanagement.utils.AppCompatPreferenceActivity;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
-//    private static final String TAG = SettingsActivity.class.getSimpleName();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +38,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             facilityPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-//                    Toast.makeText(getActivity(), "Pref " + preference.getKey() + " changed to " + newValue.toString(), Toast.LENGTH_SHORT).show();
                     if (newValue.toString().equals("false")) {
                         CALCULATE_PREF = "none";
                         Toast.makeText(getActivity(), "Restarted your app to see the changes.", Toast.LENGTH_LONG).show();
@@ -64,7 +61,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             calculatePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object o) {
-//                    Toast.makeText(getActivity(), "Pref " + preference.getKey() + " changed to " + o.toString(), Toast.LENGTH_SHORT).show();
                     if (facilityPref.isChecked()) {
                         if (o.toString().equals("true")) {
                             CALCULATE_PREF = "true";

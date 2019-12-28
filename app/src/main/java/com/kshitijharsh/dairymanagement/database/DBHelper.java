@@ -29,7 +29,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private SQLiteDatabase mDataBase;
     private File DbFile;
-    private final Context ctx;
 
     public DBHelper(Context context) {
         super(context, Environment.getExternalStorageDirectory()
@@ -38,11 +37,9 @@ public class DBHelper extends SQLiteOpenHelper {
         DbFile = new File(new File(Environment.getExternalStorageDirectory(), EXT_DIRECTORY),
                 "/" + DB_NAME);
         DB_PATH = context.getDatabasePath(DB_NAME).getPath();
-        this.ctx = context;
     }
 
     void createDataBase() throws IOException {
-//        copyDataBase();
         boolean exist = checkDataBase();
         Log.d(getClass().getSimpleName(), "createDataBase: " + exist);
         if (!exist) {
@@ -71,15 +68,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-//        db.execSQL("CREATE TABLE collectionTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, cobf TEXT, degree FLOAT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
-//        db.execSQL("CREATE TABLE saleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, brName TEXT, membCode INTEGER, mornEve TEXT, cobf TEXT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        db.execSQL("DROP TABLE IF EXISTS collectionTransactions");
-//        db.execSQL("DROP TABLE IF EXISTS saleTransactions");
-//        onCreate(db);
     }
 
 
@@ -88,7 +80,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private void copyDataBase() throws IOException {
         InputStream mInput = new FileInputStream(DbFile);
         String outfileName = DB_PATH;
-        //String outfileName = MY_PATH;
         OutputStream mOutput = new FileOutputStream(outfileName);
         byte[] buffer = new byte[1024];
         int mLength;

@@ -119,8 +119,6 @@ public class MemberActivity extends AppCompatActivity {
                 if (name.getText().toString().equals("") || radioGroup.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(MemberActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
-//                    if(!zoon.getText().toString().equals(""))
-//                        zoonCode = Integer.parseInt(zoon.getText().toString());
 
                     int selectedId = radioGroup.getCheckedRadioButtonId();
                     RadioButton temp = findViewById(selectedId);
@@ -151,7 +149,6 @@ public class MemberActivity extends AppCompatActivity {
                             dbQuery.addNewMem(name.getText().toString(), zoonCode, cb, mType, rateGrpNo);
                         Toast.makeText(MemberActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                         name.setText("");
-//                        zone.setText("");
                         radioGroup.clearCheck();
                     }
                 }

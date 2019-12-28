@@ -29,7 +29,6 @@ public class MemberDetailActivity extends AppCompatActivity implements MemberAda
     private RecyclerView recyclerView;
     DBQuery dbQuery;
     List<Member> memberList;
-    private SearchView searchView;
     MemberAdapter mAdapter;
 
 
@@ -112,7 +111,7 @@ public class MemberDetailActivity extends AppCompatActivity implements MemberAda
 
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.action_search)
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
                 .getActionView();
         searchView.setSearchableInfo(searchManager
                 .getSearchableInfo(getComponentName()));

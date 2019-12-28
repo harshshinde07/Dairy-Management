@@ -42,7 +42,6 @@ public class SaleActivity extends AppCompatActivity {
 
     DBQuery dbQuery;
     AutoCompleteTextView edtName;
-    //    TextView cowBuf;
     ArrayList<String> names;
     TextView amt, date;
     EditText txtCode;
@@ -52,7 +51,6 @@ public class SaleActivity extends AppCompatActivity {
     DBHelper dbHelper;
     DatabaseClass dbClass;
     RadioGroup radioGroup, radioGroupCB;
-    //    LinearLayout swapCB;
     LinearLayout swapBoth, saleDetails;
     String cowBuff;
     String mornEve = "";
@@ -76,11 +74,9 @@ public class SaleActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle("Milk Sale");
 
         edtName = findViewById(R.id.edt_memb_name);
-//        cowBuf = findViewById(R.id.cow_buf);
         txtCode = findViewById(R.id.edt_memb_id);
         rate = findViewById(R.id.rate);
         amt = findViewById(R.id.amt);
-//        branch = findViewById(R.id.branch);
         fat = findViewById(R.id.fat);
         quantity = findViewById(R.id.qty);
         date = findViewById(R.id.date);
@@ -97,7 +93,6 @@ public class SaleActivity extends AppCompatActivity {
         memDetails = findViewById(R.id.member_details_layout);
 
         swapBoth = findViewById(R.id.swapBoth);
-//        swapCB = findViewById(R.id.swapCB);
 
         saleDetails = findViewById(R.id.sale_details);
         todayDate = findViewById(R.id.today_date);
@@ -108,7 +103,6 @@ public class SaleActivity extends AppCompatActivity {
         if (bundle != null) {
             id = bundle.getString("id");
             edtName.setText(bundle.getString("name"));
-//            cowBuf.setText(bundle.getString("milkType"));
             txtCode.setText(bundle.getString("memId"));
             rate.setText(bundle.getString("rate"));
             amt.setText(bundle.getString("amt"));
@@ -168,12 +162,6 @@ public class SaleActivity extends AppCompatActivity {
                                       int before, int count) {
                 float ra = 0, qt = 0;
                 if (radioGroupCB.getCheckedRadioButtonId() != -1) {
-//                    if (swapBoth.getVisibility() == View.VISIBLE) {
-//                        if (cowBuff.equals("Cow"))
-//                            cowBuf.setText("Cow");
-//                        if (cowBuff.equals("Buffalo"))
-//                            cowBuf.setText("Buffalo");
-//                    }
                     if(!s.toString().equals(""))
                         ra = Float.parseFloat(s.toString());
                     if(!quantity.getText().toString().equals(""))
@@ -204,12 +192,6 @@ public class SaleActivity extends AppCompatActivity {
                                       int before, int count) {
                 float ra = 0, qt = 0;
                 if (radioGroupCB.getCheckedRadioButtonId() != -1) {
-//                    if (swapBoth.getVisibility() == View.VISIBLE) {
-//                        if (cowBuff.equals("Cow"))
-//                            cowBuf.setText("Cow");
-//                        if (cowBuff.equals("Buffalo"))
-//                            cowBuf.setText("Buffalo");
-//                    }
                     if(!s.toString().equals(""))
                         qt = Float.parseFloat(s.toString());
                     if(!rate.getText().toString().equals(""))
@@ -228,7 +210,6 @@ public class SaleActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton rb = group.findViewById(checkedId);
                 if (null != rb) {
-                    //Toast.makeText(SaleActivity.this, rb.getText(), Toast.LENGTH_SHORT).show();
                     mornEve = rb.getText().toString();
                 }
 
@@ -242,7 +223,6 @@ public class SaleActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton rb = group.findViewById(checkedId);
                 if (null != rb) {
-                    //Toast.makeText(SaleActivity.this, rb.getText(), Toast.LENGTH_SHORT).show();
                     cowBuff = rb.getText().toString();
                 }
 
@@ -253,8 +233,6 @@ public class SaleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 edtName.setText("");
-//                branch.setText("");
-//                cowBuf.setText("");
                 txtCode.setText("");
                 rate.setText("");
                 amt.setText("");
@@ -341,14 +319,6 @@ public class SaleActivity extends AppCompatActivity {
                     if (!fat.getText().toString().equals(""))
                         f = Float.parseFloat(fat.getText().toString());
                     float r = Float.parseFloat(rate.getText().toString());
-//                    float a = lit * r;
-//                    amt.setText(String.valueOf(a));
-//                    if (swapBoth.getVisibility() == View.VISIBLE) {
-//                        if (cowBuff.equals("Cow"))
-//                            cowBuf.setText("Cow");
-//                        if (cowBuff.equals("Buffalo"))
-//                            cowBuf.setText("Buffalo");
-//                    }
 
                     int selectedId = radioGroup.getCheckedRadioButtonId();
                     RadioButton mE = findViewById(selectedId);
@@ -383,18 +353,12 @@ public class SaleActivity extends AppCompatActivity {
                             dbClass.addSale(date.getText().toString(), memCode, memName, m, cb, lit, f, r, a, cashCr);
                         Toast.makeText(SaleActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                         edtName.setText("");
-//                        branch.setText("");
-//                        cowBuf.setText("");
                         txtCode.setText("");
                         rate.setText("");
                         fat.setText("");
                         amt.setText("");
                         quantity.setText("");
-//                        date.setText(R.string.select_date);
-//                        radioGroup.clearCheck(); // Morning evening should not get cleared
                         radioGroupCB.clearCheck();
-//                        swapBoth.setVisibility(View.GONE);
-//                        swapCB.setVisibility(View.VISIBLE);
                         //Update day wise details
                         todayDate.setText(date.getText().toString());
                         totAmt.setText(String.valueOf(dbClass.getAmtFromDate(date.getText().toString())));
@@ -444,23 +408,6 @@ public class SaleActivity extends AppCompatActivity {
 
                 TextView txtName = (TextView) view;
                 Member member = members.get(txtName.getText().toString());
-//                int cb = Integer.parseInt(member.getCowbfType());
-//
-//                String cbText = "";
-//                if (cb == 1) {
-//                    cbText = "Cow";
-//                    cowBuf.setText(cbText);
-//                } else if (cb == 2) {
-//                    cbText = "Buffalo";
-//                    cowBuf.setText(cbText);
-//                } else if (cb == 3) {
-//                    cbText = "Both";
-//                    cowBuf.setText(cbText);
-//                    swapBoth.setVisibility(View.VISIBLE);
-//                    swapCB.setVisibility(View.GONE);
-//                } else {
-//                    cowBuf.setText(cbText);
-//                }
                 txtCode.setText(member.getCode());
 
             }
@@ -501,24 +448,6 @@ public class SaleActivity extends AppCompatActivity {
         if (c.getCount() > 0) {
             name = c.getString(c.getColumnIndex("memb_name"));
             edtName.setText(name);
-//            Member member = members.get(name);
-//            int cb = Integer.parseInt(member.getCowbfType());
-//
-//            String cbText = "";
-//            if (cb == 1) {
-//                cbText = "Cow";
-//                cowBuf.setText(cbText);
-//            } else if (cb == 2) {
-//                cbText = "Buffalo";
-//                cowBuf.setText(cbText);
-//            } else if (cb == 3) {
-//                cbText = "Both";
-//                cowBuf.setText(cbText);
-//                swapBoth.setVisibility(View.VISIBLE);
-//                swapCB.setVisibility(View.GONE);
-//            } else {
-//                cowBuf.setText(cbText);
-//            }
         } else {
             Toast.makeText(this, "Member not found!", Toast.LENGTH_SHORT).show();
         }

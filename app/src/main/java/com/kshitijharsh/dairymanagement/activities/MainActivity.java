@@ -1,6 +1,7 @@
 package com.kshitijharsh.dairymanagement.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,7 +36,7 @@ import com.kshitijharsh.dairymanagement.utils.SqliteImporter;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -126,11 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // TODO Replace later when login is implemented
                     byte[] bytesID = new byte[0];
-                    try {
-                        bytesID = "8005".getBytes("UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
+                    bytesID = "8005".getBytes(StandardCharsets.UTF_8);
 
                     MessageDigest mdID = null;
                     try {
@@ -156,11 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // TODO Replace later when login is implemented
                     byte[] bytesID = new byte[0];
-                    try {
-                        bytesID = "8005".getBytes("UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
+                    bytesID = "8005".getBytes(StandardCharsets.UTF_8);
 
                     MessageDigest mdID = null;
                     try {
@@ -245,13 +238,7 @@ public class MainActivity extends AppCompatActivity {
             item.close();
             rateGrpMaster.close();
             customer.close();
-//            DBQuery query = new DBQuery(this);
-//            query.createDatabase();
-//            query.open();
-
-            //Toast.makeText(this, DBHelper.DB_PATH, Toast.LENGTH_LONG).show();
             query.close();
-//            db.endTransaction();
             db.close();
             dbHelper.close();
         }
@@ -262,7 +249,6 @@ public class MainActivity extends AppCompatActivity {
             finish();
         } else {
             exit = true;
-//            Toast.makeText(this,"Press back again to exit",Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -275,7 +261,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        exitApp();
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
@@ -301,15 +286,6 @@ public class MainActivity extends AppCompatActivity {
 
                         ExportTask task = new ExportTask();
                         task.execute();
-//                        try {
-//                            SqliteExporter.export(dc.getReadableDatabase());
-//                            Toast.makeText(MainActivity.this, "Successfully exported to " + Environment.getExternalStorageDirectory()
-//                                    + EXT_DIRECTORY
-//                                    + File.separator + BACKUP_DIRECTORY, Toast.LENGTH_SHORT).show();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                            Toast.makeText(MainActivity.this, "Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-//                        }
 
                     }
                 })
@@ -366,7 +342,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_main) {
-//            initiateImport();
 
             builder.setMessage("Are you sure you want to import data from CSV file ?")
                     .setCancelable(false)
@@ -402,28 +377,18 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             int res = SqliteImporter.importData(sqLiteDatabase);
-//            Toast.makeText(this, res, Toast.LENGTH_SHORT).show();
-            switch (res) {
-                case 0:
-//                    Toast.makeText(this, "No CSV files to import", Toast.LENGTH_SHORT).show();
-                    break;
-                case 1:
-//                    Toast.makeText(this, "Successfully Imported.", Toast.LENGTH_SHORT).show();
-                    retval = 0;
-                    break;
-                default:
-//                    Toast.makeText(this, "Some problem occurred...", Toast.LENGTH_SHORT).show();
+            if (res == 1) {
+                retval = 0;
             }
         } catch (Exception e) {
-//            Toast.makeText(this, "Error while importing, try again.", Toast.LENGTH_SHORT).show();
             Log.e("Import Exception: ", e.toString());
         }
-//        sqLiteDatabase.endTransaction();
         sqLiteDatabase.close();
         helper.close();
         return retval;
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class ImportTask extends AsyncTask<Integer, Integer, Integer> {
 
         @Override
@@ -471,6 +436,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class ExportTask extends AsyncTask<Integer, Integer, Integer> {
 
         @Override

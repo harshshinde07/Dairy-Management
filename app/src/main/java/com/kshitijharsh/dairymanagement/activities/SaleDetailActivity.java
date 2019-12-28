@@ -31,7 +31,6 @@ public class SaleDetailActivity extends AppCompatActivity implements SaleAdapter
     DBQuery dbQuery;
     List<Sale> saleList;
     DatabaseClass db;
-    private SearchView searchView;
     SaleAdapter mAdapter;
 
     @Override
@@ -93,7 +92,7 @@ public class SaleDetailActivity extends AppCompatActivity implements SaleAdapter
 
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.action_search)
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
                 .getActionView();
         searchView.setSearchableInfo(searchManager
                 .getSearchableInfo(getComponentName()));
