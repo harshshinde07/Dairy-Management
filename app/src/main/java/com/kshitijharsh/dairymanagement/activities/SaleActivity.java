@@ -294,7 +294,7 @@ public class SaleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String cashCr;
-                if (date.getText().toString().equals("") || quantity.getText().toString().equals("") || radioGroup.getCheckedRadioButtonId() == -1 || cashCredit.getCheckedRadioButtonId() == -1) {
+                if (date.getText().toString().equals("Select Date") || quantity.getText().toString().equals("") || radioGroup.getCheckedRadioButtonId() == -1 || cashCredit.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(SaleActivity.this, "Please enter required values", Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -347,10 +347,12 @@ public class SaleActivity extends AppCompatActivity {
 
                         float a = RoundUtil.roundTwoDecimals(Float.parseFloat(amt.getText().toString()));
 
+                        int zone = dbQuery.getZoneCode(memCode);
+
                         if (bundle != null)
-                            dbClass.editSale(id, date.getText().toString(), memCode, memName, me, cb, lit, f, r, a, cashCr);
+                            dbClass.editSale(id, date.getText().toString(), memCode, memName, me, cb, lit, f, r, a, cashCr, zone);
                         else
-                            dbClass.addSale(date.getText().toString(), memCode, memName, m, cb, lit, f, r, a, cashCr);
+                            dbClass.addSale(date.getText().toString(), memCode, memName, m, cb, lit, f, r, a, cashCr, zone);
                         Toast.makeText(SaleActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
                         edtName.setText("");
                         txtCode.setText("");
