@@ -10,7 +10,7 @@ public class Collection {
     Collection() {
     }
 
-    public Collection(String id, String date, String memId, String memName, String memType, String milktype, String morEve, String fat, String qty, String rate, String amt) {
+    public Collection(String id, String date, String memId, String memName, String memType, String milktype, String morEve, String fat, String qty, String rate, String amt, String snf) {
         this.id = id;
         this.date = date;
         this.memId = memId;
@@ -22,38 +22,39 @@ public class Collection {
         this.qty = qty;
         this.rate = rate;
         this.amt = amt;
+        this.snf = snf;
     }
 
-    public Collection(String id, String date, String memId, String memName, String memType, String milktype, String morEve, String fat, String snf, String qty, String rate, String amt) {
-        this.id = id;
-        this.date = date;
-        this.memId = memId;
-        this.memName = memName;
-        this.memType = memType;
-        this.milktype = milktype;
-        this.morEve = morEve;
-        this.fat = fat;
-        this.snf = snf;
-        this.qty = qty;
-        this.rate = rate;
-        this.amt = amt;
-    }
-
-    public Collection(String id, String date, String memId, String memName, String memType, String milktype, String morEve, String fat, String snf, String degree, String qty, String rate, String amt) {
-        this.id = id;
-        this.date = date;
-        this.memId = memId;
-        this.memName = memName;
-        this.memType = memType;
-        this.milktype = milktype;
-        this.morEve = morEve;
-        this.fat = fat;
-        this.snf = snf;
-        this.degree = degree;
-        this.qty = qty;
-        this.rate = rate;
-        this.amt = amt;
-    }
+//    public Collection(String id, String date, String memId, String memName, String memType, String milktype, String morEve, String fat, String snf, String qty, String rate, String amt) {
+//        this.id = id;
+//        this.date = date;
+//        this.memId = memId;
+//        this.memName = memName;
+//        this.memType = memType;
+//        this.milktype = milktype;
+//        this.morEve = morEve;
+//        this.fat = fat;
+//        this.snf = snf;
+//        this.qty = qty;
+//        this.rate = rate;
+//        this.amt = amt;
+//    }
+//
+//    public Collection(String id, String date, String memId, String memName, String memType, String milktype, String morEve, String fat, String snf, String degree, String qty, String rate, String amt) {
+//        this.id = id;
+//        this.date = date;
+//        this.memId = memId;
+//        this.memName = memName;
+//        this.memType = memType;
+//        this.milktype = milktype;
+//        this.morEve = morEve;
+//        this.fat = fat;
+//        this.snf = snf;
+//        this.degree = degree;
+//        this.qty = qty;
+//        this.rate = rate;
+//        this.amt = amt;
+//    }
 
     public String getId() {
         return id;

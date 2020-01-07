@@ -348,7 +348,9 @@ public class DBQuery {
     }
 
     public int getZoneCode(int memId) {
-        String query = "SELECT zoon_code from member where memb_code='" + memId + "'";
+//        String query = "SELECT zoon_code from member where memb_code='" + memId + "'";
+
+        String query = "SELECT branchcode from customer;";
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
 
@@ -361,5 +363,31 @@ public class DBQuery {
             c.close();
             return -1;
         }
+    }
+
+    public int getItemIdFromName(String item) {
+        String query = "SELECT itcode from item where itname='" + item + "'";
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        int code = 0;
+        if (c.getCount() > 0) {
+            code = c.getInt(0);
+        }
+        c.close();
+        return code;
+    }
+
+    public String getItemNameFromId(int itcode) {
+        String query = "SELECT itname from item where itcode='" + itcode + "'";
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        String name = "";
+        if (c.getCount() > 0) {
+            name = c.getString(0);
+        }
+        c.close();
+        return name;
     }
 }

@@ -80,6 +80,19 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             });
         }
+
+        @Override
+        public void onStop() {
+            super.onStop();
+            facilityPref.setChecked(false);
+            calculatePref.setChecked(false);
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+
+        }
     }
 
     @Override

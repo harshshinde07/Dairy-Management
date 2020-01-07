@@ -25,8 +25,10 @@ public class SqliteExporter {
 
         org.apache.commons.io.FileUtils.cleanDirectory(backupDir);
 
-        for (int i = 2; i < tables.size(); i++) {
+        for (int i = 0; i < tables.size(); i++) {
 
+            if (tables.get(i).equals("android_metadata") || tables.get(i).equals("sqlite_sequence"))
+                continue;
             File backupFile = new File(backupDir, tables.get(i) + ".csv");
 
             boolean success = backupFile.createNewFile();
