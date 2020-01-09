@@ -33,8 +33,10 @@ import com.kshitijharsh.dairymanagement.model.Customer;
 import com.kshitijharsh.dairymanagement.model.Member;
 import com.kshitijharsh.dairymanagement.utils.RoundUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -272,7 +274,8 @@ public class SaleActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 int m = month + 1;
-                String tmp = dayOfMonth + "-" + m + "-" + year;
+//                String tmp = dayOfMonth + "-" + m + "-" + year;
+                String tmp = formatDate(mYear, mMonth, mDay);
                 date.setText(tmp);
                 todayDate.setText(tmp);
                 totAmt.setText(String.valueOf(dbClass.getAmtFromDate(tmp)));
@@ -476,5 +479,16 @@ public class SaleActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         NavUtils.navigateUpFromSameTask(this);
+    }
+
+    private static String formatDate(int year, int month, int day) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(year, month, day);
+        Date date = cal.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        return sdf.format(date);
     }
 }

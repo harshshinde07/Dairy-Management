@@ -31,7 +31,6 @@
         </activity>
         <activity
             android:name=".activities.CattleDetailActivity"
-            android:parentActivityName=".activities.CattleFeedActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.searchable"
@@ -43,7 +42,6 @@
         </activity>
         <activity
             android:name=".activities.SaleDetailActivity"
-            android:parentActivityName=".activities.SaleActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.searchable"
@@ -55,7 +53,6 @@
         </activity>
         <activity
             android:name=".activities.CollectionDetailActivity"
-            android:parentActivityName=".activities.CollectionActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.searchable"

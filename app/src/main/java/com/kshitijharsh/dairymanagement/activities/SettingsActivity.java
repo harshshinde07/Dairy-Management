@@ -1,13 +1,13 @@
 package com.kshitijharsh.dairymanagement.activities;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.kshitijharsh.dairymanagement.R;
 import com.kshitijharsh.dairymanagement.utils.AppCompatPreferenceActivity;
@@ -26,12 +26,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public static class MainPreferenceFragment extends PreferenceFragment {
 
         CheckBoxPreference calculatePref, facilityPref;
-        public static String CALCULATE_PREF = "none";
+        public static String CALCULATE_PREF = "prefs";
 
         @Override
         public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_main);
+
+            SharedPreferences pref = getActivity().getSharedPreferences("SNFPref", Context.MODE_PRIVATE);
+            final SharedPreferences.Editor editor = pref.edit();
 
             facilityPref = (CheckBoxPreference) findPreference("snf_facility");
             calculatePref = (CheckBoxPreference) findPreference("snf_calculate");
@@ -39,21 +42,25 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             facilityPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     if (newValue.toString().equals("false")) {
-                        CALCULATE_PREF = "none";
-                        Toast.makeText(getActivity(), "Restarted your app to see the changes.", Toast.LENGTH_LONG).show();
+                        editor.putString(CALCULATE_PREF, "none");
+                        editor.apply();
+//                        Toast.makeText(getActivity(), "Restarted your app to see the changes.", Toast.LENGTH_LONG).show();
                     }
                     if (newValue.toString().equals("true")) {
-                        if (calculatePref.isChecked())
-                            CALCULATE_PREF = "true";
-                        else
-                            CALCULATE_PREF = "false";
-                        Toast.makeText(getActivity(), "Restarted your app to apply the changes.", Toast.LENGTH_LONG).show();
+                        if (calculatePref.isChecked()) {
+                            editor.putString(CALCULATE_PREF, "true");
+                            editor.apply();
+                        } else {
+                            editor.putString(CALCULATE_PREF, "false");
+                            editor.apply();
+//                            Toast.makeText(getActivity(), "Restarted your app to apply the changes.", Toast.LENGTH_LONG).show();
+                        }
                     }
-                    Intent i = getActivity().getPackageManager()
-                            .getLaunchIntentForPackage(getActivity().getPackageName());
-                    assert i != null;
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
+//                    Intent i = getActivity().getPackageManager()
+//                            .getLaunchIntentForPackage(getActivity().getPackageName());
+//                    assert i != null;
+//                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(i);
                     return true;
                 }
             });
@@ -63,18 +70,20 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 public boolean onPreferenceChange(Preference preference, Object o) {
                     if (facilityPref.isChecked()) {
                         if (o.toString().equals("true")) {
-                            CALCULATE_PREF = "true";
-                            Toast.makeText(getActivity(), "Restarted your app to apply the changes.", Toast.LENGTH_LONG).show();
+                            editor.putString(CALCULATE_PREF, "true");
+                            editor.apply();
+//                            Toast.makeText(getActivity(), "Restarted your app to apply the changes.", Toast.LENGTH_LONG).show();
                         }
                         if (o.toString().equals("false")) {
-                            CALCULATE_PREF = "false";
-                            Toast.makeText(getActivity(), "Restarted your app to apply the changes.", Toast.LENGTH_LONG).show();
+                            editor.putString(CALCULATE_PREF, "false");
+                            editor.apply();
+//                            Toast.makeText(getActivity(), "Restarted your app to apply the changes.", Toast.LENGTH_LONG).show();
                         }
-                        Intent i = getActivity().getPackageManager()
-                                .getLaunchIntentForPackage(getActivity().getPackageName());
-                        assert i != null;
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i);
+//                        Intent i = getActivity().getPackageManager()
+//                                .getLaunchIntentForPackage(getActivity().getPackageName());
+//                        assert i != null;
+//                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(i);
                     }
                     return true;
                 }
@@ -84,8 +93,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onStop() {
             super.onStop();
-            facilityPref.setChecked(false);
-            calculatePref.setChecked(false);
+//            facilityPref.setChecked(false);
+//            calculatePref.setChecked(false);
         }
 
         @Override

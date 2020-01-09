@@ -3,6 +3,7 @@ package com.kshitijharsh.dairymanagement.activities;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -36,8 +37,10 @@ import com.kshitijharsh.dairymanagement.model.Member;
 import com.kshitijharsh.dairymanagement.utils.RoundUtil;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -63,6 +66,37 @@ public class CollectionActivity extends AppCompatActivity {
     int rateGroupNo;
     TextView todayDate, totLit, totAmt, todayLit, todayAmt;
     String id;
+    public static String CALCULATE_PREF = "prefs";
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+//        settingsPrefs = SettingsActivity.MainPreferenceFragment.CALCULATE_PREF;
+
+        SharedPreferences prefs = getSharedPreferences("SNFPref", MODE_PRIVATE);
+        settingsPrefs = prefs.getString(CALCULATE_PREF, "none");
+
+        Toast.makeText(this, "Preferences: " + settingsPrefs, Toast.LENGTH_SHORT).show();
+
+        if (settingsPrefs.equals("false")) {
+            degree.setVisibility(View.VISIBLE);
+            degree.setHint("SNF");
+        }
+        if (settingsPrefs.equals("true")) {
+            snf = new EditText(this);
+            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+            snf.setLayoutParams(p);
+            snf.setEnabled(false);
+            snf.setSingleLine();
+            degree.setVisibility(View.VISIBLE);
+            snf.setHint("SNF");
+            snf.setInputType(InputType.TYPE_CLASS_PHONE);
+            //snf.setText("Text");
+            //snf.setId(R.id.snf);
+            addSNF.addView(snf);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,9 +132,9 @@ public class CollectionActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("Milk Collection");
 
-        settingsPrefs = SettingsActivity.MainPreferenceFragment.CALCULATE_PREF;
+//        settingsPrefs = SettingsActivity.MainPreferenceFragment.CALCULATE_PREF;
 
-        Toast.makeText(this, "Preferences: " + settingsPrefs, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Preferences: " + settingsPrefs, Toast.LENGTH_SHORT).show();
 
         radioGroupMorEve = findViewById(R.id.morEve);
         radioGroupMorEve.clearCheck();
@@ -158,23 +192,23 @@ public class CollectionActivity extends AppCompatActivity {
             collectionDetails.setVisibility(View.VISIBLE);
         }
 
-        if (settingsPrefs.equals("false")) {
-            degree.setVisibility(View.VISIBLE);
-            degree.setHint("SNF");
-        }
-        if (settingsPrefs.equals("true")) {
-            snf = new EditText(this);
-            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
-            snf.setLayoutParams(p);
-            snf.setEnabled(false);
-            snf.setSingleLine();
-            degree.setVisibility(View.VISIBLE);
-            snf.setHint("SNF");
-            snf.setInputType(InputType.TYPE_CLASS_PHONE);
-            //snf.setText("Text");
-            //snf.setId(R.id.snf);
-            addSNF.addView(snf);
-        }
+//        if (settingsPrefs.equals("false")) {
+//            degree.setVisibility(View.VISIBLE);
+//            degree.setHint("SNF");
+//        }
+//        if (settingsPrefs.equals("true")) {
+//            snf = new EditText(this);
+//            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+//            snf.setLayoutParams(p);
+//            snf.setEnabled(false);
+//            snf.setSingleLine();
+//            degree.setVisibility(View.VISIBLE);
+//            snf.setHint("SNF");
+//            snf.setInputType(InputType.TYPE_CLASS_PHONE);
+//            //snf.setText("Text");
+//            //snf.setId(R.id.snf);
+//            addSNF.addView(snf);
+//        }
 
         degree.addTextChangedListener(new TextWatcher() {
 
@@ -357,7 +391,8 @@ public class CollectionActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 int m = month + 1;
-                String tmp = dayOfMonth + "-" + m + "-" + year;
+//                String tmp = dayOfMonth + "-" + m + "-" + year;
+                String tmp = formatDate(mYear, mMonth, mDay);
                 date.setText(tmp);
                 todayDate.setText(tmp);
                 totAmt.setText(String.valueOf(dbClass.getCollecedAmtFromDate(tmp)));
@@ -694,5 +729,16 @@ public class CollectionActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         NavUtils.navigateUpFromSameTask(this);
+    }
+
+    private static String formatDate(int year, int month, int day) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(year, month, day);
+        Date date = cal.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        return sdf.format(date);
     }
 }
