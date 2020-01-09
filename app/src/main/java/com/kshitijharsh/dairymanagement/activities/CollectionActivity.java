@@ -77,7 +77,7 @@ public class CollectionActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("SNFPref", MODE_PRIVATE);
         settingsPrefs = prefs.getString(CALCULATE_PREF, "none");
 
-        Toast.makeText(this, "Preferences: " + settingsPrefs, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Preferences: " + settingsPrefs, Toast.LENGTH_SHORT).show();
 
         if (settingsPrefs.equals("false")) {
             degree.setVisibility(View.VISIBLE);
