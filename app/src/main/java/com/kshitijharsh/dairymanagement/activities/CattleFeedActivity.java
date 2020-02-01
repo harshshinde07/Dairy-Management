@@ -311,8 +311,8 @@ public class CattleFeedActivity extends AppCompatActivity implements AdapterView
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 int m = month + 1;
-//                String tmp = dayOfMonth + "-" + m + "-" + year;
-                String tmp = formatDate(mYear, mMonth, mDay);
+                String tmp = dayOfMonth + "-" + m + "-" + year;
+//                String tmp = formatDate(mYear, mMonth, mDay);
                 date.setText(tmp);
                 todayDate.setText(tmp);
                 totAmt.setText(String.valueOf(dbClass.getCattleAmtFromDate(tmp)));

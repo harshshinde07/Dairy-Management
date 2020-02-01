@@ -10,7 +10,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -79,7 +78,7 @@ public class CollectionDetailActivity extends AppCompatActivity implements Colle
                 me = "Evening";
             Collection collection = new Collection(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cb, me, cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10), cursor.getString(12));
             collectionList.add(collection);
-            Log.e("ERROR:mE deg zoonCode", "_id " + cursor.getString(0) + " trnDate " + cursor.getString(1) + " membCode " + cursor.getString(2) + " memName " + cursor.getString(3) + " cobf " + cursor.getString(4) + " " + cb + " " + me + " liters " + cursor.getString(7) + " fat " + cursor.getString(8) + " rate " + cursor.getString(9) + " amount " + cursor.getString(10) + " snf " + cursor.getString(12));
+//            Log.e("ERROR:mE deg zoonCode", "_id " + cursor.getString(0) + " trnDate " + cursor.getString(1) + " membCode " + cursor.getString(2) + " memName " + cursor.getString(3) + " cobf " + cursor.getString(4) + " " + cb + " " + me + " liters " + cursor.getString(7) + " fat " + cursor.getString(8) + " rate " + cursor.getString(9) + " amount " + cursor.getString(10) + " snf " + cursor.getString(12));
             cursor.moveToNext();
         }
         cursor.close();

@@ -1,5 +1,6 @@
 package com.kshitijharsh.dairymanagement.database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class DatabaseClass extends SQLiteOpenHelper {
 
@@ -40,8 +44,10 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
         int line = getLineNo(date, membCode, morEve, cobf);
 
+        String formattedDate = convertDateToDB(date);
+
         ContentValues values = new ContentValues(13);
-        values.put("trnDate", date);
+        values.put("trnDate", formattedDate);
         values.put("membCode", membCode);
         values.put("memName", name);
         values.put("cobf", cobf);
@@ -59,7 +65,10 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
     public void addSale(String date, int membCode, String name, String morEve, String cobf, float liters, float fat, float rate, float amount, String crdr, int zoonCode) {
         ContentValues values = new ContentValues(10);
-        values.put("trnDate", date);
+
+        String formattedDate = convertDateToDB(date);
+
+        values.put("trnDate", formattedDate);
         values.put("membCode", membCode);
         values.put("memName", name);
         values.put("mornEve", morEve);
@@ -75,7 +84,10 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
     public void addCattle(String date, int lgr, String name, int itemId, float qty, float rate, float amt, String part, String crdr, int zoonCode) {
         ContentValues values = new ContentValues(9);
-        values.put("trnDate", date);
+
+        String formattedDate = convertDateToDB(date);
+
+        values.put("trnDate", formattedDate);
         values.put("memId", lgr);
         values.put("memName", name);
         values.put("itemId", itemId);
@@ -213,7 +225,10 @@ public class DatabaseClass extends SQLiteOpenHelper {
     //Edit entries
     public void editColl(String id, String date, int membCode, String name, String cobf, String morEve, float degree, float liters, float fat, float rate, float amount, int zoonCode, float snf) {
         ContentValues values = new ContentValues(12);
-        values.put("trnDate", date);
+
+        String formattedDate = convertDateToDB(date);
+
+        values.put("trnDate", formattedDate);
         values.put("membCode", membCode);
         values.put("memName", name);
         values.put("cobf", cobf);
@@ -231,7 +246,10 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
     public void editSale(String id, String date, int membCode, String name, String morEve, String cobf, float liters, float fat, float rate, float amount, String crdr, int zoonCode) {
         ContentValues values = new ContentValues(10);
-        values.put("trnDate", date);
+
+        String formattedDate = convertDateToDB(date);
+
+        values.put("trnDate", formattedDate);
         values.put("membCode", membCode);
         values.put("memName", name);
         values.put("mornEve", morEve);
@@ -249,7 +267,10 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
     public void editCattle(String id, String date, int lgr, String name, int itemId, float qty, float rate, float amt, String part, String crdr, int zoonCode) {
         ContentValues values = new ContentValues(9);
-        values.put("trnDate", date);
+
+        String formattedDate = convertDateToDB(date);
+
+        values.put("trnDate", formattedDate);
         values.put("memId", lgr);
         values.put("memName", name);
         values.put("itemId", itemId);
@@ -274,5 +295,27 @@ public class DatabaseClass extends SQLiteOpenHelper {
         }
         c.close();
         return ++lineNo;
+    }
+
+    /**
+     * this function converts date from the format dd-MM-yyyy to MM/dd/yyyy
+     *
+     * @param date String of the form dd-MM-yyyy
+     * @return String of the form MM/dd/yyyy
+     */
+    private static String convertDateToDB(String date) {
+
+        String[] array = date.split("-");
+        int day = Integer.valueOf(array[0]);
+        int month = Integer.valueOf(array[1]);
+        int year = Integer.valueOf(array[2]);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(year, month - 1, day);
+        Date formattedDate = cal.getTime();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
+        return sdf.format(formattedDate);
     }
 }
