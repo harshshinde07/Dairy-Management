@@ -1,5 +1,6 @@
 package com.kshitijharsh.dairymanagement.database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,11 +8,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class DatabaseClass extends SQLiteOpenHelper {
 
     public final static String DATABASE_NAME = "records.db";
-    private static final int DATABASE_VERSION = 7; // Add snf in collectionTransactions table
+    private static final int DATABASE_VERSION = 8; // Add lineNo field in collectionTransactions table
 
     public DatabaseClass(final Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -22,7 +26,7 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE collectionTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, memName TEXT, cobf TEXT, morEve TEXT, degree FLOAT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT, zoonCode INTEGER, snf FLOAT);");
+        db.execSQL("CREATE TABLE collectionTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, memName TEXT, cobf TEXT, morEve TEXT, degree FLOAT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT, zoonCode INTEGER, snf FLOAT, lineNo INTEEGR);");
         db.execSQL("CREATE TABLE saleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, membCode INTEGER, memName TEXT, mornEve TEXT, cobf TEXT, liters FLOAT, fat FLOAT, rate FLOAT, amount FLOAT, cashCr TEXT, zoonCode INTEGER);");
         db.execSQL("CREATE TABLE cattleTransactions (_id INTEGER PRIMARY KEY AUTOINCREMENT, trnDate TEXT, memId INTEGER, memName TEXT, itemId INTEGER, quantity FLOAT, rate FLOAT, amount FLOAT, particulars TEXT, cashCr TEXT, zoonCode INTEGER);");
     }
@@ -37,8 +41,13 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
     //add new entries to database
     public void addColl(String date, int membCode, String name, String cobf, String morEve, float degree, float liters, float fat, float rate, float amount, int zoonCode, float snf) {
-        ContentValues values = new ContentValues(12);
-        values.put("trnDate", date);
+
+        int line = getLineNo(date, membCode, morEve, cobf);
+
+        String formattedDate = convertDateToDB(date);
+
+        ContentValues values = new ContentValues(13);
+        values.put("trnDate", formattedDate);
         values.put("membCode", membCode);
         values.put("memName", name);
         values.put("cobf", cobf);
@@ -50,12 +59,16 @@ public class DatabaseClass extends SQLiteOpenHelper {
         values.put("amount", amount);
         values.put("zoonCode", zoonCode);
         values.put("snf", snf);
+        values.put("lineNo", line);
         getWritableDatabase().insert("collectionTransactions", "trnDate", values);
     }
 
     public void addSale(String date, int membCode, String name, String morEve, String cobf, float liters, float fat, float rate, float amount, String crdr, int zoonCode) {
         ContentValues values = new ContentValues(10);
-        values.put("trnDate", date);
+
+        String formattedDate = convertDateToDB(date);
+
+        values.put("trnDate", formattedDate);
         values.put("membCode", membCode);
         values.put("memName", name);
         values.put("mornEve", morEve);
@@ -71,7 +84,10 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
     public void addCattle(String date, int lgr, String name, int itemId, float qty, float rate, float amt, String part, String crdr, int zoonCode) {
         ContentValues values = new ContentValues(9);
-        values.put("trnDate", date);
+
+        String formattedDate = convertDateToDB(date);
+
+        values.put("trnDate", formattedDate);
         values.put("memId", lgr);
         values.put("memName", name);
         values.put("itemId", itemId);
@@ -209,7 +225,10 @@ public class DatabaseClass extends SQLiteOpenHelper {
     //Edit entries
     public void editColl(String id, String date, int membCode, String name, String cobf, String morEve, float degree, float liters, float fat, float rate, float amount, int zoonCode, float snf) {
         ContentValues values = new ContentValues(12);
-        values.put("trnDate", date);
+
+        String formattedDate = convertDateToDB(date);
+
+        values.put("trnDate", formattedDate);
         values.put("membCode", membCode);
         values.put("memName", name);
         values.put("cobf", cobf);
@@ -227,7 +246,10 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
     public void editSale(String id, String date, int membCode, String name, String morEve, String cobf, float liters, float fat, float rate, float amount, String crdr, int zoonCode) {
         ContentValues values = new ContentValues(10);
-        values.put("trnDate", date);
+
+        String formattedDate = convertDateToDB(date);
+
+        values.put("trnDate", formattedDate);
         values.put("membCode", membCode);
         values.put("memName", name);
         values.put("mornEve", morEve);
@@ -245,7 +267,10 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
     public void editCattle(String id, String date, int lgr, String name, int itemId, float qty, float rate, float amt, String part, String crdr, int zoonCode) {
         ContentValues values = new ContentValues(9);
-        values.put("trnDate", date);
+
+        String formattedDate = convertDateToDB(date);
+
+        values.put("trnDate", formattedDate);
         values.put("memId", lgr);
         values.put("memName", name);
         values.put("itemId", itemId);
@@ -258,5 +283,39 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.update("cattleTransactions", values, "_id=" + id, null);
+    }
+
+    // Add line number as 1 plus the previous line number available
+    private int getLineNo(String date, int membCode, String morEve, String cobf) {
+        int lineNo = 0;
+        String query = "SELECT COUNT(*) as line from collectionTransactions where membCode='" + membCode + "' AND trnDate='" + date + "' AND morEve='" + morEve + "' AND cobf='" + cobf + "'";
+        Cursor c = getReadableDatabase().rawQuery(query, null);
+        if (c.moveToFirst()) {
+            lineNo = c.getInt(c.getColumnIndex("line"));
+        }
+        c.close();
+        return ++lineNo;
+    }
+
+    /**
+     * this function converts date from the format dd-MM-yyyy to MM/dd/yyyy
+     *
+     * @param date String of the form dd-MM-yyyy
+     * @return String of the form MM/dd/yyyy
+     */
+    private static String convertDateToDB(String date) {
+
+        String[] array = date.split("-");
+        int day = Integer.valueOf(array[0]);
+        int month = Integer.valueOf(array[1]);
+        int year = Integer.valueOf(array[2]);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(year, month - 1, day);
+        Date formattedDate = cal.getTime();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
+        return sdf.format(formattedDate);
     }
 }

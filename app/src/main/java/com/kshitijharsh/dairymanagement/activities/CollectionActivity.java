@@ -77,7 +77,7 @@ public class CollectionActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("SNFPref", MODE_PRIVATE);
         settingsPrefs = prefs.getString(CALCULATE_PREF, "none");
 
-        Toast.makeText(this, "Preferences: " + settingsPrefs, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Preferences: " + settingsPrefs, Toast.LENGTH_SHORT).show();
 
         if (settingsPrefs.equals("false")) {
             degree.setVisibility(View.VISIBLE);
@@ -391,8 +391,8 @@ public class CollectionActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 int m = month + 1;
-//                String tmp = dayOfMonth + "-" + m + "-" + year;
-                String tmp = formatDate(mYear, mMonth, mDay);
+                String tmp = dayOfMonth + "-" + m + "-" + year;
+//                String tmp = formatDate(mYear, mMonth, mDay);
                 date.setText(tmp);
                 todayDate.setText(tmp);
                 totAmt.setText(String.valueOf(dbClass.getCollecedAmtFromDate(tmp)));

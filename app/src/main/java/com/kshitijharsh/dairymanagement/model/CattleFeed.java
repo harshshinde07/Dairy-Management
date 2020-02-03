@@ -1,11 +1,17 @@
 package com.kshitijharsh.dairymanagement.model;
 
+import android.annotation.SuppressLint;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class CattleFeed {
     private String id, date, memId, name, itemName, rate, qty, amt, particulars;
 
     public CattleFeed(String id, String date, String memId, String name, String itemName, String rate, String qty, String amt, String particulars) {
         this.id = id;
-        this.date = date;
+        this.date = convertDateFromDB(date);
         this.memId = memId;
         this.name = name;
         this.itemName = itemName;
@@ -13,6 +19,22 @@ public class CattleFeed {
         this.qty = qty;
         this.amt = amt;
         this.particulars = particulars;
+    }
+
+    private static String convertDateFromDB(String date) {
+
+        String[] array = date.split("/");
+        int day = Integer.valueOf(array[1]);
+        int month = Integer.valueOf(array[0]);
+        int year = Integer.valueOf(array[2]);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(year, month - 1, day);
+        Date formattedDate = cal.getTime();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        return sdf.format(formattedDate);
     }
 
     public String getId() {
