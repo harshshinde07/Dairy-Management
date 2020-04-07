@@ -105,7 +105,8 @@ public class DBQuery {
             cb = "B";
         else
             cb = "C";
-        String query = "SELECT rate from ratemst where degree='" + degree + "' AND fat='" + fat + "' AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+//        String query = "SELECT rate from ratemst where degree='" + degree + "' AND fat='" + fat + "' AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+        String query = "SELECT rate from ratemst where RtDate = (select max(RtDate) from ratemst where degree='" + degree + "' AND fat='" + fat + "' AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "') AND degree='" + degree + "' AND fat='" + fat + "' AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
 
@@ -114,16 +115,19 @@ public class DBQuery {
             val = c.getFloat(c.getColumnIndex("rate"));
             c.close();
         } else {
-            String temp = "SELECT MIN(fat) as fat from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND degree='" + degree + "'";
+//            String temp = "SELECT MIN(fat) as fat from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND degree='" + degree + "'";
+            String temp = "SELECT MIN(fat) as fat from ratemst where RtDate = (select max(RtDate) from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND degree='" + degree + "') AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND degree='" + degree + "'";
             Cursor tmp = db.rawQuery(temp, null);
             tmp.moveToFirst(); // Not checked for count > 0
             float minFat = tmp.getFloat(0);
             tmp.close();
             String q;
             if (fat < minFat) {
-                q = "SELECT MIN(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND degree='" + degree + "'";
+//                q = "SELECT MIN(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND degree='" + degree + "'";
+                q = "SELECT MIN(rate) as rate from ratemst where RtDate = (select max(RtDate) from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND degree='" + degree + "') AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND degree='" + degree + "'";
             } else {
-                q = "SELECT MAX(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND degree='" + degree + "'";
+//                q = "SELECT MAX(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND degree='" + degree + "'";
+                q = "SELECT MAX(rate) as rate from ratemst where RtDate = (select max(RtDate) from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND degree='" + degree + "') AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND degree='" + degree + "'";
             }
             Cursor cursor = db.rawQuery(q, null);
             cursor.moveToFirst(); // Not checked for count > 0
@@ -139,7 +143,8 @@ public class DBQuery {
             cb = "B";
         else
             cb = "C";
-        String query = "SELECT rate from ratemst where fat='" + fat + "' AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+//        String query = "SELECT rate from ratemst where fat='" + fat + "' AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+        String query = "SELECT rate from ratemst where RtDate = (select max(RtDate) from ratemst where fat='" + fat + "' AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "') AND fat='" + fat + "' AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
 
@@ -148,16 +153,19 @@ public class DBQuery {
             val = c.getFloat(c.getColumnIndex("rate"));
             c.close();
         } else {
-            String temp = "SELECT MIN(fat) as fat from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+//            String temp = "SELECT MIN(fat) as fat from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+            String temp = "SELECT MIN(fat) as fat from ratemst where RtDate = (select max(RtDate) from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "') AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
             Cursor tmp = db.rawQuery(temp, null);
             tmp.moveToFirst(); // Not checked for count > 0
             float minFat = tmp.getFloat(0);
             tmp.close();
             String q;
             if (fat < minFat) {
-                q = "SELECT MIN(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+//                q = "SELECT MIN(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+                q = "SELECT MIN(rate) as rate from ratemst where RtDate = (select max(RtDate) from ratemstwhere cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "') AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
             } else {
-                q = "SELECT MAX(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+//                q = "SELECT MAX(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+                q = "SELECT MAX(rate) as rate from ratemst where RtDate = (select max(RtDate) from ratemstwhere cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "') AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
             }
             Cursor cursor = db.rawQuery(q, null);
             cursor.moveToFirst(); // Not checked for count > 0
@@ -173,7 +181,8 @@ public class DBQuery {
             cb = "B";
         else
             cb = "C";
-        String query = "SELECT rate from ratemst where snf='" + snf + "' AND fat='" + fat + "' AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+//        String query = "SELECT rate from ratemst where snf='" + snf + "' AND fat='" + fat + "' AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+        String query = "SELECT rate from ratemst where RtDate = (select max(RtDate) from ratemst where snf='" + snf + "' AND fat='" + fat + "' AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "') AND snf='" + snf + "' AND fat='" + fat + "' AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
 
@@ -182,7 +191,8 @@ public class DBQuery {
             val = c.getFloat(0);
             c.close();
         } else {
-            String temp = "SELECT MIN(fat) as fat from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND snf='" + snf + "'";
+//            String temp = "SELECT MIN(fat) as fat from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND snf='" + snf + "'";
+            String temp = "SELECT MIN(fat) as fat from ratemst where RtDate = (select max(RtDate) from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND snf='" + snf + "') AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND snf='" + snf + "'";
             Cursor tmp = db.rawQuery(temp, null);
             tmp.moveToFirst(); // Not checked for count > 0
 //            float minFat = tmp.getFloat(c.getColumnIndex("fat"));
@@ -190,9 +200,11 @@ public class DBQuery {
             tmp.close();
             String q;
             if (fat < minFat) {
-                q = "SELECT MIN(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND snf='" + snf + "'";
+//                q = "SELECT MIN(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND snf='" + snf + "'";
+                q = "SELECT MIN(rate) as rate from ratemst where RtDate = (select max(RtDate) from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND snf='" + snf + "') AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND snf='" + snf + "'";
             } else {
-                q = "SELECT MAX(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND snf='" + snf + "'";
+//                q = "SELECT MAX(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND snf='" + snf + "'";
+                q = "SELECT MAX(rate) as rate from ratemst where RtDate = (select max(RtDate) from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND snf='" + snf + "') AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "' AND snf='" + snf + "'";
             }
             Cursor cursor = db.rawQuery(q, null);
             cursor.moveToFirst(); // Not checked for count > 0
