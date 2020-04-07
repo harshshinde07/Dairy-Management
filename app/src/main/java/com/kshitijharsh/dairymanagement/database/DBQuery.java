@@ -162,10 +162,10 @@ public class DBQuery {
             String q;
             if (fat < minFat) {
 //                q = "SELECT MIN(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
-                q = "SELECT MIN(rate) as rate from ratemst where RtDate = (select max(RtDate) from ratemstwhere cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "') AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+                q = "SELECT MIN(rate) as rate from ratemst where RtDate = (select max(RtDate) from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "') AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
             } else {
 //                q = "SELECT MAX(rate) as rate from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
-                q = "SELECT MAX(rate) as rate from ratemst where RtDate = (select max(RtDate) from ratemstwhere cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "') AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
+                q = "SELECT MAX(rate) as rate from ratemst where RtDate = (select max(RtDate) from ratemst where cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "') AND cobf='" + cb + "' AND rtgrno='" + rateGrpNo + "'";
             }
             Cursor cursor = db.rawQuery(q, null);
             cursor.moveToFirst(); // Not checked for count > 0
